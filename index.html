@@ -1,0 +1,569 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alas Digitals · Ace Dolorito</title>
+<meta name="description" content="Store, content and distribution for small audio and mechanical keyboard brands. Case study: Vera-Fi Audio, from about $22K to $121K in average monthly revenue.">
+<meta property="og:title" content="Alas Digitals · Ace Dolorito">
+<meta property="og:description" content="How a small hi-fi brand went from about $22K to $121K in average monthly revenue on the same Shopify store.">
+<meta property="og:type" content="website">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --paper:#F2EEE6; --paper-2:#E9E4D9; --ink:#17181B; --ink-2:#2B2D31; --muted:#4A4C51;
+  --line:#A9A59C; --rule:#D3CEC3; --accent:#C8431B; --accent-text:#A83614; --accent-on-dark:#EE6A3F;
+  --display:'Bricolage Grotesque',system-ui,sans-serif; --sans:'IBM Plex Sans',system-ui,sans-serif; --mono:'IBM Plex Mono',ui-monospace,monospace;
+  --wrap:1120px; --gutter:clamp(16px,4vw,40px);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:18px;line-height:1.5;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:var(--accent-text)}
+a:hover{color:var(--ink)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 var(--gutter)}
+.mono{font-family:var(--mono);letter-spacing:.06em;text-transform:uppercase;font-size:14px}
+.eyebrow{font-family:var(--mono);font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-text);margin:0 0 16px}
+h1,h2,h3{font-family:var(--display);font-weight:800;letter-spacing:-.03em;line-height:1;margin:0}
+h2{font-size:clamp(36px,5.2vw,64px)}
+section{padding:clamp(64px,9vw,112px) 0;border-top:2px solid var(--ink)}
+.section-head{display:flex;justify-content:space-between;align-items:baseline;gap:24px;padding-bottom:20px;margin-bottom:40px;border-bottom:1px solid var(--line)}
+.section-head .num{font-family:var(--mono);font-size:14px;color:var(--muted)}
+.lede{font-size:clamp(19px,2vw,22px);color:var(--ink-2);max-width:720px;margin:20px 0 0}
+.btn{display:inline-flex;justify-content:center;text-align:center;max-width:100%;align-items:center;gap:10px;min-height:52px;padding:14px 24px;border-radius:999px;background:var(--ink);color:var(--paper);font-family:var(--sans);font-weight:600;font-size:17px;text-decoration:none;border:2px solid var(--ink);cursor:pointer;transition:background .15s,color .15s}
+.btn:hover{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn.ghost:hover{background:var(--ink);color:var(--paper)}
+
+/* header */
+header.top{position:sticky;top:0;z-index:20;background:rgba(242,238,230,.94);backdrop-filter:blur(8px);border-bottom:2px solid var(--ink)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:68px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink);font-family:var(--mono);font-size:15px;letter-spacing:.08em}
+.brand svg{width:30px;height:30px;flex-shrink:0}
+.top nav{display:flex;align-items:center;gap:20px}
+.top nav a.link{color:var(--ink);text-decoration:none;font-size:16px}
+.top nav a.link:hover{color:var(--accent-text)}
+.path-toggle{display:inline-flex;border:2px solid var(--ink);border-radius:999px;padding:3px;gap:2px}
+.path-toggle button{border:0;background:transparent;color:var(--ink);font:500 14px var(--sans);padding:8px 14px;border-radius:999px;cursor:pointer;min-height:38px}
+.path-toggle button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+@media (max-width:860px){.top nav a.link{display:none}}
+@media (max-width:520px){.brand span{display:none}.path-toggle button{padding:8px 11px;font-size:13px}}
+
+/* hero */
+.hero{border-top:0;padding-top:clamp(48px,7vw,88px)}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(32px,5vw,64px);align-items:end}
+.stat-label{font-family:var(--mono);font-size:15px;letter-spacing:.06em;color:var(--accent-text);text-transform:uppercase}
+.big{font-variant-numeric:tabular-nums;font-family:var(--display);font-weight:800;font-size:clamp(40px,12vw,168px);line-height:.92;letter-spacing:-.04em;margin:12px 0 clamp(32px,5vw,56px);white-space:nowrap}
+.big .arrow{color:var(--accent)}
+.hero h1{font-size:clamp(30px,4vw,48px);line-height:1.08;letter-spacing:-.025em}
+.hero h1 .hl{color:var(--accent-text)}
+.hero .lede{margin-top:20px}
+.hero-ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.hero-photo{border-radius:8px;overflow:hidden;background:#DFDFDF;aspect-ratio:1/1}
+.hero-photo img{width:100%;height:100%;object-fit:cover}
+.hero-caption{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;font-family:var(--mono);font-size:13px;line-height:1.45;color:var(--muted)}
+.hero-caption div{border-top:2px solid var(--ink);padding-top:10px}
+@media (max-width:860px){.hero-grid{grid-template-columns:minmax(0,1fr)}.hero-photo{aspect-ratio:4/3}}
+
+/* timeline */
+.timeline{display:flex;flex-direction:column;border-bottom:2px solid var(--ink)}
+.timeline .row{display:grid;grid-template-columns:200px minmax(0,1fr);gap:24px;padding:24px 0;border-top:1px solid var(--line)}
+.timeline .row:first-child{border-top:2px solid var(--ink)}
+.timeline .when{font-family:var(--mono);font-weight:500;font-size:16px;padding-top:4px}
+.timeline .what{font-size:clamp(20px,2.2vw,26px);line-height:1.35}
+.callout{margin-top:40px;background:var(--ink);color:var(--paper);padding:clamp(24px,4vw,40px);font-family:var(--display);font-weight:700;font-size:clamp(24px,3vw,36px);line-height:1.15;letter-spacing:-.01em}
+@media (max-width:640px){.timeline .row{grid-template-columns:1fr;gap:6px}}
+
+/* chart */
+.chart-legend{display:flex;flex-wrap:wrap;gap:24px;margin:28px 0 20px;font-family:var(--mono);font-size:14px;color:var(--muted)}
+.chart-legend span{display:inline-flex;align-items:center;gap:10px}
+.chart-legend i{width:16px;height:16px;border-radius:3px;display:inline-block}
+.chart{position:relative;height:clamp(280px,42vw,460px);margin-top:40px}
+.chart .grid{position:absolute;left:0;right:0;border-top:1px solid var(--rule)}
+.chart .grid b{position:absolute;left:0;top:4px;font:400 13px var(--mono);color:var(--muted)}
+.chart .bars{position:absolute;inset:0;display:flex;align-items:flex-end;gap:clamp(2px,.6vw,6px)}
+.chart .bar{flex:1 1 0;border-radius:3px 3px 0 0;background:var(--accent);position:relative}
+.chart .bar.before{background:var(--line)}
+.chart .bar:hover,.chart .bar:focus-visible{background:var(--ink)}
+.chart .tip{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:var(--ink);color:var(--paper);font:500 13px var(--mono);padding:6px 8px;border-radius:4px;white-space:nowrap;pointer-events:none;display:none}
+.chart .bar.r .tip{left:auto;right:0;transform:none}
+.chart .bar.l .tip{left:0;transform:none}
+.chart .bar:hover .tip,.chart .bar:focus-visible .tip{display:block}
+.chart .marker{position:absolute;top:-30px;bottom:0;border-left:2px dashed var(--ink)}
+.chart .base{position:absolute;left:0;right:0;border-top:2px dashed var(--ink-2);z-index:1;pointer-events:none}
+.chart .base span{position:absolute;left:0;top:-24px;font:500 13px var(--mono);color:var(--ink-2);background:var(--paper);padding:0 4px}
+.chart .end{position:absolute;right:0;font-family:var(--display);font-weight:800;font-size:clamp(20px,2.4vw,30px);letter-spacing:-.02em;line-height:1;text-align:right}
+.chart .end small{display:block;font:400 12px var(--mono);color:var(--muted);letter-spacing:.06em;margin-top:4px}
+.chart .marker span{position:absolute;left:10px;top:0;font:500 13px var(--mono);white-space:nowrap}
+.chart-axis{display:flex;justify-content:space-between;border-top:2px solid var(--ink);padding-top:10px;font:400 13px var(--mono);color:var(--muted)}
+.source{font-family:var(--mono);font-size:13px;color:var(--muted);margin-top:24px}
+
+/* built grid */
+.built{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:48px}
+.built .item{display:flex;gap:20px;padding:24px 0;border-top:2px solid var(--ink)}
+.built .n{font-family:var(--mono);font-weight:500;font-size:15px;color:var(--accent-text);padding-top:6px}
+.built h3{font-size:26px;font-weight:700;letter-spacing:-.015em;line-height:1.15}
+.built p{margin:6px 0 0;color:var(--muted)}
+@media (max-width:760px){.built{grid-template-columns:1fr}}
+
+/* lessons */
+.lessons{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.lesson{background:var(--paper-2);border:2px solid var(--ink);border-radius:8px;padding:28px;display:flex;flex-direction:column;gap:12px;transition:transform .2s ease-out,box-shadow .2s ease-out}
+.lesson:hover{transform:translateY(-2px);box-shadow:4px 4px 0 var(--ink)}
+.lesson .tag::before{content:attr(data-n);margin-right:10px;color:var(--muted)}
+.lesson .tag{font-family:var(--mono);font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent-text)}
+.lesson h3{font-size:26px;font-weight:700;line-height:1.15;letter-spacing:-.015em}
+.lesson p{margin:0;color:var(--ink-2)}
+@media (max-width:760px){.lessons{grid-template-columns:1fr}}
+
+/* numbers */
+.numbers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:40px}
+.numbers .stat{border-top:2px solid var(--ink);padding:24px 0 32px}
+.numbers .v{font-variant-numeric:tabular-nums;font-family:var(--display);font-weight:800;font-size:clamp(48px,6vw,76px);line-height:1;letter-spacing:-.03em;white-space:nowrap}
+.numbers .l{margin-top:10px;color:var(--ink-2)}
+@media (max-width:860px){.numbers{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:480px){.numbers{grid-template-columns:1fr}}
+
+/* fit */
+.checks{list-style:none;margin:32px 0 0;padding:0;border-bottom:2px solid var(--ink)}
+.checks li{display:flex;gap:20px;align-items:flex-start;padding:22px 0;border-top:2px solid var(--ink);font-size:clamp(20px,2.2vw,24px);line-height:1.4}
+.checks svg{width:30px;height:30px;flex-shrink:0;margin-top:2px}
+
+/* about */
+.about{display:grid;grid-template-columns:320px minmax(0,1fr);gap:clamp(32px,5vw,64px);align-items:start}
+.about img{width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;object-position:50% 22%;border-radius:8px;background:#222}
+.about .bio p{font-size:20px;margin:0 0 18px;max-width:640px}
+.about dl{display:grid;grid-template-columns:auto 1fr;gap:10px 24px;margin:28px 0 0;padding-top:20px;border-top:2px solid var(--ink);font-size:16px}
+.about dt{font-family:var(--mono);font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding-top:3px}
+.about dd{margin:0}
+@media (max-width:760px){.about{grid-template-columns:1fr}.about img{max-width:320px}}
+
+/* contact */
+.contact{background:var(--ink);color:var(--paper);border-top:0}
+.contact h2{font-size:clamp(40px,6vw,80px)}
+.contact h2 .hl{color:var(--accent-on-dark);display:block;margin-top:8px}
+.offer{margin-top:48px;border:2px solid var(--paper);padding:clamp(24px,4vw,40px);display:flex;flex-direction:column;gap:24px}
+.offer p{margin:0;font-size:clamp(20px,2.4vw,28px);line-height:1.35}
+.offer .row{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between}
+.contact .btn{background:var(--accent-on-dark);border-color:var(--accent-on-dark);color:var(--ink)}
+.contact .btn:hover{background:var(--paper);border-color:var(--paper);color:var(--ink)}
+.contact .alt{font-family:var(--mono);font-size:15px;color:#CFCAC0}
+.contact .alt a{color:var(--paper)}
+footer{background:var(--ink);color:#B8B3A9;border-top:1px solid #3A3B3F;padding:28px 0 40px;font-family:var(--mono);font-size:13px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:12px 32px;justify-content:space-between}
+
+/* popup */
+dialog#path-dialog{border:2px solid var(--ink);border-radius:12px;padding:0;max-width:560px;width:calc(100% - 32px);background:var(--paper);color:var(--ink);box-shadow:0 24px 60px rgba(23,24,27,.25)}
+dialog#path-dialog::backdrop{background:rgba(23,24,27,.55)}
+.dlg{padding:clamp(24px,5vw,36px)}
+.dlg h2{font-size:clamp(28px,4vw,36px);margin-bottom:10px}
+.dlg p{margin:0 0 24px;color:var(--ink-2)}
+.choices{display:flex;flex-direction:column;gap:12px}
+.choice{display:flex;flex-direction:column;gap:4px;text-align:left;width:100%;padding:18px 20px;border:2px solid var(--ink);border-radius:10px;background:transparent;color:var(--ink);cursor:pointer;font:inherit;transition:background .15s,color .15s}
+.choice strong{font-family:var(--display);font-weight:700;font-size:21px;letter-spacing:-.01em}
+.choice span{font-size:16px;color:var(--muted)}
+.choice:hover,.choice:focus-visible{background:var(--ink);color:var(--paper)}
+.choice:hover span,.choice:focus-visible span{color:#CFCAC0}
+.skip{margin-top:16px;background:none;border:0;color:var(--ink);text-decoration:underline;font:16px var(--sans);cursor:pointer;padding:10px 0;min-height:44px}
+
+/* tools */
+.tools{border-bottom:2px solid var(--ink)}
+.tool-row{display:grid;grid-template-columns:220px minmax(0,1fr);gap:24px;padding:28px 0;border-top:1px solid var(--line)}
+.tool-row:first-child{border-top:2px solid var(--ink)}
+.tool-row h3{font-family:var(--mono);font-weight:500;font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-text);padding-top:4px}
+.tool-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px 32px;margin:0;padding:0;list-style:none}
+.tool-list li{display:flex;flex-direction:column;gap:2px}
+.tool-list b{font-family:var(--display);font-weight:700;font-size:21px;letter-spacing:-.01em;line-height:1.2}
+.tool-list span{font-size:16px;color:var(--muted);line-height:1.45}
+@media (max-width:760px){.tool-row{grid-template-columns:minmax(0,1fr);gap:14px}}
+
+/* steps in the offer */
+.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin:0;padding:24px 0 0;list-style:none;border-top:1px solid #3A3B3F;counter-reset:step}
+.steps li{counter-increment:step;display:flex;flex-direction:column;gap:6px;font-size:17px;color:#D9D4CA;line-height:1.45}
+.steps li::before{content:"0" counter(step);font-family:var(--mono);font-size:13px;letter-spacing:.08em;color:var(--accent-on-dark)}
+@media (max-width:760px){.steps{grid-template-columns:minmax(0,1fr)}}
+
+/* popup close */
+.dlg{position:relative}
+.dlg:focus{outline:none}
+.dlg-close{position:absolute;top:12px;right:12px;width:44px;height:44px;border-radius:999px;border:0;background:transparent;color:var(--ink);cursor:pointer;display:flex;align-items:center;justify-content:center}
+.dlg-close:hover{background:var(--paper-2)}
+
+/* path switching */
+[data-path="store"] .only-dm{display:none!important}
+[data-path="dm"] .only-store{display:none!important}
+
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+</style>
+</head>
+<body data-path="dm">
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Alas Digitals home">
+      <svg viewBox="0 0 314 313" fill="currentColor" aria-hidden="true"><path d="M0.0284517 199.411C-0.327893 213.725 2.45704 219.219 20.1681 219.604C20.1788 219.604 20.1895 219.605 20.2002 219.605L20.217 219.605H21.4789C52.9983 214.364 80.7836 217.081 104.758 232.226C121.161 243.585 135.041 261.254 141.35 287.757C145.135 305.426 157.211 312.291 171.634 313V176.82L141.35 187.835V239.447C121.111 216.773 104.874 208.179 70.9489 201.232L305.664 116.229C313 108.681 316.478 93.0306 308.413 83.1724L171.634 0C153.968 0.000148287 141.35 13.8831 141.35 29.0282V135.71L171.634 124.695V31.0477L283.654 96.4585L0.0284517 199.411Z"/></svg>
+      <span>ALAS DIGITALS</span>
+    </a>
+    <nav aria-label="Main">
+      <a class="link" href="#case-study">Case study</a>
+      <a class="link" href="#lessons">What worked</a>
+      <a class="link" href="#tools">Tools</a>
+      <a class="link" href="#contact">Contact</a>
+      <div class="path-toggle" role="group" aria-label="Show the page for">
+        <button type="button" data-set-path="dm" aria-pressed="true">I sell by DM</button>
+        <button type="button" data-set-path="store" aria-pressed="false">I have a store</button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap">
+    <div class="stat-label">Case study · Vera-Fi Audio · Avg monthly revenue</div>
+    <div class="big" aria-label="From $22K to $121K">$22K<span class="arrow"> → </span>$121K</div>
+  </div>
+  <div class="wrap hero-grid">
+    <div>
+      <h1 class="only-dm">You already sell by DM. <span class="hl">I build the store, content and distribution that sell without you.</span></h1>
+      <h1 class="only-store">Your store already takes orders. <span class="hl">I build what makes it sell.</span></h1>
+      <p class="lede only-dm">I help small audio and mechanical keyboard brands move from selling one inbox at a time to a store that does the selling.</p>
+      <p class="lede only-store">I help small audio and mechanical keyboard brands add the email, product content and store work that turn a working store into one that sells.</p>
+      <div class="hero-ctas">
+        <a class="btn" href="#contact">Get three ideas for your store, free</a>
+        <a class="btn ghost" href="#case-study">See the case study</a>
+      </div>
+    </div>
+    <figure style="margin:0">
+      <div class="hero-photo"><img src="assets/vera-fi-scout.jpg" alt="Vera-Fi Audio Vanguard Scout bookshelf speakers, shot on a clean background" width="1080" height="1080"></div>
+      <figcaption class="hero-caption">
+        <div>Mar–May 2024<br>before I joined</div>
+        <div>2025 average<br>after I took over the store</div>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- STARTING POINT -->
+<section id="case-study">
+  <div class="wrap">
+    <div class="section-head"><span class="mono">The starting point</span><span class="num">01</span></div>
+    <h2 class="only-dm">Great products, sold one inbox at a time.</h2>
+    <h2 class="only-store">A working store, with nothing around it yet.</h2>
+    <div class="timeline" style="margin-top:40px">
+      <div class="row only-dm"><div class="when">2022</div><div class="what">Every sale made by email or private message.</div></div>
+      <div class="row only-dm"><div class="when">2023</div><div class="what">The Shopify store opens and gets no real traction.</div></div>
+      <div class="row only-dm"><div class="when">Feb 2024</div><div class="what">The order system finally works: 2 sales that month.</div></div>
+      <div class="row only-store"><div class="when">2023</div><div class="what">The Shopify store goes live.</div></div>
+      <div class="row only-store"><div class="when">Feb 2024</div><div class="what">Checkout works. The first store orders come in.</div></div>
+      <div class="row"><div class="when">Mar–May 2024</div><div class="what">About $22K a month, carried by paid press ads and YouTuber promotions.</div></div>
+      <div class="row only-store"><div class="when">Jun 2024</div><div class="what">Still missing: an Instagram presence, an email program and a product photo standard.</div></div>
+    </div>
+    <div class="callout only-dm">The products had fans. The store just wasn’t doing the selling.</div>
+    <div class="callout only-store">Having a store isn’t the same as having a store that sells.</div>
+  </div>
+</section>
+
+<!-- CHART -->
+<section aria-labelledby="chart-h">
+  <div class="wrap">
+    <div class="section-head"><span class="mono">The line</span><span class="num">02</span></div>
+    <h2 id="chart-h"><span class="only-dm">The growth held.</span><span class="only-store">Same store. New results.</span></h2>
+    <p class="lede">Monthly gross sales on the Vera-Fi Shopify store, Feb 2024 to Dec 2025.</p>
+    <div class="chart-legend">
+      <span><i style="background:var(--line)"></i>Before I joined</span>
+      <span><i style="background:var(--accent)"></i>After I took over (Jun 2024)</span>
+    </div>
+    <div class="chart" id="chart" role="img" aria-label="Bar chart of monthly gross sales. Feb 2024: $922. Mar to May 2024: about $22K a month. After June 2024 sales climb, reaching $180K in Dec 2025."></div>
+    <div class="chart-axis" aria-hidden="true"><span>Feb ’24</span><span>Jan ’25</span><span>Dec ’25</span></div>
+    <p class="source">Source: Shopify gross sales report.</p>
+  </div>
+</section>
+
+<!-- WHAT I BUILT -->
+<section aria-labelledby="built-h">
+  <div class="wrap">
+    <div class="section-head"><span class="mono">June 2024 → now</span><span class="num">03</span></div>
+    <h2 id="built-h"><span class="only-dm">I took over the whole commercial side.</span><span class="only-store">I built everything around the store.</span></h2>
+    <p class="lede"><span class="only-dm">Not just the storefront. Everything between the product and the sale.</span><span class="only-store">Same Shopify store. These are the pieces that feed it.</span></p>
+    <div class="built" id="built" style="margin-top:40px"></div>
+  </div>
+</section>
+
+<!-- LESSONS (help-first) -->
+<section id="lessons" aria-labelledby="lessons-h">
+  <div class="wrap">
+    <div class="section-head"><span class="mono">What worked</span><span class="num">04</span></div>
+    <h2 id="lessons-h">Four things you can use this week.</h2>
+    <p class="lede">You don’t need to hire anyone for these. They’re a few of the things I did at Vera-Fi that you can try on your own.</p>
+    <div class="lessons" style="margin-top:40px">
+      <article class="lesson">
+        <div class="tag" data-n="01">Product photos</div>
+        <h3>Shoot every product on the same background, at 1:1.</h3>
+        <p>Shoppers compare products side by side. When every photo matches, the products look like one brand, and the store looks like a store you can trust.</p>
+      </article>
+      <article class="lesson">
+        <div class="tag" data-n="02">Email</div>
+        <h3>Email the people who already bought from you.</h3>
+        <p>Past buyers and newsletter sign-ups are usually the easiest sales to win. At Vera-Fi, campaigns to that list averaged an 11.6% click rate.</p>
+      </article>
+      <article class="lesson">
+        <div class="tag" data-n="03">Promotion</div>
+        <h3>Use YouTubers for launches, not for steady sales.</h3>
+        <p>Lead with your award winners the rest of the time. Reviews give a launch its spike, and the store and email have to carry the months in between.</p>
+      </article>
+      <article class="lesson">
+        <div class="tag" data-n="04">Support</div>
+        <h3>Write the manual so customers don’t have to email you.</h3>
+        <p>A clear, designed manual answers the setup questions before they reach your inbox, and it makes the product feel finished.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- NUMBERS -->
+<section aria-labelledby="numbers-h">
+  <div class="wrap">
+    <div class="section-head"><span class="mono">The numbers</span><span class="num">05</span></div>
+    <h2 id="numbers-h">What it added up to.</h2>
+    <div class="numbers" style="margin-top:40px">
+      <div class="stat"><div class="v">5.5×</div><div class="l">average monthly revenue, 2025 vs. Mar–May 2024</div></div>
+      <div class="stat"><div class="v">$1.99M</div><div class="l">gross store sales, Jun 2024 – Dec 2025</div></div>
+      <div class="stat"><div class="v">97%</div><div class="l">of the store’s 2024–25 revenue came after I took over</div></div>
+      <div class="stat"><div class="v">6,312</div><div class="l">units sold on the store, Jun 2024 – Dec 2025</div></div>
+      <div class="stat"><div class="v">15×</div><div class="l">email list growth: 276 → 4,213 subscribers</div></div>
+      <div class="stat"><div class="v">11.6%</div><div class="l">average click rate across 54 email campaigns</div></div>
+    </div>
+    <p class="source">Sources: Shopify gross sales, Jan 2024 – Dec 2025. Brevo campaign reports, Aug 2024 – Apr 2026.</p>
+  </div>
+</section>
+
+<!-- FIT -->
+<section aria-labelledby="fit-h">
+  <div class="wrap">
+    <div class="section-head"><span class="mono">Who this is for</span><span class="num">06</span></div>
+    <h2 id="fit-h"><span class="only-dm">Small hardware brands with real fans.</span><span class="only-store">Your store is live. Is it selling?</span></h2>
+    <p class="lede"><span class="only-dm">Hi-fi and audio gear. Mechanical keyboards. Products people research, compare and talk about before they buy.</span><span class="only-store">For audio and mechanical keyboard brands with a working store and real fans.</span></p>
+    <ul class="checks only-dm">
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="#C8431B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg>Customers already buy from you, mostly by DM, email or forum.</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="#C8431B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg>You have a store, or want one, but it isn’t doing the selling.</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="#C8431B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg>Photos, manuals and packaging were made one at a time, when there was time.</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="#C8431B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg>Dealers and distributors reach out, but there’s no system for them.</li>
+    </ul>
+    <ul class="checks only-store">
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="#C8431B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg>Your store takes orders, but most sales still come from launches and reviews.</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="#C8431B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg>There’s a newsletter box, but no regular emails go out.</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="#C8431B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg>Product pages have few or no customer reviews.</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="#C8431B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg>Photos, manuals and FAQs were made at different times and don’t match.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section aria-labelledby="about-h">
+  <div class="wrap">
+    <div class="section-head"><span class="mono">Who I am</span><span class="num">07</span></div>
+    <div class="about">
+      <img src="assets/ace.jpg" alt="Ace Dolorito" width="900" height="900" loading="lazy">
+      <div class="bio">
+        <h2 id="about-h" style="margin-bottom:28px">Hi, I’m Ace.</h2>
+        <p>I run Alas Digitals. Since June 2024 I’ve also run the Shopify store, email and product content at Vera-Fi Audio, a small hi-fi brand, working closely with the owner, Mark Schifter.</p>
+        <p>The dealer and distributor side was a shared effort. Mark built a lot of it, and I supported it with outreach and the distributor price list.</p>
+        <p>Now I help other small hardware brands do the same, one brand at a time.</p>
+        <dl>
+          <dt>Role</dt><dd>Head of Marketing &amp; International Sales, Vera-Fi Audio</dd>
+          <dt>Practice</dt><dd>Alas Digitals, since March 2023</dd>
+          <dt>Where</dt><dd>Remote, working with US and Asian brands</dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TOOLS -->
+<section id="tools" aria-labelledby="tools-h">
+  <div class="wrap">
+    <div class="section-head"><span class="mono">Tools I use</span><span class="num">08</span></div>
+    <h2 id="tools-h">The tools behind the work.</h2>
+    <p class="lede">What I work in every day, grouped by the job each one does.</p>
+    <div class="tools" style="margin-top:40px">
+      <div class="tool-row"><h3>Store and web</h3><ul class="tool-list"><li><b>Shopify</b><span>Store builds, themes, apps and checkout.</span></li><li><b>WordPress and Wix</b><span>Sites for brands that aren’t on Shopify.</span></li><li><b>VS Code and GitHub</b><span>Theme code and custom store sections.</span></li></ul></div>
+      <div class="tool-row"><h3>Search and data</h3><ul class="tool-list"><li><b>Google Analytics</b><span>Traffic and sales reports.</span></li><li><b>Google Search Console</b><span>SEO, indexing and what people search for.</span></li></ul></div>
+      <div class="tool-row"><h3>Email and social</h3><ul class="tool-list"><li><b>Brevo</b><span>Email campaigns and the subscriber list.</span></li><li><b>Instagram and Meta Business Suite</b><span>Posting, scheduling and the inbox.</span></li><li><b>LinkedIn</b><span>Dealer and distributor outreach.</span></li></ul></div>
+      <div class="tool-row"><h3>Design and content</h3><ul class="tool-list"><li><b>Figma</b><span>Store layouts, packaging and manuals.</span></li><li><b>Canva</b><span>Social graphics and quick layouts.</span></li></ul></div>
+      <div class="tool-row"><h3>Payments</h3><ul class="tool-list"><li><b>PayPal and Wise</b><span>Getting paid by brands in different countries.</span></li></ul></div>
+      <div class="tool-row"><h3>Work and calls</h3><ul class="tool-list"><li><b>Google Workspace and Microsoft Office</b><span>Docs, sheets and price lists.</span></li><li><b>Notion</b><span>Project plans and notes.</span></li><li><b>Zoom and WhatsApp Business</b><span>Calls and quick messages with brands and suppliers.</span></li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact" aria-labelledby="contact-h">
+  <div class="wrap">
+    <h2 id="contact-h" class="only-dm">You already sell by DM. <span class="hl">I build the store, content and distribution that sell without you.</span></h2>
+    <h2 class="only-store">Your store already takes orders. <span class="hl">I build what makes it sell.</span></h2>
+    <div class="offer">
+      <p class="only-dm">Tell me how you sell today. I’ll send back three specific ideas for getting your first store working, free. No call needed.</p>
+      <p class="only-store">Send me your store link. I’ll send back three things you can fix or add this week, free. No call needed.</p>
+      <ol class="steps">
+        <li>You email me your store link, or how you sell today.</li>
+        <li>I look through it and send back three specific ideas.</li>
+        <li>Use them yourself. If you’d like help with them, we talk.</li>
+      </ol>
+      <div class="row">
+        <a class="btn" id="mail-btn" href="mailto:acedolorito@gmail.com">Email Ace</a>
+        <div class="alt">acedolorito@gmail.com · <a href="https://www.instagram.com/alasdigitals/" rel="noopener">@alasdigitals</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Alas Digitals · Ace Dolorito</span>
+    <span>Vera-Fi Audio name, photos and figures used with the owner’s permission.</span>
+  </div>
+</footer>
+
+<!-- FIRST-VISIT POPUP -->
+<dialog id="path-dialog" aria-labelledby="dlg-h" aria-describedby="dlg-p">
+  <div class="dlg" tabindex="-1" autofocus>
+    <button type="button" class="dlg-close" data-choose="skip" aria-label="Close"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <p class="eyebrow">Quick question</p>
+    <h2 id="dlg-h">Where is your brand right now?</h2>
+    <p id="dlg-p">Pick one and I’ll show you the part of this page that fits.</p>
+    <div class="choices">
+      <button type="button" class="choice" data-choose="dm">
+        <strong>I sell by DM, email or dealers</strong>
+        <span>I’d like an online store that sells for me.</span>
+      </button>
+      <button type="button" class="choice" data-choose="store">
+        <strong>I have a store, but it only takes orders</strong>
+        <span>I’d like it to sell more on its own.</span>
+      </button>
+    </div>
+    <button type="button" class="skip" data-choose="skip">Just looking around</button>
+  </div>
+</dialog>
+
+<script>
+(function () {
+  var KEY = 'alas-path';
+  var body = document.body;
+  var dialog = document.getElementById('path-dialog');
+
+  function store(k, v) { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) { return null; } }
+
+  var mail = {
+    dm: { s: 'Three ideas for my store', b: 'Hi Ace,\n\nBrand: \nWhat we make: \nHow we sell today (DM, email, dealers, forums): \nWebsite (if any): \n\nThanks,\n' },
+    store: { s: 'Three ideas for my store', b: 'Hi Ace,\n\nBrand: \nStore link: \nWhat we make: \nWhat I would like the store to do better: \n\nThanks,\n' }
+  };
+
+  function setPath(p) {
+    if (p !== 'dm' && p !== 'store') return;
+    body.setAttribute('data-path', p);
+    document.querySelectorAll('[data-set-path]').forEach(function (b) {
+      b.setAttribute('aria-pressed', b.getAttribute('data-set-path') === p ? 'true' : 'false');
+    });
+    var m = mail[p];
+    document.getElementById('mail-btn').href = 'mailto:acedolorito@gmail.com?subject=' + encodeURIComponent(m.s) + '&body=' + encodeURIComponent(m.b);
+    renderBuilt(p);
+  }
+
+  /* What I built: same eight items, ordered for each path */
+  var items = {
+    social: ['Social presence', 'Built the brand’s Instagram from zero.'],
+    store: ['Store rebuild + SEO', 'Navigation, collections, reviews, press, search.'],
+    photo: ['Product photography', 'Clean backgrounds, consistent 1:1. Reshoots where needed.'],
+    manual: ['Product manuals', 'Designed so customers can set up without emailing.'],
+    pack: ['Packaging design', 'The box matches the product and the brand.'],
+    email: ['Email program', 'Campaigns to past buyers and newsletter sign-ups.'],
+    dealer: ['Dealer support', 'Outreach and a distributor price list, alongside the owner.'],
+    promo: ['Promo strategy', 'Lead with award winners. YouTubers for launches only.']
+  };
+  var order = {
+    dm: ['social', 'store', 'photo', 'manual', 'pack', 'email', 'dealer', 'promo'],
+    store: ['store', 'email', 'photo', 'manual', 'social', 'pack', 'promo', 'dealer']
+  };
+  function renderBuilt(p) {
+    var el = document.getElementById('built');
+    el.innerHTML = '';
+    order[p].forEach(function (k, i) {
+      var d = document.createElement('div'); d.className = 'item';
+      var n = document.createElement('div'); n.className = 'n'; n.textContent = String(i + 1).padStart(2, '0');
+      var t = document.createElement('div');
+      var h = document.createElement('h3'); h.textContent = items[k][0];
+      var s = document.createElement('p'); s.textContent = items[k][1];
+      t.appendChild(h); t.appendChild(s); d.appendChild(n); d.appendChild(t); el.appendChild(d);
+    });
+  }
+
+  /* Chart */
+  var months = ['Feb 2024','Mar 2024','Apr 2024','May 2024','Jun 2024','Jul 2024','Aug 2024','Sep 2024','Oct 2024','Nov 2024','Dec 2024','Jan 2025','Feb 2025','Mar 2025','Apr 2025','May 2025','Jun 2025','Jul 2025','Aug 2025','Sep 2025','Oct 2025','Nov 2025','Dec 2025'];
+  var sales = [922,23814,20751,21600,31286,36052,59753,45229,116360,103642,146937,90137,88128,114587,93892,89219,117868,145410,183879,80858,115913,155177,180499];
+  (function () {
+    var c = document.getElementById('chart'), max = 220000;
+    [50000, 100000, 150000, 200000].forEach(function (g) {
+      var line = document.createElement('div'); line.className = 'grid'; line.style.bottom = (g / max * 100) + '%';
+      line.innerHTML = '<b>$' + (g / 1000) + 'K</b>'; c.appendChild(line);
+    });
+    var bars = document.createElement('div'); bars.className = 'bars'; bars.setAttribute('aria-hidden', 'true');
+    sales.forEach(function (v, i) {
+      var b = document.createElement('div'); b.className = 'bar' + (i < 4 ? ' before' : '') + (i > 17 ? ' r' : '') + (i < 3 ? ' l' : '');
+      b.style.height = Math.max(0.8, v / max * 100) + '%'; b.tabIndex = -1;
+      var tip = document.createElement('span'); tip.className = 'tip';
+      tip.textContent = months[i] + ' · $' + v.toLocaleString('en-US');
+      b.appendChild(tip); bars.appendChild(b);
+    });
+    c.appendChild(bars);
+    var base = document.createElement('div'); base.className = 'base';
+    base.style.bottom = (22000 / max * 100) + '%';
+    base.innerHTML = '<span>BEFORE: ~$22K/MO</span>'; c.appendChild(base);
+    var end = document.createElement('div'); end.className = 'end';
+    end.style.bottom = (180499 / max * 100 + 2) + '%';
+    end.innerHTML = '$180K<small>DEC ’25</small>'; end.setAttribute('aria-hidden','true'); c.appendChild(end);
+    var mk = document.createElement('div'); mk.className = 'marker';
+    mk.style.left = (4 / 23 * 100) + '%';
+    mk.innerHTML = '<span>JUN 2024 · I TAKE OVER</span>';
+    c.appendChild(mk);
+  })();
+
+  /* Toggle */
+  document.querySelectorAll('[data-set-path]').forEach(function (b) {
+    b.addEventListener('click', function () { var p = b.getAttribute('data-set-path'); setPath(p); store(KEY, p); });
+  });
+
+  /* Popup choices */
+  dialog.querySelectorAll('[data-choose]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var p = b.getAttribute('data-choose');
+      if (p === 'skip') { store(KEY, 'dm'); } else { setPath(p); store(KEY, p); }
+      dialog.close();
+    });
+  });
+  dialog.addEventListener('cancel', function () { store(KEY, body.getAttribute('data-path')); });
+
+  /* Start: ?path=store or ?path=dm in the link skips the popup (useful in outreach links) */
+  var q = new URLSearchParams(location.search).get('path');
+  var saved = store(KEY);
+  if (q === 'dm' || q === 'store') { setPath(q); store(KEY, q); }
+  else if (saved === 'dm' || saved === 'store') { setPath(saved); }
+  else {
+    setPath('dm');
+    if (typeof dialog.showModal === 'function') {
+      setTimeout(function () { dialog.showModal(); }, 600);
+    }
+  }
+})();
+</script>
+</body>
+</html>
