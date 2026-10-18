@@ -28,7 +28,7 @@
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:18px;line-height:1.5;-webkit-font-smoothing:antialiased}
-img{max-width:100%;display:block}
+img{max-width:100%;height:auto;display:block}
 a{color:var(--accent-text)}
 a:hover{color:var(--ink)}
 :focus-visible{outline:3px solid var(--accent);outline-offset:3px}
@@ -134,8 +134,8 @@ header.top{position:sticky;top:0;z-index:20;background:rgba(242,238,230,.94);bac
 .chart .bars{position:absolute;inset:0;display:flex;align-items:flex-end;gap:clamp(2px,.6vw,6px)}
 .chart .bar{flex:1 1 0;border-radius:3px 3px 0 0;background:var(--accent);position:relative}
 .chart .bar.before{background:var(--line)}
-.chart .bar:hover{background:var(--ink)}
-.chart .tip{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:var(--ink);color:var(--paper);font:500 13px var(--mono);padding:6px 8px;border-radius:4px;white-space:nowrap;pointer-events:none;display:none}
+.chart .bar:hover{background:var(--ink);z-index:5}
+.chart .tip{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:var(--ink);color:var(--paper);font:500 13px var(--mono);padding:6px 8px;border-radius:4px;white-space:nowrap;pointer-events:none;display:none;z-index:6}
 .chart .bar.r .tip{left:auto;right:0;transform:none}
 .chart .bar.l .tip{left:0;transform:none}
 .chart .bar:hover .tip{display:block}
@@ -165,12 +165,26 @@ header.top{position:sticky;top:0;z-index:20;background:rgba(242,238,230,.94);bac
 .ba-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
 .ba-grid figure{margin:0;display:flex;flex-direction:column;gap:10px}
 .ba-grid .frame{border:2px solid var(--ink);border-radius:8px;overflow:hidden;background:#fff}
-.ba-grid .frame.tall{max-height:560px}
-.ba-grid .frame.tall img{width:100%;height:560px;object-fit:cover;object-position:top}
+.ba-grid .frame.square{aspect-ratio:1/1}
+.ba-grid .frame.square img{width:100%;height:100%;object-fit:cover}
+/* browser mockup: 16:10 viewport, the screenshot scrolls inside like a real page */
+.browser{border:2px solid var(--ink);border-radius:10px;overflow:hidden;background:#fff;box-shadow:4px 4px 0 var(--ink)}
+.b-bar{display:flex;align-items:flex-end;gap:14px;padding:8px 12px 0;background:#E4DFD5}
+.b-dots{display:flex;gap:6px;padding-bottom:10px}
+.b-dots i{width:10px;height:10px;border-radius:50%;background:#B9B3A8;display:block}
+.b-dots i:first-child{background:#E0695B}.b-dots i:nth-child(2){background:#E2B54A}.b-dots i:nth-child(3){background:#71B865}
+.b-tab{background:#fff;border-radius:8px 8px 0 0;padding:7px 14px;font-size:12px;color:var(--ink-2);max-width:60%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.b-url{display:flex;align-items:center;gap:8px;margin:0;padding:8px 12px;background:#fff;border-bottom:1px solid #E4DFD5;font-family:var(--mono);font-size:12px;color:var(--muted)}
+.b-url svg{width:12px;height:12px;color:#9C978E;flex-shrink:0}
+.b-url span{background:#F3F1EC;border-radius:999px;padding:4px 12px;flex-grow:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.b-view{aspect-ratio:16/10;overflow-y:auto;overscroll-behavior:contain;background:#fff}
+.b-view img{width:100%;height:auto;display:block}
+.b-view:focus-visible{outline:3px solid var(--accent);outline-offset:-3px}
+.ba-hint{font-family:var(--mono);font-size:13px;color:var(--muted);margin:-8px 0 16px}
 .ba-grid figcaption{display:flex;gap:10px;align-items:baseline;font-size:15px;color:var(--muted)}
 .ba-grid figcaption b{font-family:var(--mono);font-weight:500;font-size:12px;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:4px;background:var(--paper-2);color:var(--ink);flex-shrink:0}
 .ba-grid figure.after figcaption b{background:var(--accent);color:#fff}
-@media (max-width:640px){.ba-grid{grid-template-columns:minmax(0,1fr)}.ba-grid .frame.tall img{height:420px}}
+@media (max-width:640px){.ba-grid{grid-template-columns:minmax(0,1fr)}}
 
 /* numbers */
 .numbers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:40px;margin-top:40px}
@@ -290,6 +304,7 @@ footer{background:var(--ink);color:#B8B3A9;border-top:1px solid #3A3B3F;padding:
 footer .wrap{display:flex;flex-wrap:wrap;gap:12px 32px;justify-content:space-between}
 
 /* path switching */
+[data-locked] .path-toggle{display:none}
 [data-path="store"] .only-dm{display:none!important}
 [data-path="dm"] .only-store{display:none!important}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
@@ -413,17 +428,26 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 32px;justify-content:space-bet
       <div class="ba-pair">
         <h3>The homepage</h3>
         <p>From a generic header and an empty image block to a page with a clear product hero, press logos, reviews and guarantees.</p>
+        <p class="ba-hint">Scroll inside each window to see more of the page.</p>
         <div class="ba-grid">
-          <figure><div class="frame tall"><img src="assets/store-before.jpg" alt="Old Vera-Fi Audio homepage with a generic header and an empty image block" width="680" height="863" loading="lazy"></div><figcaption><b>Before</b>Archived homepage, before I took over</figcaption></figure>
-          <figure class="after"><div class="frame tall"><img src="assets/store-after.jpg" alt="Current Vera-Fi Audio homepage with product hero, press logos, reviews and guarantees" width="1120" height="1028" loading="lazy"></div><figcaption><b>After</b>Current homepage</figcaption></figure>
+          <figure><div class="browser">
+            <div class="b-bar"><span class="b-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="b-tab">Vera-Fi Audio LLC</span></div>
+            <div class="b-url"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 11V8a5 5 0 0 1 10 0v3" fill="none" stroke="currentColor" stroke-width="2"/><rect x="5" y="11" width="14" height="10" rx="2" fill="currentColor"/></svg><span>Archived homepage · 2024</span></div>
+            <div class="b-view" tabindex="0" aria-label="Old Vera-Fi Audio homepage with a generic header and an empty image block. Scroll to see more of the page."><img src="assets/store-before.jpg" alt="Old Vera-Fi Audio homepage with a generic header and an empty image block" width="680" height="863" loading="lazy"></div>
+          </div><figcaption><b>Before</b>Archived homepage, before I took over</figcaption></figure>
+          <figure class="after"><div class="browser">
+            <div class="b-bar"><span class="b-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="b-tab">Vera-Fi Audio</span></div>
+            <div class="b-url"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 11V8a5 5 0 0 1 10 0v3" fill="none" stroke="currentColor" stroke-width="2"/><rect x="5" y="11" width="14" height="10" rx="2" fill="currentColor"/></svg><span>Current homepage</span></div>
+            <div class="b-view" tabindex="0" aria-label="Current Vera-Fi Audio homepage with product hero, press logos, reviews and guarantees. Scroll to see more of the page."><img src="assets/store-after.jpg" alt="Current Vera-Fi Audio homepage with product hero, press logos, reviews and guarantees" width="1120" height="1028" loading="lazy"></div>
+          </div><figcaption><b>After</b>Current homepage</figcaption></figure>
         </div>
       </div>
       <div class="ba-pair">
         <h3>The product photo standard</h3>
         <p>Every product on a clean background at 1:1, so the catalog reads as one brand and products compare side by side.</p>
         <div class="ba-grid">
-          <figure><div class="frame"><img src="assets/photo-after.jpg" alt="Subwoofer photographed in a room with fabric and furniture behind it" width="1080" height="1080" loading="lazy"></div><figcaption><b>Before</b>Shot in a room</figcaption></figure>
-          <figure class="after"><div class="frame"><img src="assets/photo-before.jpg" alt="The same subwoofer on a clean light grey background" width="1080" height="1080" loading="lazy"></div><figcaption><b>After</b>Clean background, 1:1</figcaption></figure>
+          <figure><div class="frame square"><img src="assets/photo-before.jpg" alt="Subwoofer photographed in a room with fabric and furniture behind it" width="1080" height="1080" loading="lazy"></div><figcaption><b>Before</b>Shot in a room</figcaption></figure>
+          <figure class="after"><div class="frame square"><img src="assets/photo-after.jpg" alt="The same subwoofer on a clean light grey background" width="1080" height="1080" loading="lazy"></div><figcaption><b>After</b>Clean background, 1:1</figcaption></figure>
         </div>
       </div>
     </div>
@@ -673,10 +697,16 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 32px;justify-content:space-bet
     b.addEventListener('click', function () { var p = b.getAttribute('data-set-path'); setPath(p); store(KEY, p); });
   });
 
-  /* Start: ?path= link wins, then a saved choice, then the store version */
+  /* Dedicated links: /store and /dm show one version only, with no switch */
+  var route = location.pathname.replace(/\/+$/, '').split('/').pop();
   var q = new URLSearchParams(location.search).get('path');
   var saved = store(KEY);
-  if (q === 'dm' || q === 'store') { setPath(q); store(KEY, q); }
+  if (route === 'store' || route === 'dm') {
+    body.setAttribute('data-locked', '');
+    setPath(route);
+  }
+  /* Otherwise: ?path= link wins, then a saved choice, then the store version */
+  else if (q === 'dm' || q === 'store') { setPath(q); store(KEY, q); }
   else if (saved === 'dm' || saved === 'store') { setPath(saved); }
   else { setPath('store'); }
 
