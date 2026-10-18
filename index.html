@@ -4,15 +4,21 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Alas Digitals · Ace Dolorito</title>
-<meta name="description" content="Store, content and distribution for small audio and mechanical keyboard brands. Case study: Vera-Fi Audio, from about $22K to $121K in average monthly revenue.">
+<meta name="description" content="I help small audio brands turn a store that takes orders into one that sells. Case study: Vera-Fi Audio, from about $22K to $121K in average monthly revenue.">
 <meta property="og:title" content="Alas Digitals · Ace Dolorito">
 <meta property="og:description" content="How a small hi-fi brand went from about $22K to $121K in average monthly revenue on the same Shopify store.">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://alas-digitals-landing-page.vercel.app/v2">
+<meta property="og:image" content="https://alas-digitals-landing-page.vercel.app/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
 <style>
+/* Version 2. Same system as v1: paper, ink, one accent. Bricolage display, Plex body and mono. */
 :root{
   --paper:#F2EEE6; --paper-2:#E9E4D9; --ink:#17181B; --ink-2:#2B2D31; --muted:#4A4C51;
   --line:#A9A59C; --rule:#D3CEC3; --accent:#C8431B; --accent-text:#A83614; --accent-on-dark:#EE6A3F;
@@ -28,17 +34,17 @@ a:hover{color:var(--ink)}
 :focus-visible{outline:3px solid var(--accent);outline-offset:3px}
 .wrap{max-width:var(--wrap);margin:0 auto;padding:0 var(--gutter)}
 .mono{font-family:var(--mono);letter-spacing:.06em;text-transform:uppercase;font-size:14px}
-.eyebrow{font-family:var(--mono);font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-text);margin:0 0 16px}
 h1,h2,h3{font-family:var(--display);font-weight:800;letter-spacing:-.03em;line-height:1;margin:0}
 h2{font-size:clamp(36px,5.2vw,64px)}
 section{padding:clamp(64px,9vw,112px) 0;border-top:2px solid var(--ink)}
 .section-head{display:flex;justify-content:space-between;align-items:baseline;gap:24px;padding-bottom:20px;margin-bottom:40px;border-bottom:1px solid var(--line)}
 .section-head .num{font-family:var(--mono);font-size:14px;color:var(--muted)}
 .lede{font-size:clamp(19px,2vw,22px);color:var(--ink-2);max-width:720px;margin:20px 0 0}
-.btn{display:inline-flex;justify-content:center;text-align:center;max-width:100%;align-items:center;gap:10px;min-height:52px;padding:14px 24px;border-radius:999px;background:var(--ink);color:var(--paper);font-family:var(--sans);font-weight:600;font-size:17px;text-decoration:none;border:2px solid var(--ink);cursor:pointer;transition:background .15s,color .15s}
+.btn{display:inline-flex;justify-content:center;text-align:center;max-width:100%;align-items:center;gap:10px;min-height:52px;padding:14px 24px;border-radius:999px;background:var(--ink);color:var(--paper);font-family:var(--sans);font-weight:600;font-size:17px;text-decoration:none;border:2px solid var(--ink);cursor:pointer;transition:background .15s,color .15s,border-color .15s}
 .btn:hover{background:var(--accent);border-color:var(--accent);color:#fff}
 .btn.ghost{background:transparent;color:var(--ink)}
 .btn.ghost:hover{background:var(--ink);color:var(--paper)}
+.source{font-family:var(--mono);font-size:13px;color:var(--muted);margin-top:24px}
 
 /* header */
 header.top{position:sticky;top:0;z-index:20;background:rgba(242,238,230,.94);backdrop-filter:blur(8px);border-bottom:2px solid var(--ink)}
@@ -51,27 +57,66 @@ header.top{position:sticky;top:0;z-index:20;background:rgba(242,238,230,.94);bac
 .path-toggle{display:inline-flex;border:2px solid var(--ink);border-radius:999px;padding:3px;gap:2px}
 .path-toggle button{border:0;background:transparent;color:var(--ink);font:500 14px var(--sans);padding:8px 14px;border-radius:999px;cursor:pointer;min-height:38px}
 .path-toggle button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
-@media (max-width:860px){.top nav a.link{display:none}}
+@media (max-width:980px){.top nav a.link{display:none}}
 @media (max-width:520px){.brand span{display:none}.path-toggle button{padding:8px 11px;font-size:13px}}
 
 /* hero */
-.hero{border-top:0;padding-top:clamp(48px,7vw,88px)}
-.hero-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(32px,5vw,64px);align-items:end}
-.stat-label{font-family:var(--mono);font-size:15px;letter-spacing:.06em;color:var(--accent-text);text-transform:uppercase}
+.hero{border-top:0;padding-top:clamp(40px,6vw,80px)}
+.for-line{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);border:2px solid var(--ink);border-radius:999px;padding:8px 16px;margin-bottom:28px}
+.for-line i{width:8px;height:8px;border-radius:50%;background:var(--accent);display:inline-block}
+.stat-label{font-family:var(--mono);font-size:14px;letter-spacing:.06em;color:var(--accent-text);text-transform:uppercase}
 .big{font-variant-numeric:tabular-nums;font-family:var(--display);font-weight:800;font-size:clamp(40px,12vw,168px);line-height:.92;letter-spacing:-.04em;margin:12px 0 clamp(32px,5vw,56px);white-space:nowrap}
 .big .arrow{color:var(--accent)}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(32px,5vw,64px);align-items:start}
 .hero h1{font-size:clamp(30px,4vw,48px);line-height:1.08;letter-spacing:-.025em}
 .hero h1 .hl{color:var(--accent-text)}
-.hero .lede{margin-top:20px}
-.hero-ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
-.hero-photo{border-radius:8px;overflow:hidden;background:#DFDFDF;aspect-ratio:1/1}
-.hero-photo img{width:100%;height:100%;object-fit:cover}
-.hero-caption{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;font-family:var(--mono);font-size:13px;line-height:1.45;color:var(--muted)}
-.hero-caption div{border-top:2px solid var(--ink);padding-top:10px}
-@media (max-width:860px){.hero-grid{grid-template-columns:minmax(0,1fr)}.hero-photo{aspect-ratio:4/3}}
+.picker{margin-top:32px;padding:20px;border:2px solid var(--ink);border-radius:12px;background:var(--paper-2)}
+.picker p{margin:0 0 12px;font-family:var(--mono);font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.picker .opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.picker button{display:flex;flex-direction:column;gap:2px;text-align:left;padding:14px 16px;border:2px solid var(--ink);border-radius:10px;background:var(--paper);color:var(--ink);font:inherit;cursor:pointer;min-height:44px;transition:background .15s,color .15s}
+.picker button strong{font-family:var(--display);font-weight:700;font-size:18px;letter-spacing:-.01em;line-height:1.2}
+.picker button span{font-size:14px;color:var(--muted)}
+.picker button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.picker button[aria-pressed="true"] span{color:#CFCAC0}
+.picker button:hover{border-color:var(--accent)}
+@media (max-width:520px){.picker .opts{grid-template-columns:1fr}.for-line{font-size:12px;padding:6px 12px}}
+.hero-ctas{display:flex;flex-wrap:wrap;align-items:center;gap:16px 28px;margin-top:36px}
+.text-link{color:var(--ink);font-weight:600;font-size:17px;text-underline-offset:4px;min-height:44px;display:inline-flex;align-items:center;gap:6px}
+.text-link:hover{color:var(--accent-text)}
+/* hero quote: Mark's words take the place of the product photo */
+.hero-quote{margin:0;padding:clamp(22px,2.6vw,30px);background:var(--paper-2);border:2px solid var(--ink);border-radius:12px;display:flex;flex-direction:column;gap:16px;box-shadow:6px 6px 0 var(--ink)}
+.hero-quote .qmark{width:36px;height:27px;color:var(--accent)}
+.hero-quote blockquote{margin:0;display:flex;flex-direction:column;gap:10px}
+.hero-quote blockquote p{margin:0;font-size:16px;line-height:1.5;color:var(--ink-2)}
+.hero-quote blockquote p:first-child{font-family:var(--display);font-weight:700;font-size:clamp(20px,1.9vw,23px);line-height:1.25;letter-spacing:-.015em;color:var(--ink)}
+.hero-quote figcaption{display:flex;flex-direction:column;gap:2px;padding-top:14px;border-top:1px solid var(--line)}
+.hero-quote figcaption b{font-family:var(--display);font-weight:700;font-size:18px}
+.hero-quote figcaption span{font-family:var(--mono);font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+@media (max-width:860px){.hero-grid{grid-template-columns:minmax(0,1fr)}.hero-quote{box-shadow:4px 4px 0 var(--ink)}}
+
+/* announcement bar */
+.announce{display:flex;justify-content:center;align-items:center;gap:12px;min-height:44px;padding:10px var(--gutter);background:var(--accent);color:#fff;text-decoration:none;font-family:var(--mono);font-weight:500;font-size:14px;letter-spacing:.06em;text-transform:uppercase;text-align:center}
+.announce:hover{background:var(--ink);color:var(--paper)}
+.announce .go{text-decoration:underline;text-underline-offset:3px}
+.announce .dot{width:10px;height:10px;border-radius:50%;background:#fff;display:inline-block;flex-shrink:0;animation:pulse 2s ease-out infinite}
+@media (max-width:420px){.announce{font-size:12px;gap:8px}}
+
+/* one spot open */
+.spot-badge{display:inline-flex;align-items:center;gap:12px;margin-top:28px;padding:10px 18px 10px 14px;border-radius:999px;background:var(--accent);color:#fff;font-family:var(--mono);font-weight:500;font-size:14px;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;min-height:44px}
+.spot-badge:hover{background:var(--ink);color:var(--paper)}
+.spot-badge i,.spot-band .dot,.contact-spot i{width:10px;height:10px;border-radius:50%;background:#fff;display:inline-block;flex-shrink:0;animation:pulse 2s ease-out infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,255,255,.7)}70%{box-shadow:0 0 0 10px rgba(255,255,255,0)}100%{box-shadow:0 0 0 0 rgba(255,255,255,0)}}
+.spot-band{margin-top:40px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px 40px;align-items:center;padding:clamp(28px,4vw,48px);border-radius:16px;background:var(--accent);color:#fff;scroll-margin-top:96px}
+.spot-band .kicker{display:inline-flex;align-items:center;gap:12px;font-family:var(--mono);font-weight:500;font-size:14px;letter-spacing:.08em;text-transform:uppercase}
+.spot-band h3{margin-top:14px;font-size:clamp(36px,5vw,64px);line-height:1;letter-spacing:-.03em;color:#fff}
+.spot-band p{margin:14px 0 0;font-size:clamp(18px,2vw,21px);max-width:560px;color:#FFF3EE}
+.spot-band .btn{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.spot-band .btn:hover{background:var(--paper);border-color:var(--paper);color:var(--ink)}
+@media (max-width:760px){.spot-band{grid-template-columns:minmax(0,1fr)}.spot-band .btn{justify-self:start}}
+.contact-spot{display:inline-flex;align-items:center;gap:12px;margin-bottom:20px;padding:8px 16px 8px 12px;border-radius:999px;background:var(--accent);color:#fff;font-family:var(--mono);font-weight:500;font-size:13px;letter-spacing:.06em;text-transform:uppercase}
 
 /* timeline */
-.timeline{display:flex;flex-direction:column;border-bottom:2px solid var(--ink)}
+.timeline{display:flex;flex-direction:column;border-bottom:2px solid var(--ink);margin-top:40px}
 .timeline .row{display:grid;grid-template-columns:200px minmax(0,1fr);gap:24px;padding:24px 0;border-top:1px solid var(--line)}
 .timeline .row:first-child{border-top:2px solid var(--ink)}
 .timeline .when{font-family:var(--mono);font-weight:500;font-size:16px;padding-top:4px}
@@ -89,50 +134,103 @@ header.top{position:sticky;top:0;z-index:20;background:rgba(242,238,230,.94);bac
 .chart .bars{position:absolute;inset:0;display:flex;align-items:flex-end;gap:clamp(2px,.6vw,6px)}
 .chart .bar{flex:1 1 0;border-radius:3px 3px 0 0;background:var(--accent);position:relative}
 .chart .bar.before{background:var(--line)}
-.chart .bar:hover,.chart .bar:focus-visible{background:var(--ink)}
+.chart .bar:hover{background:var(--ink)}
 .chart .tip{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:var(--ink);color:var(--paper);font:500 13px var(--mono);padding:6px 8px;border-radius:4px;white-space:nowrap;pointer-events:none;display:none}
 .chart .bar.r .tip{left:auto;right:0;transform:none}
 .chart .bar.l .tip{left:0;transform:none}
-.chart .bar:hover .tip,.chart .bar:focus-visible .tip{display:block}
-.chart .marker{position:absolute;top:-30px;bottom:0;border-left:2px dashed var(--ink)}
+.chart .bar:hover .tip{display:block}
 .chart .base{position:absolute;left:0;right:0;border-top:2px dashed var(--ink-2);z-index:1;pointer-events:none}
 .chart .base span{position:absolute;left:0;top:-24px;font:500 13px var(--mono);color:var(--ink-2);background:var(--paper);padding:0 4px}
 .chart .end{position:absolute;right:0;font-family:var(--display);font-weight:800;font-size:clamp(20px,2.4vw,30px);letter-spacing:-.02em;line-height:1;text-align:right}
 .chart .end small{display:block;font:400 12px var(--mono);color:var(--muted);letter-spacing:.06em;margin-top:4px}
+.chart .marker{position:absolute;top:-30px;bottom:0;border-left:2px dashed var(--ink)}
 .chart .marker span{position:absolute;left:10px;top:0;font:500 13px var(--mono);white-space:nowrap}
 .chart-axis{display:flex;justify-content:space-between;border-top:2px solid var(--ink);padding-top:10px;font:400 13px var(--mono);color:var(--muted)}
-.source{font-family:var(--mono);font-size:13px;color:var(--muted);margin-top:24px}
 
 /* built grid */
-.built{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:48px}
+.built{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:48px;margin-top:40px}
 .built .item{display:flex;gap:20px;padding:24px 0;border-top:2px solid var(--ink)}
-.built .n{font-family:var(--mono);font-weight:500;font-size:15px;color:var(--accent-text);padding-top:6px}
+.built .n{font-family:var(--mono);font-weight:500;font-size:15px;color:var(--accent-text);padding-top:6px;min-width:22px}
 .built h3{font-size:26px;font-weight:700;letter-spacing:-.015em;line-height:1.15}
 .built p{margin:6px 0 0;color:var(--muted)}
-@media (max-width:760px){.built{grid-template-columns:1fr}}
+.built .tools-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.built .tool{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:500;color:var(--ink);background:var(--paper-2);border:1px solid var(--line);border-radius:999px;padding:5px 12px 5px 9px;line-height:1.2}
+.built .tool svg{width:16px;height:16px;fill:var(--ink);flex-shrink:0}
+@media (max-width:760px){.built{grid-template-columns:minmax(0,1fr)}}
 
-/* lessons */
-.lessons{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
-.lesson{background:var(--paper-2);border:2px solid var(--ink);border-radius:8px;padding:28px;display:flex;flex-direction:column;gap:12px;transition:transform .2s ease-out,box-shadow .2s ease-out}
-.lesson:hover{transform:translateY(-2px);box-shadow:4px 4px 0 var(--ink)}
-.lesson .tag::before{content:attr(data-n);margin-right:10px;color:var(--muted)}
-.lesson .tag{font-family:var(--mono);font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent-text)}
-.lesson h3{font-size:26px;font-weight:700;line-height:1.15;letter-spacing:-.015em}
-.lesson p{margin:0;color:var(--ink-2)}
-@media (max-width:760px){.lessons{grid-template-columns:1fr}}
+/* before / after */
+.ba{display:flex;flex-direction:column;gap:56px;margin-top:40px}
+.ba-pair h3{font-size:28px;font-weight:700;letter-spacing:-.015em;margin-bottom:6px}
+.ba-pair > p{margin:0 0 20px;color:var(--muted);max-width:680px}
+.ba-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
+.ba-grid figure{margin:0;display:flex;flex-direction:column;gap:10px}
+.ba-grid .frame{border:2px solid var(--ink);border-radius:8px;overflow:hidden;background:#fff}
+.ba-grid .frame.tall{max-height:560px}
+.ba-grid .frame.tall img{width:100%;height:560px;object-fit:cover;object-position:top}
+.ba-grid figcaption{display:flex;gap:10px;align-items:baseline;font-size:15px;color:var(--muted)}
+.ba-grid figcaption b{font-family:var(--mono);font-weight:500;font-size:12px;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:4px;background:var(--paper-2);color:var(--ink);flex-shrink:0}
+.ba-grid figure.after figcaption b{background:var(--accent);color:#fff}
+@media (max-width:640px){.ba-grid{grid-template-columns:minmax(0,1fr)}.ba-grid .frame.tall img{height:420px}}
 
 /* numbers */
-.numbers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:40px}
+.numbers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:40px;margin-top:40px}
 .numbers .stat{border-top:2px solid var(--ink);padding:24px 0 32px}
 .numbers .v{font-variant-numeric:tabular-nums;font-family:var(--display);font-weight:800;font-size:clamp(48px,6vw,76px);line-height:1;letter-spacing:-.03em;white-space:nowrap}
 .numbers .l{margin-top:10px;color:var(--ink-2)}
 @media (max-width:860px){.numbers{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:480px){.numbers{grid-template-columns:1fr}}
+@media (max-width:480px){.numbers{grid-template-columns:minmax(0,1fr)}}
+.mid-cta{margin-top:48px;display:flex;flex-wrap:wrap;gap:20px;align-items:center;justify-content:space-between;padding:28px 32px;border:2px solid var(--ink);border-radius:12px;background:var(--paper-2)}
+.mid-cta p{margin:0;font-family:var(--display);font-weight:700;font-size:clamp(22px,2.6vw,28px);letter-spacing:-.015em;line-height:1.2;max-width:620px}
 
-/* fit */
-.checks{list-style:none;margin:32px 0 0;padding:0;border-bottom:2px solid var(--ink)}
-.checks li{display:flex;gap:20px;align-items:flex-start;padding:22px 0;border-top:2px solid var(--ink);font-size:clamp(20px,2.2vw,24px);line-height:1.4}
-.checks svg{width:30px;height:30px;flex-shrink:0;margin-top:2px}
+/* lessons */
+.lessons{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;margin-top:40px}
+.lesson{background:var(--paper-2);border:2px solid var(--ink);border-radius:8px;padding:28px;display:flex;flex-direction:column;gap:12px;transition:transform .2s ease-out,box-shadow .2s ease-out}
+.lesson:hover{transform:translateY(-2px);box-shadow:4px 4px 0 var(--ink)}
+.lesson .tag{font-family:var(--mono);font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent-text)}
+.lesson .tag::before{content:attr(data-n);margin-right:10px;color:var(--muted)}
+.lesson h3{font-size:26px;font-weight:700;line-height:1.15;letter-spacing:-.015em}
+.lesson p{margin:0;color:var(--ink-2)}
+@media (max-width:760px){.lessons{grid-template-columns:minmax(0,1fr)}}
+
+/* start */
+.start{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,.7fr);gap:clamp(32px,5vw,56px);margin-top:40px;align-items:start}
+.first-steps{list-style:none;margin:0;padding:0;border-bottom:2px solid var(--ink);counter-reset:fs}
+.first-steps li{counter-increment:fs;display:grid;grid-template-columns:44px minmax(0,1fr);gap:16px;padding:22px 0;border-top:1px solid var(--line)}
+.first-steps li:first-child{border-top:2px solid var(--ink)}
+.first-steps li::before{content:"0" counter(fs);font-family:var(--mono);font-weight:500;font-size:15px;color:var(--accent-text);padding-top:4px}
+.first-steps b{display:block;font-family:var(--display);font-weight:700;font-size:22px;letter-spacing:-.01em;line-height:1.2}
+.first-steps span{display:block;margin-top:4px;color:var(--muted)}
+.price-card{position:sticky;top:96px;border:2px solid var(--ink);border-radius:12px;padding:28px;background:var(--ink);color:var(--paper);display:flex;flex-direction:column;gap:16px}
+.price-card .mono{color:#CFCAC0}
+.price-card .amount{font-family:var(--display);font-weight:800;font-size:56px;line-height:1;letter-spacing:-.03em}
+.price-card .amount small{display:block;font:500 14px var(--mono);letter-spacing:.06em;color:#CFCAC0;margin-bottom:8px;text-transform:uppercase}
+.price-card p{margin:0;color:#D9D4CA;font-size:17px}
+.price-card .btn{background:var(--accent-on-dark);border-color:var(--accent-on-dark);color:var(--ink)}
+.price-card .btn:hover{background:var(--paper);border-color:var(--paper)}
+@media (max-width:860px){.start{grid-template-columns:minmax(0,1fr)}.price-card{position:static}}
+
+/* fit and trust */
+.fit{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:40px}
+.fit-col{border:2px solid var(--ink);border-radius:12px;padding:28px}
+.fit-col.no{background:transparent;border-style:dashed}
+.fit-col h3{font-size:24px;font-weight:700;letter-spacing:-.01em;margin-bottom:16px}
+.fit-col ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14px}
+.fit-col li{display:flex;gap:14px;align-items:flex-start;font-size:18px;line-height:1.45}
+.fit-col svg{width:24px;height:24px;flex-shrink:0;margin-top:1px}
+@media (max-width:760px){.fit{grid-template-columns:minmax(0,1fr)}}
+.trust{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;margin-top:20px;border-top:2px solid var(--ink);border-bottom:2px solid var(--ink)}
+.trust div{padding:24px 24px 24px 0}
+.trust div + div{padding-left:24px;border-left:1px solid var(--line)}
+.trust b{display:block;font-family:var(--display);font-weight:700;font-size:20px;letter-spacing:-.01em;line-height:1.25}
+.trust span{display:block;margin-top:6px;font-size:16px;color:var(--muted)}
+.slot{display:inline-flex;align-items:center;gap:12px;padding-left:4px;font-family:var(--mono);font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent-text)}
+.slot i{width:8px;height:8px;border-radius:50%;background:var(--accent);display:inline-block;box-shadow:0 0 0 4px rgba(200,67,27,.18)}
+@media (max-width:860px){.trust{grid-template-columns:minmax(0,1fr)}.trust div,.trust div + div{padding:20px 0;border-left:0}.trust div + div{border-top:1px solid var(--line)}}
+.clients{margin-top:28px;display:grid;grid-template-columns:200px minmax(0,1fr);gap:12px 24px;align-items:baseline;font-size:16px;color:var(--ink-2)}
+.clients ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.clients b{font-weight:600;color:var(--ink);margin-right:8px}
+@media (max-width:640px){.clients{grid-template-columns:minmax(0,1fr)}}
+.clients .mono{color:var(--muted);font-size:13px}
 
 /* about */
 .about{display:grid;grid-template-columns:320px minmax(0,1fr);gap:clamp(32px,5vw,64px);align-items:start}
@@ -141,67 +239,65 @@ header.top{position:sticky;top:0;z-index:20;background:rgba(242,238,230,.94);bac
 .about dl{display:grid;grid-template-columns:auto 1fr;gap:10px 24px;margin:28px 0 0;padding-top:20px;border-top:2px solid var(--ink);font-size:16px}
 .about dt{font-family:var(--mono);font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding-top:3px}
 .about dd{margin:0}
-@media (max-width:760px){.about{grid-template-columns:1fr}.about img{max-width:320px}}
+.quote{margin:32px 0 0;padding:24px 28px;border-left:0;background:var(--paper-2);border-radius:8px}
+.quote blockquote{margin:0;font-family:var(--display);font-weight:700;font-size:22px;line-height:1.3;letter-spacing:-.01em}
+.quote figcaption{margin-top:12px;font-family:var(--mono);font-size:13px;color:var(--muted)}
+.tools-line{margin-top:28px;padding-top:20px;border-top:1px solid var(--line);font-size:16px}
+.tools-line .mono{display:block;color:var(--muted);font-size:13px;margin-bottom:8px}
+.tools-line details{margin-top:10px}
+.tools-line summary{cursor:pointer;color:var(--accent-text);font-size:15px;min-height:32px;display:inline-flex;align-items:center}
+.tools-line details p{margin:8px 0 0;color:var(--muted);font-size:15px}
+@media (max-width:760px){.about{grid-template-columns:minmax(0,1fr)}.about img{max-width:320px}}
+
+/* faq */
+.faq{margin-top:40px;border-bottom:2px solid var(--ink)}
+.faq details{border-top:1px solid var(--line)}
+.faq details:first-child{border-top:2px solid var(--ink)}
+.faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:24px;align-items:center;padding:24px 0;font-family:var(--display);font-weight:700;font-size:clamp(20px,2.2vw,24px);letter-spacing:-.01em;line-height:1.25}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font-family:var(--mono);font-weight:400;font-size:24px;color:var(--accent-text);flex-shrink:0;transition:transform .2s ease-out}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq details p{margin:0 0 24px;max-width:760px;color:var(--ink-2);font-size:18px}
 
 /* contact */
 .contact{background:var(--ink);color:var(--paper);border-top:0}
 .contact h2{font-size:clamp(40px,6vw,80px)}
 .contact h2 .hl{color:var(--accent-on-dark);display:block;margin-top:8px}
-.offer{margin-top:48px;border:2px solid var(--paper);padding:clamp(24px,4vw,40px);display:flex;flex-direction:column;gap:24px}
-.offer p{margin:0;font-size:clamp(20px,2.4vw,28px);line-height:1.35}
-.offer .row{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between}
-.contact .btn{background:var(--accent-on-dark);border-color:var(--accent-on-dark);color:var(--ink)}
-.contact .btn:hover{background:var(--paper);border-color:var(--paper);color:var(--ink)}
-.contact .alt{font-family:var(--mono);font-size:15px;color:#CFCAC0}
-.contact .alt a{color:var(--paper)}
+.contact-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(32px,5vw,56px);margin-top:48px;align-items:start}
+.offer p.big-p{margin:0 0 24px;font-size:clamp(20px,2.4vw,26px);line-height:1.35}
+.steps{display:grid;grid-template-columns:minmax(0,1fr);gap:18px;margin:0;padding:0;list-style:none;counter-reset:step}
+.steps li{counter-increment:step;display:grid;grid-template-columns:40px minmax(0,1fr);gap:12px;font-size:17px;color:#D9D4CA;line-height:1.45}
+.steps li::before{content:"0" counter(step);font-family:var(--mono);font-size:13px;letter-spacing:.08em;color:var(--accent-on-dark);padding-top:3px}
+.alt{margin-top:28px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;font-family:var(--mono);font-size:15px;color:#CFCAC0}
+.alt a{color:var(--paper)}
+.copy-btn{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:10px 16px;border-radius:999px;border:2px solid #5A5B60;background:transparent;color:var(--paper);font:500 15px var(--mono);cursor:pointer}
+.copy-btn:hover{border-color:var(--paper)}
+form.lead{border:2px solid var(--paper);border-radius:12px;padding:clamp(20px,3vw,32px);display:flex;flex-direction:column;gap:18px}
+form.lead label{display:flex;flex-direction:column;gap:8px;font-size:15px;color:#D9D4CA}
+form.lead label span.opt{color:#9C978E}
+form.lead input,form.lead textarea{width:100%;font:inherit;font-size:17px;color:var(--ink);background:var(--paper);border:2px solid var(--paper);border-radius:8px;padding:12px 14px;min-height:48px}
+form.lead textarea{min-height:96px;resize:vertical}
+form.lead input:focus,form.lead textarea:focus{outline:3px solid var(--accent-on-dark);outline-offset:2px}
+form.lead .btn{background:var(--accent-on-dark);border-color:var(--accent-on-dark);color:var(--ink);align-self:flex-start}
+form.lead .btn:hover{background:var(--paper);border-color:var(--paper)}
+form.lead .btn[disabled]{opacity:.6;cursor:wait}
+.form-status{min-height:24px;font-size:16px;margin:0}
+.form-status.ok{color:#9BE3B7}
+.form-status.err{color:#FFB4A0}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+@media (max-width:860px){.contact-grid{grid-template-columns:minmax(0,1fr)}}
 footer{background:var(--ink);color:#B8B3A9;border-top:1px solid #3A3B3F;padding:28px 0 40px;font-family:var(--mono);font-size:13px}
 footer .wrap{display:flex;flex-wrap:wrap;gap:12px 32px;justify-content:space-between}
-
-/* popup */
-dialog#path-dialog{border:2px solid var(--ink);border-radius:12px;padding:0;max-width:560px;width:calc(100% - 32px);background:var(--paper);color:var(--ink);box-shadow:0 24px 60px rgba(23,24,27,.25)}
-dialog#path-dialog::backdrop{background:rgba(23,24,27,.55)}
-.dlg{padding:clamp(24px,5vw,36px)}
-.dlg h2{font-size:clamp(28px,4vw,36px);margin-bottom:10px}
-.dlg p{margin:0 0 24px;color:var(--ink-2)}
-.choices{display:flex;flex-direction:column;gap:12px}
-.choice{display:flex;flex-direction:column;gap:4px;text-align:left;width:100%;padding:18px 20px;border:2px solid var(--ink);border-radius:10px;background:transparent;color:var(--ink);cursor:pointer;font:inherit;transition:background .15s,color .15s}
-.choice strong{font-family:var(--display);font-weight:700;font-size:21px;letter-spacing:-.01em}
-.choice span{font-size:16px;color:var(--muted)}
-.choice:hover,.choice:focus-visible{background:var(--ink);color:var(--paper)}
-.choice:hover span,.choice:focus-visible span{color:#CFCAC0}
-.skip{margin-top:16px;background:none;border:0;color:var(--ink);text-decoration:underline;font:16px var(--sans);cursor:pointer;padding:10px 0;min-height:44px}
-
-/* tools */
-.tools{border-bottom:2px solid var(--ink)}
-.tool-row{display:grid;grid-template-columns:220px minmax(0,1fr);gap:24px;padding:28px 0;border-top:1px solid var(--line)}
-.tool-row:first-child{border-top:2px solid var(--ink)}
-.tool-row h3{font-family:var(--mono);font-weight:500;font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-text);padding-top:4px}
-.tool-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px 32px;margin:0;padding:0;list-style:none}
-.tool-list li{display:flex;flex-direction:column;gap:2px}
-.tool-list b{font-family:var(--display);font-weight:700;font-size:21px;letter-spacing:-.01em;line-height:1.2}
-.tool-list span{font-size:16px;color:var(--muted);line-height:1.45}
-@media (max-width:760px){.tool-row{grid-template-columns:minmax(0,1fr);gap:14px}}
-
-/* steps in the offer */
-.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin:0;padding:24px 0 0;list-style:none;border-top:1px solid #3A3B3F;counter-reset:step}
-.steps li{counter-increment:step;display:flex;flex-direction:column;gap:6px;font-size:17px;color:#D9D4CA;line-height:1.45}
-.steps li::before{content:"0" counter(step);font-family:var(--mono);font-size:13px;letter-spacing:.08em;color:var(--accent-on-dark)}
-@media (max-width:760px){.steps{grid-template-columns:minmax(0,1fr)}}
-
-/* popup close */
-.dlg{position:relative}
-.dlg:focus{outline:none}
-.dlg-close{position:absolute;top:12px;right:12px;width:44px;height:44px;border-radius:999px;border:0;background:transparent;color:var(--ink);cursor:pointer;display:flex;align-items:center;justify-content:center}
-.dlg-close:hover{background:var(--paper-2)}
 
 /* path switching */
 [data-path="store"] .only-dm{display:none!important}
 [data-path="dm"] .only-store{display:none!important}
-
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
 </style>
 </head>
-<body data-path="dm">
+<body data-path="store">
+
+<a class="announce" href="#spot"><span class="dot" aria-hidden="true"></span><span>One spot open for Q4 2026</span><span class="go">Claim it <span aria-hidden="true">→</span></span></a>
 
 <header class="top">
   <div class="wrap">
@@ -211,12 +307,13 @@ dialog#path-dialog::backdrop{background:rgba(23,24,27,.55)}
     </a>
     <nav aria-label="Main">
       <a class="link" href="#case-study">Case study</a>
-      <a class="link" href="#lessons">What worked</a>
-      <a class="link" href="#tools">Tools</a>
+      <a class="link" href="#before-after">Before / after</a>
+      <a class="link" href="#start">How we’d start</a>
+      <a class="link" href="#faq">FAQ</a>
       <a class="link" href="#contact">Contact</a>
       <div class="path-toggle" role="group" aria-label="Show the page for">
-        <button type="button" data-set-path="dm" aria-pressed="true">I sell by DM</button>
-        <button type="button" data-set-path="store" aria-pressed="false">I have a store</button>
+        <button type="button" data-set-path="dm" aria-pressed="false">I sell by DM</button>
+        <button type="button" data-set-path="store" aria-pressed="true">I have a store</button>
       </div>
     </nav>
   </div>
@@ -227,37 +324,38 @@ dialog#path-dialog::backdrop{background:rgba(23,24,27,.55)}
 <!-- HERO -->
 <section class="hero">
   <div class="wrap">
+    <div class="for-line"><i aria-hidden="true"></i>For small audio brands · US and Asia</div>
     <div class="stat-label">Case study · Vera-Fi Audio · Avg monthly revenue</div>
     <div class="big" aria-label="From $22K to $121K">$22K<span class="arrow"> → </span>$121K</div>
   </div>
   <div class="wrap hero-grid">
     <div>
-      <h1 class="only-dm">You already sell by DM. <span class="hl">I build the store, content and distribution that sell without you.</span></h1>
-      <h1 class="only-store">Your store already takes orders. <span class="hl">I build what makes it sell.</span></h1>
-      <p class="lede only-dm">I help small audio and mechanical keyboard brands move from selling one inbox at a time to a store that does the selling.</p>
-      <p class="lede only-store">I help small audio and mechanical keyboard brands add the email, product content and store work that turn a working store into one that sells.</p>
+      <h1><span class="only-dm">You already sell by DM. <span class="hl">I build the store, content and distribution that sell without you.</span></span><span class="only-store">Your store already takes orders. <span class="hl">I build what makes it sell.</span></span></h1>
+      <p class="lede">I help hi-fi, headphone and IEM brands that want to grow <span class="only-dm">move from selling one inbox at a time to a store that does the selling.</span><span class="only-store">add the email, product content and store work that turn a working store into one that sells.</span></p>
+
       <div class="hero-ctas">
         <a class="btn" href="#contact">Get three ideas for your store, free</a>
-        <a class="btn ghost" href="#case-study">See the case study</a>
+        <a class="text-link" href="#case-study">See the case study <span aria-hidden="true">↓</span></a>
       </div>
     </div>
-    <figure style="margin:0">
-      <div class="hero-photo"><img src="assets/vera-fi-scout.jpg" alt="Vera-Fi Audio Vanguard Scout bookshelf speakers, shot on a clean background" width="1080" height="1080"></div>
-      <figcaption class="hero-caption">
-        <div>Mar–May 2024<br>before I joined</div>
-        <div>2025 average<br>after I took over the store</div>
-      </figcaption>
+    <figure class="hero-quote">
+      <svg class="qmark" viewBox="0 0 48 36" aria-hidden="true"><path fill="currentColor" d="M0 36V22.4C0 9.6 6.4 2.1 19.2 0l2 5.6C14 7.4 10.6 11.4 10.4 17.6H20V36H0Zm28 0V22.4C28 9.6 34.4 2.1 47.2 0l2 5.6C42 7.4 38.6 11.4 38.4 17.6H48V36H28Z"/></svg>
+      <blockquote>
+        <p>We mainly sold products through direct sales and promotions. Now people naturally come to buy.</p>
+        <p>The change I noticed the most is how everything is systematized, organized and intentional. Ace reports changes and improvements regularly and asks for feedback on a daily basis.</p>
+        <p>I have recommended him to several of my peers, and he has done small projects with them. So far, so good.</p>
+      </blockquote>
+      <figcaption><b>Mark Schifter</b><span>Owner, Vera-Fi Audio</span></figcaption>
     </figure>
   </div>
 </section>
 
-<!-- STARTING POINT -->
-<section id="case-study">
+<!-- 01 STARTING POINT -->
+<section id="case-study" aria-labelledby="start-h">
   <div class="wrap">
     <div class="section-head"><span class="mono">The starting point</span><span class="num">01</span></div>
-    <h2 class="only-dm">Great products, sold one inbox at a time.</h2>
-    <h2 class="only-store">A working store, with nothing around it yet.</h2>
-    <div class="timeline" style="margin-top:40px">
+    <h2 id="start-h"><span class="only-dm">Great products, sold one inbox at a time.</span><span class="only-store">A working store, with nothing around it yet.</span></h2>
+    <div class="timeline">
       <div class="row only-dm"><div class="when">2022</div><div class="what">Every sale made by email or private message.</div></div>
       <div class="row only-dm"><div class="when">2023</div><div class="what">The Shopify store opens and gets no real traction.</div></div>
       <div class="row only-dm"><div class="when">Feb 2024</div><div class="what">The order system finally works: 2 sales that month.</div></div>
@@ -266,17 +364,16 @@ dialog#path-dialog::backdrop{background:rgba(23,24,27,.55)}
       <div class="row"><div class="when">Mar–May 2024</div><div class="what">About $22K a month, carried by paid press ads and YouTuber promotions.</div></div>
       <div class="row only-store"><div class="when">Jun 2024</div><div class="what">Still missing: an Instagram presence, an email program and a product photo standard.</div></div>
     </div>
-    <div class="callout only-dm">The products had fans. The store just wasn’t doing the selling.</div>
-    <div class="callout only-store">Having a store isn’t the same as having a store that sells.</div>
+    <div class="callout"><span class="only-dm">The products had fans. The store just wasn’t doing the selling.</span><span class="only-store">Having a store isn’t the same as having a store that sells.</span></div>
   </div>
 </section>
 
-<!-- CHART -->
+<!-- 02 CHART -->
 <section aria-labelledby="chart-h">
   <div class="wrap">
     <div class="section-head"><span class="mono">The line</span><span class="num">02</span></div>
     <h2 id="chart-h"><span class="only-dm">The growth held.</span><span class="only-store">Same store. New results.</span></h2>
-    <p class="lede">Monthly gross sales on the Vera-Fi Shopify store, Feb 2024 to Dec 2025.</p>
+    <p class="lede">Monthly gross sales on the Vera-Fi Audio Shopify store, Feb 2024 to Dec 2025.</p>
     <div class="chart-legend">
       <span><i style="background:var(--line)"></i>Before I joined</span>
       <span><i style="background:var(--accent)"></i>After I took over (Jun 2024)</span>
@@ -287,119 +384,201 @@ dialog#path-dialog::backdrop{background:rgba(23,24,27,.55)}
   </div>
 </section>
 
-<!-- WHAT I BUILT -->
+<!-- 03 WHAT I BUILT -->
 <section aria-labelledby="built-h">
   <div class="wrap">
     <div class="section-head"><span class="mono">June 2024 → now</span><span class="num">03</span></div>
     <h2 id="built-h"><span class="only-dm">I took over the whole commercial side.</span><span class="only-store">I built everything around the store.</span></h2>
     <p class="lede"><span class="only-dm">Not just the storefront. Everything between the product and the sale.</span><span class="only-store">Same Shopify store. These are the pieces that feed it.</span></p>
-    <div class="built" id="built" style="margin-top:40px"></div>
-  </div>
-</section>
-
-<!-- LESSONS (help-first) -->
-<section id="lessons" aria-labelledby="lessons-h">
-  <div class="wrap">
-    <div class="section-head"><span class="mono">What worked</span><span class="num">04</span></div>
-    <h2 id="lessons-h">Four things you can use this week.</h2>
-    <p class="lede">You don’t need to hire anyone for these. They’re a few of the things I did at Vera-Fi that you can try on your own.</p>
-    <div class="lessons" style="margin-top:40px">
-      <article class="lesson">
-        <div class="tag" data-n="01">Product photos</div>
-        <h3>Shoot every product on the same background, at 1:1.</h3>
-        <p>Shoppers compare products side by side. When every photo matches, the products look like one brand, and the store looks like a store you can trust.</p>
-      </article>
-      <article class="lesson">
-        <div class="tag" data-n="02">Email</div>
-        <h3>Email the people who already bought from you.</h3>
-        <p>Past buyers and newsletter sign-ups are usually the easiest sales to win. At Vera-Fi, campaigns to that list averaged an 11.6% click rate.</p>
-      </article>
-      <article class="lesson">
-        <div class="tag" data-n="03">Promotion</div>
-        <h3>Use YouTubers for launches, not for steady sales.</h3>
-        <p>Lead with your award winners the rest of the time. Reviews give a launch its spike, and the store and email have to carry the months in between.</p>
-      </article>
-      <article class="lesson">
-        <div class="tag" data-n="04">Support</div>
-        <h3>Write the manual so customers don’t have to email you.</h3>
-        <p>A clear, designed manual answers the setup questions before they reach your inbox, and it makes the product feel finished.</p>
-      </article>
+    <div class="built" id="built">
+      <div class="item" data-k="store"><div class="n">01</div><div><h3>Store rebuild + SEO</h3><p>Navigation, collections, reviews, press, search.</p><div class="tools-row"><span class="tool"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.337 23.979l7.216-1.561s-2.604-17.613-2.625-17.73c-.018-.116-.114-.192-.211-.192s-1.929-.136-1.929-.136-1.275-1.274-1.439-1.411c-.045-.037-.075-.057-.121-.074l-.914 21.104h.023zM11.71 11.305s-.81-.424-1.774-.424c-1.447 0-1.504.906-1.504 1.141 0 1.232 3.24 1.715 3.24 4.629 0 2.295-1.44 3.76-3.406 3.76-2.354 0-3.54-1.465-3.54-1.465l.646-2.086s1.245 1.066 2.28 1.066c.675 0 .975-.545.975-.932 0-1.619-2.654-1.694-2.654-4.359-.034-2.237 1.571-4.416 4.827-4.416 1.257 0 1.875.361 1.875.361l-.945 2.715-.02.01zM11.17.83c.136 0 .271.038.405.135-.984.465-2.064 1.639-2.508 3.992-.656.213-1.293.405-1.889.578C7.697 3.75 8.951.84 11.17.84V.83zm1.235 2.949v.135c-.754.232-1.583.484-2.394.736.466-1.777 1.333-2.645 2.085-2.971.193.501.309 1.176.309 2.1zm.539-2.234c.694.074 1.141.867 1.429 1.755-.349.114-.735.231-1.158.366v-.252c0-.752-.096-1.371-.271-1.871v.002zm2.992 1.289c-.02 0-.06.021-.078.021s-.289.075-.714.21c-.423-1.233-1.176-2.37-2.508-2.37h-.115C12.135.209 11.669 0 11.265 0 8.159 0 6.675 3.877 6.21 5.846c-1.194.365-2.063.636-2.16.674-.675.213-.694.232-.772.87-.075.462-1.83 14.063-1.83 14.063L15.009 24l.927-21.166z"/></svg>Shopify</span><span class="tool"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.548 1.156L6.832 2.872v1.682h1.716zm0 3.398v.035H6.832v-.035H3.386L0 7.844v3.577h2.826V8.94c0-.525.429-.954.954-.954h16.476c.525 0 .954.43.954.954v2.48h2.754V7.844l-3.386-3.29H17.3v.035h-1.717v-.035zm7.035 0H17.3V2.872l-1.717-1.716zM8.679 1.188V2.84h6.773V1.188zm11.471 7.07a.834.834 0 00-.132.01l-.543.002c-5.216.014-10.432-.008-15.648.01-.435-.063-.794.436-.716.883v2.264h17.812c-.016-.888.045-1.782-.034-2.666-.104-.342-.427-.502-.739-.502zm-15.422.634a.689.698 0 01.689.698.689.698 0 01-.689.697.689.698 0 01-.688-.697.689.698 0 01.688-.698zm2.134 0a.689.698 0 01.689.698.689.698 0 01-.689.697.689.698 0 01-.688-.697.689.698 0 01.688-.698zM.036 11.645v9.156c0 1.05.858 1.908 1.907 1.908h.883V11.645zm21.174 0v11.064h.882c1.05 0 1.908-.858 1.908-1.908v-9.156zM4.057 13.133v6.85h6.137v-6.85zm13.243.021v3.777l-1.708.977-1.708-.977v-3.758a4.006 4.006 0 000 7.23v2.441h3.457v-2.442a4.006 4.006 0 00-.041-7.248zm-13.243 8.26v1.43h7.925v-1.43z"/></svg>Search Console</span></div></div></div>
+      <div class="item" data-k="email"><div class="n">02</div><div><h3>Email program</h3><p>Campaigns to past buyers and sign-ups, sent by interest.</p><div class="tools-row"><span class="tool"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zM7.2 4.8h5.747c2.34 0 3.895 1.406 3.895 3.516 0 1.022-.348 1.862-1.09 2.588C17.189 11.812 18 13.22 18 14.785c0 2.86-2.64 5.016-6.164 5.016H7.199v-15zm2.085 1.952v5.537h.07c.233-.432.858-.796 2.249-1.226 2.039-.659 3.037-1.52 3.037-2.655 0-.998-.766-1.656-1.924-1.656H9.285zm4.87 5.266c-.766.385-1.67.748-2.76 1.11-1.229.387-2.11 1.386-2.11 2.407v2.315h2.365c2.387 0 4.149-1.34 4.149-3.155 0-1.067-.625-2.087-1.645-2.677z"/></svg>Brevo</span></div></div></div>
+      <div class="item" data-k="photo"><div class="n">03</div><div><h3>Product photography</h3><p>Clean backgrounds, consistent 1:1. Reshoots where needed.</p></div></div>
+      <div class="item" data-k="manual"><div class="n">04</div><div><h3>Product manuals</h3><p>Designed so customers can set up without emailing.</p><div class="tools-row"><span class="tool"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.852 8.981h-4.588V0h4.588c2.476 0 4.49 2.014 4.49 4.49s-2.014 4.491-4.49 4.491zM12.735 7.51h3.117c1.665 0 3.019-1.355 3.019-3.019s-1.355-3.019-3.019-3.019h-3.117V7.51zm0 1.471H8.148c-2.476 0-4.49-2.014-4.49-4.49S5.672 0 8.148 0h4.588v8.981zm-4.587-7.51c-1.665 0-3.019 1.355-3.019 3.019s1.354 3.02 3.019 3.02h3.117V1.471H8.148zm4.587 15.019H8.148c-2.476 0-4.49-2.014-4.49-4.49s2.014-4.49 4.49-4.49h4.588v8.98zM8.148 8.981c-1.665 0-3.019 1.355-3.019 3.019s1.355 3.019 3.019 3.019h3.117V8.981H8.148zM8.172 24c-2.489 0-4.515-2.014-4.515-4.49s2.014-4.49 4.49-4.49h4.588v4.441c0 2.503-2.047 4.539-4.563 4.539zm-.024-7.51a3.023 3.023 0 0 0-3.019 3.019c0 1.665 1.365 3.019 3.044 3.019 1.705 0 3.093-1.376 3.093-3.068v-2.97H8.148zm7.704 0h-.098c-2.476 0-4.49-2.014-4.49-4.49s2.014-4.49 4.49-4.49h.098c2.476 0 4.49 2.014 4.49 4.49s-2.014 4.49-4.49 4.49zm-.097-7.509c-1.665 0-3.019 1.355-3.019 3.019s1.355 3.019 3.019 3.019h.098c1.665 0 3.019-1.355 3.019-3.019s-1.355-3.019-3.019-3.019h-.098z"/></svg>Figma</span></div></div></div>
+      <div class="item" data-k="social"><div class="n">05</div><div><h3>Social presence</h3><p>Built the brand’s Instagram from zero.</p><div class="tools-row"><span class="tool"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.915 4.03c-1.968 0-3.683 1.28-4.871 3.113C.704 9.208 0 11.883 0 14.449c0 .706.07 1.369.21 1.973a6.624 6.624 0 0 0 .265.86 5.297 5.297 0 0 0 .371.761c.696 1.159 1.818 1.927 3.593 1.927 1.497 0 2.633-.671 3.965-2.444.76-1.012 1.144-1.626 2.663-4.32l.756-1.339.186-.325c.061.1.121.196.183.3l2.152 3.595c.724 1.21 1.665 2.556 2.47 3.314 1.046.987 1.992 1.22 3.06 1.22 1.075 0 1.876-.355 2.455-.843a3.743 3.743 0 0 0 .81-.973c.542-.939.861-2.127.861-3.745 0-2.72-.681-5.357-2.084-7.45-1.282-1.912-2.957-2.93-4.716-2.93-1.047 0-2.088.467-3.053 1.308-.652.57-1.257 1.29-1.82 2.05-.69-.875-1.335-1.547-1.958-2.056-1.182-.966-2.315-1.303-3.454-1.303zm10.16 2.053c1.147 0 2.188.758 2.992 1.999 1.132 1.748 1.647 4.195 1.647 6.4 0 1.548-.368 2.9-1.839 2.9-.58 0-1.027-.23-1.664-1.004-.496-.601-1.343-1.878-2.832-4.358l-.617-1.028a44.908 44.908 0 0 0-1.255-1.98c.07-.109.141-.224.211-.327 1.12-1.667 2.118-2.602 3.358-2.602zm-10.201.553c1.265 0 2.058.791 2.675 1.446.307.327.737.871 1.234 1.579l-1.02 1.566c-.757 1.163-1.882 3.017-2.837 4.338-1.191 1.649-1.81 1.817-2.486 1.817-.524 0-1.038-.237-1.383-.794-.263-.426-.464-1.13-.464-2.046 0-2.221.63-4.535 1.66-6.088.454-.687.964-1.226 1.533-1.533a2.264 2.264 0 0 1 1.088-.285z"/></svg>Meta Business Suite</span></div></div></div>
+      <div class="item" data-k="pack"><div class="n">06</div><div><h3>Packaging design</h3><p>The box matches the product and the brand.</p><div class="tools-row"><span class="tool"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.852 8.981h-4.588V0h4.588c2.476 0 4.49 2.014 4.49 4.49s-2.014 4.491-4.49 4.491zM12.735 7.51h3.117c1.665 0 3.019-1.355 3.019-3.019s-1.355-3.019-3.019-3.019h-3.117V7.51zm0 1.471H8.148c-2.476 0-4.49-2.014-4.49-4.49S5.672 0 8.148 0h4.588v8.981zm-4.587-7.51c-1.665 0-3.019 1.355-3.019 3.019s1.354 3.02 3.019 3.02h3.117V1.471H8.148zm4.587 15.019H8.148c-2.476 0-4.49-2.014-4.49-4.49s2.014-4.49 4.49-4.49h4.588v8.98zM8.148 8.981c-1.665 0-3.019 1.355-3.019 3.019s1.355 3.019 3.019 3.019h3.117V8.981H8.148zM8.172 24c-2.489 0-4.515-2.014-4.515-4.49s2.014-4.49 4.49-4.49h4.588v4.441c0 2.503-2.047 4.539-4.563 4.539zm-.024-7.51a3.023 3.023 0 0 0-3.019 3.019c0 1.665 1.365 3.019 3.044 3.019 1.705 0 3.093-1.376 3.093-3.068v-2.97H8.148zm7.704 0h-.098c-2.476 0-4.49-2.014-4.49-4.49s2.014-4.49 4.49-4.49h.098c2.476 0 4.49 2.014 4.49 4.49s-2.014 4.49-4.49 4.49zm-.097-7.509c-1.665 0-3.019 1.355-3.019 3.019s1.355 3.019 3.019 3.019h.098c1.665 0 3.019-1.355 3.019-3.019s-1.355-3.019-3.019-3.019h-.098z"/></svg>Figma</span></div></div></div>
+      <div class="item" data-k="promo"><div class="n">07</div><div><h3>Promo strategy</h3><p>Lead with award winners. YouTubers for launches only.</p><div class="tools-row"><span class="tool"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22.84 2.9982v17.9987c.0086 1.6473-1.3197 2.9897-2.967 2.9984a2.9808 2.9808 0 01-.3677-.0208c-1.528-.226-2.6477-1.5558-2.6105-3.1V3.1204c-.0369-1.5458 1.0856-2.8762 2.6157-3.1 1.6361-.1915 3.1178.9796 3.3093 2.6158.014.1201.0208.241.0202.3619zM4.1326 18.0548c-1.6417 0-2.9726 1.331-2.9726 2.9726C1.16 22.6691 2.4909 24 4.1326 24s2.9726-1.3309 2.9726-2.9726-1.331-2.9726-2.9726-2.9726zm7.8728-9.0098c-.0171 0-.0342 0-.0513.0003-1.6495.0904-2.9293 1.474-2.891 3.1256v7.9846c0 2.167.9535 3.4825 2.3505 3.763 1.6118.3266 3.1832-.7152 3.5098-2.327.04-.1974.06-.3983.0593-.5998v-8.9585c.003-1.6474-1.33-2.9852-2.9773-2.9882z"/></svg>Google Analytics</span></div></div></div>
+      <div class="item" data-k="dealer"><div class="n">08</div><div><h3>Dealer support</h3><p>Outreach and a distributor price list, alongside the owner.</p></div></div>
     </div>
   </div>
 </section>
 
-<!-- NUMBERS -->
+<!-- 04 BEFORE / AFTER -->
+<section id="before-after" aria-labelledby="ba-h">
+  <div class="wrap">
+    <div class="section-head"><span class="mono">Before / after</span><span class="num">04</span></div>
+    <h2 id="ba-h">See the difference.</h2>
+    <p class="lede">Two of the changes, side by side. Same brand, same products.</p>
+    <div class="ba">
+      <div class="ba-pair">
+        <h3>The homepage</h3>
+        <p>From a generic header and an empty image block to a page with a clear product hero, press logos, reviews and guarantees.</p>
+        <div class="ba-grid">
+          <figure><div class="frame tall"><img src="assets/store-before.jpg" alt="Old Vera-Fi Audio homepage with a generic header and an empty image block" width="680" height="863" loading="lazy"></div><figcaption><b>Before</b>Archived homepage, before I took over</figcaption></figure>
+          <figure class="after"><div class="frame tall"><img src="assets/store-after.jpg" alt="Current Vera-Fi Audio homepage with product hero, press logos, reviews and guarantees" width="1120" height="1028" loading="lazy"></div><figcaption><b>After</b>Current homepage</figcaption></figure>
+        </div>
+      </div>
+      <div class="ba-pair">
+        <h3>The product photo standard</h3>
+        <p>Every product on a clean background at 1:1, so the catalog reads as one brand and products compare side by side.</p>
+        <div class="ba-grid">
+          <figure><div class="frame"><img src="assets/photo-before.jpg" alt="Subwoofer photographed in a room with fabric and furniture behind it" width="1080" height="1080" loading="lazy"></div><figcaption><b>Before</b>Shot in a room</figcaption></figure>
+          <figure class="after"><div class="frame"><img src="assets/photo-after.jpg" alt="The same subwoofer on a clean light grey background" width="1080" height="1080" loading="lazy"></div><figcaption><b>After</b>Clean background, 1:1</figcaption></figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 NUMBERS -->
 <section aria-labelledby="numbers-h">
   <div class="wrap">
     <div class="section-head"><span class="mono">The numbers</span><span class="num">05</span></div>
     <h2 id="numbers-h">What it added up to.</h2>
-    <div class="numbers" style="margin-top:40px">
+    <div class="numbers">
       <div class="stat"><div class="v">5.5×</div><div class="l">average monthly revenue, 2025 vs. Mar–May 2024</div></div>
       <div class="stat"><div class="v">$1.99M</div><div class="l">gross store sales, Jun 2024 – Dec 2025</div></div>
-      <div class="stat"><div class="v">97%</div><div class="l">of the store’s 2024–25 revenue came after I took over</div></div>
       <div class="stat"><div class="v">6,312</div><div class="l">units sold on the store, Jun 2024 – Dec 2025</div></div>
       <div class="stat"><div class="v">15×</div><div class="l">email list growth: 276 → 4,213 subscribers</div></div>
       <div class="stat"><div class="v">11.6%</div><div class="l">average click rate across 54 email campaigns</div></div>
     </div>
     <p class="source">Sources: Shopify gross sales, Jan 2024 – Dec 2025. Brevo campaign reports, Aug 2024 – Apr 2026.</p>
+    <div class="mid-cta">
+      <p>Curious what this could look like for your store?</p>
+      <a class="btn" href="#contact">Get three ideas, free</a>
+    </div>
   </div>
 </section>
 
-<!-- FIT -->
-<section aria-labelledby="fit-h">
+<!-- 06 LESSONS -->
+<section id="lessons" aria-labelledby="lessons-h">
   <div class="wrap">
-    <div class="section-head"><span class="mono">Who this is for</span><span class="num">06</span></div>
-    <h2 id="fit-h"><span class="only-dm">Small hardware brands with real fans.</span><span class="only-store">Your store is live. Is it selling?</span></h2>
-    <p class="lede"><span class="only-dm">Hi-fi and audio gear. Mechanical keyboards. Products people research, compare and talk about before they buy.</span><span class="only-store">For audio and mechanical keyboard brands with a working store and real fans.</span></p>
-    <ul class="checks only-dm">
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="#C8431B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg>Customers already buy from you, mostly by DM, email or forum.</li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="#C8431B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg>You have a store, or want one, but it isn’t doing the selling.</li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="#C8431B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg>Photos, manuals and packaging were made one at a time, when there was time.</li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="#C8431B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg>Dealers and distributors reach out, but there’s no system for them.</li>
-    </ul>
-    <ul class="checks only-store">
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="#C8431B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg>Your store takes orders, but most sales still come from launches and reviews.</li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="#C8431B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg>There’s a newsletter box, but no regular emails go out.</li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="#C8431B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg>Product pages have few or no customer reviews.</li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="#C8431B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg>Photos, manuals and FAQs were made at different times and don’t match.</li>
-    </ul>
+    <div class="section-head"><span class="mono">What worked</span><span class="num">06</span></div>
+    <h2 id="lessons-h">Four things you can use this week.</h2>
+    <p class="lede">You don’t need to hire anyone for these. They’re a few of the things I did at Vera-Fi Audio that you can try on your own.</p>
+    <div class="lessons">
+      <article class="lesson"><div class="tag" data-n="01">Product photos</div><h3>Shoot every product on the same background, at 1:1.</h3><p>Shoppers compare products side by side. When every photo matches, the products look like one brand, and the store looks like a store you can trust.</p></article>
+      <article class="lesson"><div class="tag" data-n="02">Email</div><h3>Email the people who already bought from you, by interest.</h3><p>Past buyers and sign-ups are usually the easiest sales to win. Send each group the emails that match what they bought or asked about. At Vera-Fi Audio, campaigns averaged an 11.6% click rate.</p></article>
+      <article class="lesson"><div class="tag" data-n="03">Promotion</div><h3>Use YouTubers for launches, not for steady sales.</h3><p>Lead with your award winners the rest of the time. Reviews give a launch its spike, and the store and email have to carry the months in between.</p></article>
+      <article class="lesson"><div class="tag" data-n="04">Support</div><h3>Write the manual so customers don’t have to email you.</h3><p>A clear, designed manual answers the setup questions before they reach your inbox, and it makes the product feel finished.</p></article>
+    </div>
   </div>
 </section>
 
-<!-- ABOUT -->
+<!-- 07 HOW WE'D START -->
+<section id="start" aria-labelledby="start2-h">
+  <div class="wrap">
+    <div class="section-head"><span class="mono">How we’d start</span><span class="num">07</span></div>
+    <h2 id="start2-h">One change at a time.</h2>
+    <p class="lede">Nothing that sells today gets switched off. I add improvements one by one, the way I did at Vera-Fi Audio, starting with the ones that carry the least risk.</p>
+    <div class="start">
+      <ol class="first-steps">
+        <li><div><b>A welcome email for new subscribers</b><span>And a newsletter sign-up that actually works.</span></div></li>
+        <li><div><b>An abandoned-cart email</b><span>A reminder for shoppers who got as far as checkout.</span></div></li>
+        <li><div><b>Review requests after purchase</b><span>With a reviews app on your product pages.</span></div></li>
+        <li><div><b>One photo standard for your 3 best-sellers</b><span>Reshot or re-edited so they match.</span></div></li>
+        <li><div><b>One best-seller page, rebuilt as a test</b><span>Compared against the old one before anything else changes.</span></div></li>
+      </ol>
+      <aside class="price-card" aria-label="Pricing">
+        <span class="mono">Projects</span>
+        <div class="amount"><small>From</small>$2,000</div>
+        <p>Every project starts with three free ideas for your store, so you can see how I think before you spend anything.</p>
+        <a class="btn" href="#contact">Get three ideas, free</a>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- 08 FIT AND TRUST -->
+<section id="fit" aria-labelledby="fit-h">
+  <div class="wrap">
+    <div class="section-head"><span class="mono">Who this is for</span><span class="num">08</span></div>
+    <h2 id="fit-h"><span class="only-dm">Small audio brands with real fans.</span><span class="only-store">Your store is live. Is it selling?</span></h2>
+    <p class="lede">For hi-fi, headphone, IEM and turntable brands with a proven product and plans to grow.</p>
+    <div class="fit">
+      <div class="fit-col">
+        <h3>A good fit if</h3>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="#C8431B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg>You plan to scale and want the store to carry more of the selling.</li>
+          <li class="only-dm"><svg viewBox="0 0 24 24" fill="none" stroke="#C8431B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg>Customers already buy from you, mostly by DM, email, forums or dealers.</li>
+          <li class="only-store"><svg viewBox="0 0 24 24" fill="none" stroke="#C8431B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg>Your store takes orders, but most sales still come from launches and reviews.</li>
+          <li class="only-store"><svg viewBox="0 0 24 24" fill="none" stroke="#C8431B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg>There’s a newsletter box, but no regular emails go out.</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="#C8431B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg>Photos, manuals and packaging were made at different times and don’t match.</li>
+        </ul>
+      </div>
+      <div class="fit-col no">
+        <h3>Probably not a fit if</h3>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="#4A4C51" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>You’re happy at your current size and don’t plan to grow.</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="#4A4C51" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>You want a full rebuild in two weeks.</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="#4A4C51" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>The product is still a prototype.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="trust">
+      <div><b>No direct competitors</b><span>I don’t work with direct competitors of my clients.</span></div>
+      <div><b>Your numbers stay private</b><span>Unless you agree otherwise.</span></div>
+    </div>
+    <div class="spot-band" id="spot">
+      <div>
+        <span class="kicker"><span class="dot" aria-hidden="true"></span>Availability</span>
+        <h3>One spot open for Q4 2026.</h3>
+        <p>I’m taking on one more brand this quarter. If your store could be doing more of the selling, let’s talk.</p>
+      </div>
+      <a class="btn" href="#contact">Claim the Q4 spot</a>
+    </div>
+    <div class="clients">
+      <span class="mono">Also working with</span>
+      <ul>
+        <li><b>An audio publication (USA)</b> WordPress site and custom sections</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 09 ABOUT -->
 <section aria-labelledby="about-h">
   <div class="wrap">
-    <div class="section-head"><span class="mono">Who I am</span><span class="num">07</span></div>
+    <div class="section-head"><span class="mono">Who I am</span><span class="num">09</span></div>
     <div class="about">
       <img src="assets/ace.jpg" alt="Ace Dolorito" width="900" height="900" loading="lazy">
       <div class="bio">
         <h2 id="about-h" style="margin-bottom:28px">Hi, I’m Ace.</h2>
         <p>I run Alas Digitals. Since June 2024 I’ve also run the Shopify store, email and product content at Vera-Fi Audio, a small hi-fi brand, working closely with the owner, Mark Schifter.</p>
         <p>The dealer and distributor side was a shared effort. Mark built a lot of it, and I supported it with outreach and the distributor price list.</p>
-        <p>Now I help other small hardware brands do the same, one brand at a time.</p>
+        <p>Vera-Fi Audio now runs on systems that are already in place, which is why I have room to help one more brand.</p>
+
+
         <dl>
           <dt>Role</dt><dd>Head of Marketing &amp; International Sales, Vera-Fi Audio</dd>
           <dt>Practice</dt><dd>Alas Digitals, since March 2023</dd>
           <dt>Where</dt><dd>Remote, working with US and Asian brands</dd>
         </dl>
+        <div class="tools-line">
+          <span class="mono">Main tools</span>
+          Shopify · Brevo · Google Analytics · Search Console · Figma
+          <details>
+            <summary>See all tools</summary>
+            <p>WordPress, Wix, VS Code, GitHub, Canva, Meta Business Suite, Instagram, LinkedIn, Google Workspace, Microsoft Office, Notion, Zoom, WhatsApp Business, PayPal, Wise.</p>
+          </details>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- TOOLS -->
-<section id="tools" aria-labelledby="tools-h">
+<!-- 10 FAQ -->
+<section id="faq" aria-labelledby="faq-h">
   <div class="wrap">
-    <div class="section-head"><span class="mono">Tools I use</span><span class="num">08</span></div>
-    <h2 id="tools-h">The tools behind the work.</h2>
-    <p class="lede">What I work in every day, grouped by the job each one does.</p>
-    <div class="tools" style="margin-top:40px">
-      <div class="tool-row"><h3>Store and web</h3><ul class="tool-list"><li><b>Shopify</b><span>Store builds, themes, apps and checkout.</span></li><li><b>WordPress and Wix</b><span>Sites for brands that aren’t on Shopify.</span></li><li><b>VS Code and GitHub</b><span>Theme code and custom store sections.</span></li></ul></div>
-      <div class="tool-row"><h3>Search and data</h3><ul class="tool-list"><li><b>Google Analytics</b><span>Traffic and sales reports.</span></li><li><b>Google Search Console</b><span>SEO, indexing and what people search for.</span></li></ul></div>
-      <div class="tool-row"><h3>Email and social</h3><ul class="tool-list"><li><b>Brevo</b><span>Email campaigns and the subscriber list.</span></li><li><b>Instagram and Meta Business Suite</b><span>Posting, scheduling and the inbox.</span></li><li><b>LinkedIn</b><span>Dealer and distributor outreach.</span></li></ul></div>
-      <div class="tool-row"><h3>Design and content</h3><ul class="tool-list"><li><b>Figma</b><span>Store layouts, packaging and manuals.</span></li><li><b>Canva</b><span>Social graphics and quick layouts.</span></li></ul></div>
-      <div class="tool-row"><h3>Payments</h3><ul class="tool-list"><li><b>PayPal and Wise</b><span>Getting paid by brands in different countries.</span></li></ul></div>
-      <div class="tool-row"><h3>Work and calls</h3><ul class="tool-list"><li><b>Google Workspace and Microsoft Office</b><span>Docs, sheets and price lists.</span></li><li><b>Notion</b><span>Project plans and notes.</span></li><li><b>Zoom and WhatsApp Business</b><span>Calls and quick messages with brands and suppliers.</span></li></ul></div>
+    <div class="section-head"><span class="mono">Questions</span><span class="num">10</span></div>
+    <h2 id="faq-h">Fair questions.</h2>
+    <div class="faq">
+      <details><summary>Will a store take away the personal touch my customers like?</summary><p>It didn’t at Vera-Fi Audio. Customers still talk to us personally through the store chat and email. Email campaigns are sent by interest, so people get the emails that match what they care about, not a blast to everyone.</p></details>
+      <details><summary>You work with an audio brand. Is that a conflict?</summary><p>I don’t work with direct competitors of my clients. If you make a different kind of equipment, serve a different market, or go for a different sound, it isn’t a conflict. Your numbers stay private unless you agree otherwise.</p></details>
+      <details><summary>Do you have time for another brand?</summary><p>Yes. Vera-Fi Audio runs on systems that are already in place, so I don’t start from scratch there anymore. I’m taking on one more brand for Q4 2026.</p></details>
+      <details><summary>Will the changes break what already sells?</summary><p>No. I add improvements one at a time, the way I did at Vera-Fi Audio. Nothing that sells today gets switched off.</p></details>
+      <details><summary>How much does it cost, and how long does it take?</summary><p>Projects start at $2,000 and usually run up to 2 months. Before any of that, I’ll send you three free ideas for your store.</p></details>
+      <details><summary>Do you work with brands outside the US?</summary><p>Yes. I work remotely with US and Asian brands.</p></details>
     </div>
   </div>
 </section>
@@ -407,20 +586,42 @@ dialog#path-dialog::backdrop{background:rgba(23,24,27,.55)}
 <!-- CONTACT -->
 <section class="contact" id="contact" aria-labelledby="contact-h">
   <div class="wrap">
-    <h2 id="contact-h" class="only-dm">You already sell by DM. <span class="hl">I build the store, content and distribution that sell without you.</span></h2>
-    <h2 class="only-store">Your store already takes orders. <span class="hl">I build what makes it sell.</span></h2>
-    <div class="offer">
-      <p class="only-dm">Tell me how you sell today. I’ll send back three specific ideas for getting your first store working, free. No call needed.</p>
-      <p class="only-store">Send me your store link. I’ll send back three things you can fix or add this week, free. No call needed.</p>
-      <ol class="steps">
-        <li>You email me your store link, or how you sell today.</li>
-        <li>I look through it and send back three specific ideas.</li>
-        <li>Use them yourself. If you’d like help with them, we talk.</li>
-      </ol>
-      <div class="row">
-        <a class="btn" id="mail-btn" href="mailto:acedolorito@gmail.com">Email Ace</a>
-        <div class="alt">acedolorito@gmail.com · <a href="https://www.instagram.com/alasdigitals/" rel="noopener">@alasdigitals</a></div>
+    <h2 id="contact-h"><span class="only-dm">You already sell by DM. <span class="hl">I build the store, content and distribution that sell without you.</span></span><span class="only-store">Your store already takes orders. <span class="hl">I build what makes it sell.</span></span></h2>
+    <div class="contact-grid">
+      <div class="offer">
+        <a class="contact-spot" href="#spot" style="text-decoration:none"><i aria-hidden="true"></i>One spot open for Q4 2026</a>
+        <p class="big-p"><span class="only-dm">Tell me how you sell today. I’ll send back three specific ideas for getting your store working, free. No call needed.</span><span class="only-store">Send me your store link. I’ll send back three things you can fix or add this week, free. No call needed.</span></p>
+        <ol class="steps">
+          <li>You send your store link, or how you sell today.</li>
+          <li>I look through it and send back three specific ideas.</li>
+          <li>Use them yourself. If you’d like help with them, we talk.</li>
+        </ol>
+        <div class="alt">
+          <button type="button" class="copy-btn" id="copy-email" aria-live="polite">Copy email</button>
+          <a href="mailto:acedolorito@gmail.com" id="mail-link">acedolorito@gmail.com</a>
+          <span aria-hidden="true">·</span>
+          <a href="https://www.instagram.com/alasdigitals/" rel="noopener">@alasdigitals</a>
+        </div>
       </div>
+
+      <!--
+        FORM SETUP: sign up free at web3forms.com with acedolorito@gmail.com,
+        copy your Access Key, and paste it in place of YOUR_WEB3FORMS_ACCESS_KEY below.
+        Until then, the form opens the visitor's email app with their answers filled in.
+      -->
+      <form class="lead" id="lead-form" action="https://api.web3forms.com/submit" method="POST" novalidate>
+        <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY">
+        <input type="hidden" name="subject" value="New enquiry from the Alas Digitals site">
+        <input type="hidden" name="from_name" value="Alas Digitals site">
+        <input type="hidden" name="path" id="path-field" value="store">
+        <label class="hp" aria-hidden="true">Leave empty<input type="checkbox" name="botcheck" tabindex="-1"></label>
+        <label>Your name<input type="text" name="name" autocomplete="name" required></label>
+        <label>Email<input type="email" name="email" autocomplete="email" required></label>
+        <label><span class="only-store">Store link</span><span class="only-dm">Website, or how you sell today</span><input type="text" name="store" id="store-field" placeholder="yourbrand.com" required></label>
+        <label><span>Anything else? <span class="opt">(optional)</span></span><textarea name="message" placeholder="What you make, what you’d like the store to do better"></textarea></label>
+        <button type="submit" class="btn" id="submit-btn">Send it</button>
+        <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+      </form>
     </div>
   </div>
 </section>
@@ -434,39 +635,28 @@ dialog#path-dialog::backdrop{background:rgba(23,24,27,.55)}
   </div>
 </footer>
 
-<!-- FIRST-VISIT POPUP -->
-<dialog id="path-dialog" aria-labelledby="dlg-h" aria-describedby="dlg-p">
-  <div class="dlg" tabindex="-1" autofocus>
-    <button type="button" class="dlg-close" data-choose="skip" aria-label="Close"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
-    <p class="eyebrow">Quick question</p>
-    <h2 id="dlg-h">Where is your brand right now?</h2>
-    <p id="dlg-p">Pick one and I’ll show you the part of this page that fits.</p>
-    <div class="choices">
-      <button type="button" class="choice" data-choose="dm">
-        <strong>I sell by DM, email or dealers</strong>
-        <span>I’d like an online store that sells for me.</span>
-      </button>
-      <button type="button" class="choice" data-choose="store">
-        <strong>I have a store, but it only takes orders</strong>
-        <span>I’d like it to sell more on its own.</span>
-      </button>
-    </div>
-    <button type="button" class="skip" data-choose="skip">Just looking around</button>
-  </div>
-</dialog>
-
 <script>
 (function () {
   var KEY = 'alas-path';
+  var EMAIL = 'acedolorito@gmail.com';
   var body = document.body;
-  var dialog = document.getElementById('path-dialog');
 
   function store(k, v) { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) { return null; } }
 
-  var mail = {
-    dm: { s: 'Three ideas for my store', b: 'Hi Ace,\n\nBrand: \nWhat we make: \nHow we sell today (DM, email, dealers, forums): \nWebsite (if any): \n\nThanks,\n' },
-    store: { s: 'Three ideas for my store', b: 'Hi Ace,\n\nBrand: \nStore link: \nWhat we make: \nWhat I would like the store to do better: \n\nThanks,\n' }
+  /* What I built: reorder for the DM path */
+  var order = {
+    store: ['store', 'email', 'photo', 'manual', 'social', 'pack', 'promo', 'dealer'],
+    dm: ['social', 'store', 'photo', 'manual', 'pack', 'email', 'dealer', 'promo']
   };
+  function reorderBuilt(p) {
+    var wrap = document.getElementById('built');
+    order[p].forEach(function (k, i) {
+      var el = wrap.querySelector('[data-k="' + k + '"]');
+      if (!el) return;
+      el.querySelector('.n').textContent = String(i + 1).padStart(2, '0');
+      wrap.appendChild(el);
+    });
+  }
 
   function setPath(p) {
     if (p !== 'dm' && p !== 'store') return;
@@ -474,38 +664,21 @@ dialog#path-dialog::backdrop{background:rgba(23,24,27,.55)}
     document.querySelectorAll('[data-set-path]').forEach(function (b) {
       b.setAttribute('aria-pressed', b.getAttribute('data-set-path') === p ? 'true' : 'false');
     });
-    var m = mail[p];
-    document.getElementById('mail-btn').href = 'mailto:acedolorito@gmail.com?subject=' + encodeURIComponent(m.s) + '&body=' + encodeURIComponent(m.b);
-    renderBuilt(p);
+    document.getElementById('path-field').value = p;
+    document.getElementById('store-field').placeholder = p === 'store' ? 'yourbrand.com' : 'Instagram, forum, dealers, website';
+    reorderBuilt(p);
   }
 
-  /* What I built: same eight items, ordered for each path */
-  var items = {
-    social: ['Social presence', 'Built the brand’s Instagram from zero.'],
-    store: ['Store rebuild + SEO', 'Navigation, collections, reviews, press, search.'],
-    photo: ['Product photography', 'Clean backgrounds, consistent 1:1. Reshoots where needed.'],
-    manual: ['Product manuals', 'Designed so customers can set up without emailing.'],
-    pack: ['Packaging design', 'The box matches the product and the brand.'],
-    email: ['Email program', 'Campaigns to past buyers and newsletter sign-ups.'],
-    dealer: ['Dealer support', 'Outreach and a distributor price list, alongside the owner.'],
-    promo: ['Promo strategy', 'Lead with award winners. YouTubers for launches only.']
-  };
-  var order = {
-    dm: ['social', 'store', 'photo', 'manual', 'pack', 'email', 'dealer', 'promo'],
-    store: ['store', 'email', 'photo', 'manual', 'social', 'pack', 'promo', 'dealer']
-  };
-  function renderBuilt(p) {
-    var el = document.getElementById('built');
-    el.innerHTML = '';
-    order[p].forEach(function (k, i) {
-      var d = document.createElement('div'); d.className = 'item';
-      var n = document.createElement('div'); n.className = 'n'; n.textContent = String(i + 1).padStart(2, '0');
-      var t = document.createElement('div');
-      var h = document.createElement('h3'); h.textContent = items[k][0];
-      var s = document.createElement('p'); s.textContent = items[k][1];
-      t.appendChild(h); t.appendChild(s); d.appendChild(n); d.appendChild(t); el.appendChild(d);
-    });
-  }
+  document.querySelectorAll('[data-set-path]').forEach(function (b) {
+    b.addEventListener('click', function () { var p = b.getAttribute('data-set-path'); setPath(p); store(KEY, p); });
+  });
+
+  /* Start: ?path= link wins, then a saved choice, then the store version */
+  var q = new URLSearchParams(location.search).get('path');
+  var saved = store(KEY);
+  if (q === 'dm' || q === 'store') { setPath(q); store(KEY, q); }
+  else if (saved === 'dm' || saved === 'store') { setPath(saved); }
+  else { setPath('store'); }
 
   /* Chart */
   var months = ['Feb 2024','Mar 2024','Apr 2024','May 2024','Jun 2024','Jul 2024','Aug 2024','Sep 2024','Oct 2024','Nov 2024','Dec 2024','Jan 2025','Feb 2025','Mar 2025','Apr 2025','May 2025','Jun 2025','Jul 2025','Aug 2025','Sep 2025','Oct 2025','Nov 2025','Dec 2025'];
@@ -518,8 +691,9 @@ dialog#path-dialog::backdrop{background:rgba(23,24,27,.55)}
     });
     var bars = document.createElement('div'); bars.className = 'bars'; bars.setAttribute('aria-hidden', 'true');
     sales.forEach(function (v, i) {
-      var b = document.createElement('div'); b.className = 'bar' + (i < 4 ? ' before' : '') + (i > 17 ? ' r' : '') + (i < 3 ? ' l' : '');
-      b.style.height = Math.max(0.8, v / max * 100) + '%'; b.tabIndex = -1;
+      var b = document.createElement('div');
+      b.className = 'bar' + (i < 4 ? ' before' : '') + (i > 17 ? ' r' : '') + (i < 3 ? ' l' : '');
+      b.style.height = Math.max(0.8, v / max * 100) + '%';
       var tip = document.createElement('span'); tip.className = 'tip';
       tip.textContent = months[i] + ' · $' + v.toLocaleString('en-US');
       b.appendChild(tip); bars.appendChild(b);
@@ -528,41 +702,54 @@ dialog#path-dialog::backdrop{background:rgba(23,24,27,.55)}
     var base = document.createElement('div'); base.className = 'base';
     base.style.bottom = (22000 / max * 100) + '%';
     base.innerHTML = '<span>BEFORE: ~$22K/MO</span>'; c.appendChild(base);
-    var end = document.createElement('div'); end.className = 'end';
+    var end = document.createElement('div'); end.className = 'end'; end.setAttribute('aria-hidden', 'true');
     end.style.bottom = (180499 / max * 100 + 2) + '%';
-    end.innerHTML = '$180K<small>DEC ’25</small>'; end.setAttribute('aria-hidden','true'); c.appendChild(end);
+    end.innerHTML = '$180K<small>DEC ’25</small>'; c.appendChild(end);
     var mk = document.createElement('div'); mk.className = 'marker';
     mk.style.left = (4 / 23 * 100) + '%';
-    mk.innerHTML = '<span>JUN 2024 · I TAKE OVER</span>';
-    c.appendChild(mk);
+    mk.innerHTML = '<span>JUN 2024 · I TAKE OVER</span>'; c.appendChild(mk);
   })();
 
-  /* Toggle */
-  document.querySelectorAll('[data-set-path]').forEach(function (b) {
-    b.addEventListener('click', function () { var p = b.getAttribute('data-set-path'); setPath(p); store(KEY, p); });
+  /* Copy email */
+  var copyBtn = document.getElementById('copy-email');
+  copyBtn.addEventListener('click', function () {
+    function done(ok) { copyBtn.textContent = ok ? 'Copied' : EMAIL; setTimeout(function () { copyBtn.textContent = 'Copy email'; }, 2200); }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(EMAIL).then(function () { done(true); }, function () { done(false); });
+    } else { done(false); }
   });
 
-  /* Popup choices */
-  dialog.querySelectorAll('[data-choose]').forEach(function (b) {
-    b.addEventListener('click', function () {
-      var p = b.getAttribute('data-choose');
-      if (p === 'skip') { store(KEY, 'dm'); } else { setPath(p); store(KEY, p); }
-      dialog.close();
-    });
-  });
-  dialog.addEventListener('cancel', function () { store(KEY, body.getAttribute('data-path')); });
-
-  /* Start: ?path=store or ?path=dm in the link skips the popup (useful in outreach links) */
-  var q = new URLSearchParams(location.search).get('path');
-  var saved = store(KEY);
-  if (q === 'dm' || q === 'store') { setPath(q); store(KEY, q); }
-  else if (saved === 'dm' || saved === 'store') { setPath(saved); }
-  else {
-    setPath('dm');
-    if (typeof dialog.showModal === 'function') {
-      setTimeout(function () { dialog.showModal(); }, 600);
+  /* Form */
+  var form = document.getElementById('lead-form');
+  var status = document.getElementById('form-status');
+  var btn = document.getElementById('submit-btn');
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    status.className = 'form-status'; status.textContent = '';
+    var f = form.elements;
+    if (!f.name.value.trim() || !f.email.value.trim() || !f.store.value.trim()) {
+      status.className = 'form-status err'; status.textContent = 'Please fill in your name, email and store link.'; return;
     }
-  }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email.value.trim())) {
+      status.className = 'form-status err'; status.textContent = 'That email address doesn’t look right. Please check it.'; return;
+    }
+    var key = f.access_key.value;
+    if (!key || key.indexOf('YOUR_') === 0) {
+      var lines = ['Hi Ace,', '', 'Name: ' + f.name.value, 'Email: ' + f.email.value, (body.getAttribute('data-path') === 'store' ? 'Store link: ' : 'How we sell today: ') + f.store.value, '', f.message.value, '', 'Thanks,'];
+      location.href = 'mailto:' + EMAIL + '?subject=' + encodeURIComponent('Three ideas for my store') + '&body=' + encodeURIComponent(lines.join('\n'));
+      status.className = 'form-status ok'; status.textContent = 'Your email app should open with your answers filled in.';
+      return;
+    }
+    btn.disabled = true; btn.textContent = 'Sending…';
+    fetch(form.action, { method: 'POST', headers: { 'Accept': 'application/json' }, body: new FormData(form) })
+      .then(function (r) { return r.json().then(function (j) { return { ok: r.ok && j.success, j: j }; }); })
+      .then(function (res) {
+        if (res.ok) { form.reset(); setPath(body.getAttribute('data-path')); status.className = 'form-status ok'; status.textContent = 'Thanks. I’ll reply by email.'; }
+        else { throw new Error('send failed'); }
+      })
+      .catch(function () { status.className = 'form-status err'; status.textContent = 'Something went wrong sending that. Please email me at ' + EMAIL + ' instead.'; })
+      .then(function () { btn.disabled = false; btn.textContent = 'Send it'; });
+  });
 })();
 </script>
 </body>
