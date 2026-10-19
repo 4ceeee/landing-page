@@ -1,3 +1,7 @@
 {
-  "cleanUrls": true
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/store", "destination": "/v2.html" },
+    { "source": "/dm", "destination": "/v2.html" }
+  ]
 }
