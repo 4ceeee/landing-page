@@ -8,8 +8,8 @@
 <meta property="og:title" content="Alas Digitals · Ace Dolorito">
 <meta property="og:description" content="How a small hi-fi brand went from about $22K to $121K in average monthly revenue on the same Shopify store.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://alas-digitals-landing-page.vercel.app/store">
-<meta property="og:image" content="https://alas-digitals-landing-page.vercel.app/assets/og.png">
+<meta property="og:url" content="https://alas-digitals.vercel.app/store">
+<meta property="og:image" content="https://alas-digitals.vercel.app/assets/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
@@ -305,8 +305,14 @@ header.top{position:sticky;top:0;z-index:20;background:rgba(242,238,230,.94);bac
 .steps li::before{content:"0" counter(step);font-family:var(--mono);font-size:13px;letter-spacing:.08em;color:var(--accent-on-dark);padding-top:3px}
 .alt{margin-top:28px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;font-family:var(--mono);font-size:15px;color:#CFCAC0}
 .alt a{color:var(--paper)}
-.copy-btn{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:10px 16px;border-radius:999px;border:2px solid #5A5B60;background:transparent;color:var(--paper);font:500 15px var(--mono);cursor:pointer}
-.copy-btn:hover{border-color:var(--paper)}
+.email-pill{display:flex;align-items:center;gap:12px;padding:6px 6px 6px 18px;border-radius:999px;background:#fff;color:var(--ink);border:2px solid var(--paper)}
+.email-pill svg{width:20px;height:20px;flex-shrink:0;color:var(--accent)}
+.email-pill a{flex-grow:1;min-width:0;color:var(--ink);font:500 16px var(--mono);text-decoration:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.email-pill a:hover{color:var(--accent-text);text-decoration:underline}
+.or-form{margin:18px 0 12px;font-size:15px;color:#CFCAC0}
+.copy-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:10px 18px;border-radius:999px;border:0;background:var(--ink);color:var(--paper);font:600 15px var(--sans);cursor:pointer;flex-shrink:0;white-space:nowrap}
+.copy-btn:hover{background:var(--accent);color:#fff}
+@media (max-width:420px){.email-pill{padding-left:14px;gap:8px}.email-pill a{font-size:14px}.copy-btn{padding:10px 14px}.copy-btn .wide{display:none}}
 form.lead{border:2px solid var(--paper);border-radius:12px;padding:clamp(20px,3vw,32px);display:flex;flex-direction:column;gap:18px}
 form.lead label{display:flex;flex-direction:column;gap:8px;font-size:15px;color:#D9D4CA}
 form.lead label span.opt{color:#9C978E}
@@ -537,7 +543,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 32px;justify-content:space-bet
       </ol>
       <aside class="price-card" aria-label="Pricing">
         <span class="mono">Projects</span>
-        <div class="amount"><small>From</small>$2,000</div>
+        <div class="amount"><small>Starts at</small>$1,200</div>
         <p>Every project starts with three free ideas for your store, so you can see how I think before you spend anything.</p>
         <a class="btn" href="#contact">Get three ideas, free</a>
       </aside>
@@ -625,7 +631,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 32px;justify-content:space-bet
       <details><summary>You work with an audio brand. Is that a conflict?</summary><p>I don’t work with direct competitors of my clients. If you make a different kind of equipment, serve a different market, or go for a different sound, it isn’t a conflict. Your numbers stay private unless you agree otherwise.</p></details>
       <details><summary>Do you have time for another brand?</summary><p>Yes. Vera-Fi Audio runs on systems that are already in place, so I don’t start from scratch there anymore. I’m taking on one more brand for Q4 2026.</p></details>
       <details><summary>Will the changes break what already sells?</summary><p>No. I add improvements one at a time, the way I did at Vera-Fi Audio. Nothing that sells today gets switched off.</p></details>
-      <details><summary>How much does it cost, and how long does it take?</summary><p>Projects start at $2,000 and usually run up to 2 months. Before any of that, I’ll send you three free ideas for your store.</p></details>
+      <details><summary>How much does it cost, and how long does it take?</summary><p>Projects start at $1,200 and usually run up to 2 months. Before any of that, I’ll send you three free ideas for your store.</p></details>
       <details><summary>Do you work with brands outside the US?</summary><p>Yes. I work remotely with US and Asian brands.</p></details>
     </div>
   </div>
@@ -644,21 +650,16 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 32px;justify-content:space-bet
           <li>I look through it and send back three specific ideas.</li>
           <li>Use them yourself. If you’d like help with them, we talk.</li>
         </ol>
-        <div class="alt">
-          <button type="button" class="copy-btn" id="copy-email" aria-live="polite">Copy email</button>
+        <div class="email-pill" style="margin-top:28px">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3.5 6.5l8.5 6.5 8.5-6.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
           <a href="mailto:acedolorito@gmail.com" id="mail-link">acedolorito@gmail.com</a>
-          <span aria-hidden="true">·</span>
-          <a href="https://www.instagram.com/alasdigitals/" rel="noopener">@alasdigitals</a>
+          <button type="button" class="copy-btn" id="copy-email" aria-live="polite" aria-label="Copy email address">Copy<span class="wide"> email</span></button>
         </div>
       </div>
 
-      <!--
-        FORM SETUP: sign up free at web3forms.com with acedolorito@gmail.com,
-        copy your Access Key, and paste it in place of YOUR_WEB3FORMS_ACCESS_KEY below.
-        Until then, the form opens the visitor's email app with their answers filled in.
-      -->
+      <div class="form-col">
       <form class="lead" id="lead-form" action="https://api.web3forms.com/submit" method="POST" novalidate>
-        <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY">
+        <input type="hidden" name="access_key" value="201ca9a4-322e-4413-bf46-64e35fc1b3f1">
         <input type="hidden" name="subject" value="New enquiry from the Alas Digitals site">
         <input type="hidden" name="from_name" value="Alas Digitals site">
         <input type="hidden" name="path" id="path-field" value="store">
@@ -670,6 +671,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 32px;justify-content:space-bet
         <button type="submit" class="btn" id="submit-btn">Send it</button>
         <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
       </form>
+      </div>
     </div>
   </div>
 </section>
@@ -751,7 +753,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 32px;justify-content:space-bet
   /* Copy email */
   var copyBtn = document.getElementById('copy-email');
   copyBtn.addEventListener('click', function () {
-    function done(ok) { copyBtn.textContent = ok ? 'Copied' : EMAIL; setTimeout(function () { copyBtn.textContent = 'Copy email'; }, 2200); }
+    function done(ok) { copyBtn.textContent = ok ? 'Copied' : 'Select and copy'; setTimeout(function () { copyBtn.innerHTML = 'Copy<span class="wide"> email</span>'; }, 2200); }
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(EMAIL).then(function () { done(true); }, function () { done(false); });
     } else { done(false); }
