@@ -19,12 +19,17 @@
 <link rel="preload" href="/assets/fonts/instrument-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/site.css">
 <script>
-/* Loading screen: once per browser session, never with reduced motion, never longer than 6 s. */
+/* Loading screen: plays on every arrival and every reload. Skipped when moving between pages of this site,
+   with reduced motion, or after 6 s at most. Add ?splash to any URL to force it. */
 (function (h) {
   h.classList.add('js');
-  var seen = null; try { seen = sessionStorage.getItem('alas-splash'); } catch (e) {}
-  if (seen || matchMedia('(prefers-reduced-motion: reduce)').matches) { h.setAttribute('data-ready', ''); h.setAttribute('data-nosplash', ''); }
-  else { try { sessionStorage.setItem('alas-splash', '1'); } catch (e) {} }
+  var internal = false;
+  try {
+    var nav = performance.getEntriesByType('navigation')[0];
+    internal = !!document.referrer && new URL(document.referrer).origin === location.origin && !(nav && nav.type === 'reload');
+  } catch (e) {}
+  if (/[?&]splash\b/.test(location.search)) internal = false;
+  if (internal || matchMedia('(prefers-reduced-motion: reduce)').matches) { h.setAttribute('data-ready', ''); h.setAttribute('data-nosplash', ''); }
   setTimeout(function () { h.setAttribute('data-ready', ''); }, 6000);
   setTimeout(function () { if (!window.__alasMotion) h.classList.remove('js'); }, 2500);
 })(document.documentElement);

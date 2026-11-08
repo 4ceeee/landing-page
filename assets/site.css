@@ -478,6 +478,39 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 32px;justify-content:space-bet
 @media (hover:hover) and (pointer:fine){.to-top:hover{color:var(--gold-hi)}.to-top:hover .arrow{transform:translateY(-2px)}}
 @media (max-width:600px){.to-top{width:46px;height:46px}}
 
+/* ============ Scroll snapping: one section per "slide" (v4.3) ============
+   Laptop and up, on screens tall enough. Each section starts at the top of the screen under the header.
+   Sections taller than a screen (the journey, before/after, the fixes) scroll freely inside, then hand over to the next.
+   Phones keep free scrolling: their sections run several screens long and snapping fights the thumb. */
+@media (min-width:900px) and (min-height:640px) and (prefers-reduced-motion:no-preference){
+  html{scroll-snap-type:y mandatory;scroll-padding-top:68px}
+  main > section{scroll-snap-align:start;scroll-snap-stop:normal}
+  footer{scroll-snap-align:end}
+}
+@media (min-width:900px) and (min-height:640px) and (prefers-reduced-motion:reduce){
+  html{scroll-snap-type:y proximity;scroll-padding-top:68px}
+  main > section{scroll-snap-align:start}
+}
+.hero .tools-marquee{margin-top:clamp(40px,6vw,72px);border-bottom:0}
+.after-marquee{border-top:1px solid var(--line)}
+
+/* Section rail: where you are, and a way to jump (laptop and up) */
+.rail{display:none}
+@media (min-width:1200px) and (min-height:640px){
+  .rail{position:fixed;right:22px;top:50%;transform:translateY(-50%);z-index:25;display:flex;flex-direction:column;align-items:flex-end;gap:2px}
+  .rail button{position:relative;display:flex;align-items:center;justify-content:flex-end;gap:12px;width:auto;height:22px;padding:0 0 0 12px;border:0;background:transparent;cursor:pointer;color:var(--muted)}
+  .rail button i{display:block;width:6px;height:6px;border-radius:3px;background:var(--line-2);transition:height .5s var(--ease-lux),background-color .4s var(--ease)}
+  .rail button span{font:500 11px var(--mono);letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;opacity:0;transform:translateX(6px);transition:opacity .35s var(--ease),transform .35s var(--ease);pointer-events:none}
+  .rail button[aria-current="true"] i{height:20px;background:var(--accent)}
+  .rail button:focus-visible span{opacity:1;transform:none}
+  .rail button:active i{transform:scale(.9)}
+}
+@media (min-width:1200px) and (hover:hover) and (pointer:fine){
+  .rail:hover button span{opacity:.85;transform:none}
+  .rail button:hover span{opacity:1;color:var(--ink)}
+  .rail button:hover i{background:var(--gold-hi)}
+}
+
 /* reduced motion: show everything, keep only gentle fades */
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}

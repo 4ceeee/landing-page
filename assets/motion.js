@@ -140,6 +140,29 @@
     });
   }
 
+  /* 5c. Section rail: one mark per section, the current one stretched in champagne. Click to jump. */
+  var secs = Array.prototype.slice.call(document.querySelectorAll('main > section')).filter(function (x) { return x.offsetParent !== null || x.getClientRects().length; });
+  if (secs.length > 2 && 'IntersectionObserver' in window) {
+    var rail = document.createElement('nav'); rail.className = 'rail'; rail.setAttribute('aria-label', 'Sections');
+    var btns = secs.map(function (sec, i) {
+      var lab = sec.classList.contains('hero') ? 'Intro' : sec.classList.contains('contact') ? 'Contact' : ((sec.querySelector('.section-head .mono') || {}).textContent || 'Section ' + (i + 1));
+      var b = document.createElement('button'); b.type = 'button';
+      b.innerHTML = '<span></span><i aria-hidden="true"></i>'; b.firstChild.textContent = lab.trim();
+      b.setAttribute('aria-label', 'Go to ' + lab.trim());
+      b.addEventListener('click', function () { sec.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' }); });
+      rail.appendChild(b); return b;
+    });
+    document.body.appendChild(rail);
+    var railIO = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        var i = secs.indexOf(e.target);
+        btns.forEach(function (b, j) { b.setAttribute('aria-current', j === i ? 'true' : 'false'); });
+      });
+    }, { rootMargin: '-45% 0px -45% 0px' });
+    secs.forEach(function (x) { railIO.observe(x); });
+  }
+
   /* 6. Audience toggle: a thumb that slides between "I sell by DM" and "I have a store". */
   document.querySelectorAll('.path-toggle').forEach(function (t) {
     var thumb = document.createElement('span'); thumb.className = 'thumb'; thumb.setAttribute('aria-hidden', 'true');
