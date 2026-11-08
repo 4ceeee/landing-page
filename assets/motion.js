@@ -124,6 +124,22 @@
   function onScroll() { if (header) header.classList.toggle('scrolled', scrollY > 8); }
   addEventListener('scroll', onScroll, { passive: true }); onScroll();
 
+  /* 5b. Back to top: shows after 1.5 screens, hides again near the top; returns focus to the start of the page. */
+  var toTop = document.querySelector('.to-top');
+  if (toTop) {
+    var topShown = false;
+    var checkTop = function () {
+      var on = scrollY > innerHeight * 1.5;
+      if (on !== topShown) { topShown = on; toTop.classList.toggle('show', on); }
+    };
+    addEventListener('scroll', checkTop, { passive: true }); checkTop();
+    toTop.addEventListener('click', function (e) {
+      e.preventDefault();
+      scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+      var brand = document.querySelector('.brand'); if (brand) brand.focus({ preventScroll: true });
+    });
+  }
+
   /* 6. Audience toggle: a thumb that slides between "I sell by DM" and "I have a store". */
   document.querySelectorAll('.path-toggle').forEach(function (t) {
     var thumb = document.createElement('span'); thumb.className = 'thumb'; thumb.setAttribute('aria-hidden', 'true');

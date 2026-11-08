@@ -434,6 +434,50 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 32px;justify-content:space-bet
 /* the hero waits for the hand-over, then rises under the leaving splash */
 .js:not([data-ready]) .rise,.js:not([data-ready]) .tagline .ln>span,.js:not([data-ready]) .for-line i,.js:not([data-ready]) .hero .gold{animation-play-state:paused}
 
+/* ============ Full-height sections + scroll-linked motion (v4.2) ============ */
+/* Laptop and up, on screens tall enough: every section fills at least one screen and centres its content.
+   Longer sections (the journey, the fixes, the FAQ) simply run longer: nothing is cut or scrolled inside a box.
+   Phones keep natural heights so short sections don't become empty screens. */
+@media (min-width:900px) and (min-height:640px){
+  main > section{min-height:calc(100svh - 68px);display:flex;flex-direction:column;justify-content:center}
+  main > section > .wrap{width:100%}
+  main > section.hero{min-height:calc(100svh - 68px)}
+}
+
+/* Scroll-linked (Chrome, Edge, Safari 26+; other browsers just skip it).
+   As a heading scrolls up out of view it lifts away and fades, so the next section takes over the screen.
+   Fill is forwards-only so it never fights the one-time reveal. */
+@supports (animation-timeline: view()){
+  @media (prefers-reduced-motion:no-preference){
+    main > section:not(.hero) .section-head,
+    main > section:not(.hero) h2,
+    main > section:not(.hero) > .wrap > .lede{animation:lift-out linear forwards;animation-timeline:view();animation-range:exit 0% exit 100%}
+    .hero .tagline{animation:lift-out linear forwards;animation-timeline:view();animation-range:exit 0% exit 100%}
+    /* photos drift slightly slower than the page as they pass */
+    .about img,.work-card .shot{animation:drift linear both;animation-timeline:view();animation-range:cover 0% cover 100%}
+  }
+}
+@keyframes lift-out{to{opacity:0;transform:translateY(-28px);filter:blur(4px)}}
+@keyframes drift{from{translate:0 18px}to{translate:0 -18px}}
+
+/* Back to top: appears after the first screen and a half, with a ring that fills as you read */
+.to-top{position:fixed;right:max(16px,env(safe-area-inset-right));bottom:max(16px,env(safe-area-inset-bottom));z-index:30;width:52px;height:52px;display:grid;place-items:center;border-radius:50%;background:rgba(21,23,28,.88);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);color:var(--accent);text-decoration:none;box-shadow:0 0 0 1px var(--line),0 8px 24px rgba(0,0,0,.35);transition:opacity .5s var(--ease-lux),transform .5s var(--ease-lux),visibility 0s linear 0s,color .3s var(--ease)}
+.js .to-top{opacity:0;transform:translateY(12px) scale(.96);visibility:hidden;pointer-events:none;transition:opacity .35s var(--ease),transform .35s var(--ease),visibility 0s linear .35s,color .3s var(--ease)}
+.js .to-top.show{opacity:1;transform:none;visibility:visible;pointer-events:auto;transition:opacity .6s var(--ease-lux),transform .6s var(--ease-lux),visibility 0s,color .3s var(--ease)}
+.to-top:active{transform:scale(.95)!important;transition-duration:.12s}
+.to-top .arrow{width:20px;height:20px;position:relative;transition:transform .4s var(--ease)}
+.to-top .ring{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
+.to-top .ring circle{fill:none;stroke-width:1.5}
+.to-top .ring .track{stroke:transparent}
+.to-top .ring .prog{stroke:var(--accent);stroke-dasharray:100;stroke-dashoffset:100;display:none}
+@supports (animation-timeline: scroll()){
+  .to-top .ring .track{stroke:var(--line)}
+  .to-top .ring .prog{display:block;animation:ring-fill linear both;animation-timeline:scroll(root)}
+}
+@keyframes ring-fill{to{stroke-dashoffset:0}}
+@media (hover:hover) and (pointer:fine){.to-top:hover{color:var(--gold-hi)}.to-top:hover .arrow{transform:translateY(-2px)}}
+@media (max-width:600px){.to-top{width:46px;height:46px}}
+
 /* reduced motion: show everything, keep only gentle fades */
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
