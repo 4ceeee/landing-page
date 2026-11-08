@@ -406,6 +406,34 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 32px;justify-content:space-bet
 .work-card a.wlink{color:var(--accent);text-underline-offset:5px;text-decoration-color:var(--gold-deep)}
 .work-card.more{border-style:dashed;background:transparent}
 
+/* ============ Loading screen (from Alas OS, Nov 2026) ============
+   Unhurried: the mark rises, glides left as the wordmark unveils, one sheen, then the page.
+   Shown once per browser session; tap or any key skips it; hidden entirely without JS or with reduced motion. */
+.splash{display:none}
+.js .splash{position:fixed;inset:0;z-index:1000;display:grid;place-content:center;background:var(--paper);cursor:default;transition:opacity 700ms cubic-bezier(.22,1,.36,1),visibility 0s linear 700ms}
+[data-nosplash] .splash{display:none}
+.js:not([data-ready]) body{overflow:hidden}
+/* a slow champagne bloom behind the lockup: the room lighting up before anything moves */
+.splash::before{content:"";position:absolute;inset:0;background:radial-gradient(42% 38% at 50% 48%,rgba(212,180,131,.13),transparent 72%);animation:splash-bloom 1600ms cubic-bezier(.22,1,.36,1) both}
+.splash-inner{position:relative;display:grid;justify-items:center;transition:transform 900ms cubic-bezier(.22,1,.36,1),opacity 600ms cubic-bezier(.22,1,.36,1),filter 600ms cubic-bezier(.22,1,.36,1)}
+/* opens with the mark alone in the centre; translateX(50% - mark/2) is exact for any wordmark width */
+.splash-lockup{--mark:48px;display:flex;align-items:center;gap:16px;transform:translateX(calc(50% - var(--mark) / 2));animation:splash-settle 1100ms cubic-bezier(.77,0,.175,1) 1150ms forwards}
+.splash-mark{position:relative;z-index:1;width:var(--mark);height:var(--mark);overflow:visible;clip-path:inset(100% 0 0 0);transform:translateY(8px);animation:splash-rise 1000ms cubic-bezier(.23,1,.32,1) 200ms forwards,splash-glow 3.6s ease-in-out 2.4s infinite}
+.splash-path{fill:#D4B483}
+/* Brand Kit v2 wordmark: Outfit 200, tracked +12% */
+.splash-word{font:200 30px/1 var(--display);letter-spacing:.12em;margin-right:-.12em;white-space:nowrap;color:transparent;background:linear-gradient(105deg,#D4B483 0%,#E6CC94 38%,#FFF3D6 50%,#E6CC94 62%,#D4B483 100%) 100% 0/260% 100%;-webkit-background-clip:text;background-clip:text;clip-path:inset(-10% 100% -10% 0);transform:translateX(-12px);animation:splash-unveil 1100ms cubic-bezier(.77,0,.175,1) 1150ms forwards,splash-sheen 1200ms cubic-bezier(.45,0,.25,1) 2200ms forwards}
+@media (max-width:420px){.splash-lockup{--mark:40px;gap:12px}.splash-word{font-size:23px}}
+@keyframes splash-bloom{from{opacity:0}}
+@keyframes splash-rise{to{clip-path:inset(0 0 0 0);transform:translateY(0)}}
+@keyframes splash-settle{to{transform:translateX(0)}}
+@keyframes splash-unveil{to{clip-path:inset(-10% 0 -10% 0);transform:translateX(0)}}
+@keyframes splash-sheen{to{background-position:0 0}}
+@keyframes splash-glow{0%,100%{filter:drop-shadow(0 0 0 rgba(212,180,131,0))}50%{filter:drop-shadow(0 0 14px rgba(212,180,131,.26))}}
+[data-ready] .splash{opacity:0;visibility:hidden;pointer-events:none}
+[data-ready] .splash-inner{opacity:0;transform:scale(1.03);filter:blur(3px)}
+/* the hero waits for the hand-over, then rises under the leaving splash */
+.js:not([data-ready]) .rise,.js:not([data-ready]) .tagline .ln>span,.js:not([data-ready]) .for-line i,.js:not([data-ready]) .hero .gold{animation-play-state:paused}
+
 /* reduced motion: show everything, keep only gentle fades */
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}

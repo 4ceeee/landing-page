@@ -8,6 +8,31 @@
   window.__alasMotion = true;
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  /* 0. Loading screen hand-over: wait for the page and fonts, and never cut the lockup short
+        (3.3 s from first paint, as in Alas OS). Tap or any key skips it. */
+  function isReady() { return root.hasAttribute('data-ready'); }
+  function setReady() { if (!isReady()) root.setAttribute('data-ready', ''); }
+  function onReady(cb) {
+    if (isReady()) { cb(); return; }
+    var mo = new MutationObserver(function () { if (isReady()) { mo.disconnect(); cb(); } });
+    mo.observe(root, { attributes: true, attributeFilter: ['data-ready'] });
+  }
+  if (!isReady()) {
+    var MIN_MS = 3300;
+    var hide = function () {
+      var fonts = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
+      fonts.catch(function () {}).then(function () {
+        var fp = performance.getEntriesByName('first-paint')[0];
+        var painted = fp ? fp.startTime : 0;
+        setTimeout(setReady, Math.max(0, painted + MIN_MS - performance.now()));
+      });
+    };
+    if (document.readyState === 'complete') hide(); else addEventListener('load', hide, { once: true });
+    var splash = document.querySelector('.splash');
+    if (splash) splash.addEventListener('click', setReady);
+    addEventListener('keydown', function skip() { setReady(); removeEventListener('keydown', skip); });
+  }
+
   /* 1. Tag what should reveal on scroll. Markup stays clean; this file decides. */
   function tag(el, kind, delay) {
     if (!el || el.hasAttribute('data-r')) return;
@@ -90,8 +115,8 @@
       entries.forEach(function (e) { if (e.isIntersecting) { reveal(e.target); io.unobserve(e.target); } });
     }, { rootMargin: '0px 0px -12% 0px', threshold: 0.08 });
     targets.forEach(function (el) { io.observe(el); });
-    /* the hero number counts once the headline has landed */
-    if (heroTo) setTimeout(function () { runCount(heroTo, 2200); }, 1500);
+    /* the hero number counts once the headline has landed (after the loading screen hands over) */
+    if (heroTo) onReady(function () { setTimeout(function () { runCount(heroTo, 2200); }, 1500); });
   }
 
   /* 5. Header: hairline appears once the page has moved. */

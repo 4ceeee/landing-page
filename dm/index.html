@@ -18,11 +18,30 @@
 <link rel="preload" href="/assets/fonts/outfit-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/instrument-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/site.css">
-<script>document.documentElement.classList.add('js');setTimeout(function(){if(!window.__alasMotion)document.documentElement.classList.remove('js')},2500)</script>
+<script>
+/* Loading screen: once per browser session, never with reduced motion, never longer than 6 s. */
+(function (h) {
+  h.classList.add('js');
+  var seen = null; try { seen = sessionStorage.getItem('alas-splash'); } catch (e) {}
+  if (seen || matchMedia('(prefers-reduced-motion: reduce)').matches) { h.setAttribute('data-ready', ''); h.setAttribute('data-nosplash', ''); }
+  else { try { sessionStorage.setItem('alas-splash', '1'); } catch (e) {} }
+  setTimeout(function () { h.setAttribute('data-ready', ''); }, 6000);
+  setTimeout(function () { if (!window.__alasMotion) h.classList.remove('js'); }, 2500);
+})(document.documentElement);
+</script>
 <script src="/assets/motion.js" defer></script>
 
 </head>
 <body data-path="store">
+<!-- Loading screen (static, paints before any JS). Same sequence as Alas OS: the mark rises, glides left as the wordmark unveils, one sheen. -->
+<div class="splash" aria-hidden="true">
+  <div class="splash-inner">
+    <div class="splash-lockup">
+      <svg class="splash-mark" viewBox="130 130 340 340" width="48" height="48"><path class="splash-path" d="M143.029 343.118C142.672 357.433 145.457 362.926 163.168 363.311C163.179 363.311 163.19 363.312 163.2 363.312L163.217 363.312H164.479C195.998 358.071 223.784 360.788 247.758 375.933C264.161 387.292 278.041 404.961 284.35 431.464C288.136 449.134 300.211 455.998 314.634 456.707V320.527L284.35 331.542V383.155C264.111 360.48 247.874 351.886 213.949 344.939L448.664 259.936C456 252.388 459.478 236.738 451.413 226.88L314.634 143.707C296.968 143.707 284.35 157.59 284.35 172.735V279.417L314.634 268.403V174.755L426.654 240.166L143.029 343.118Z"/></svg>
+      <span class="splash-word">ALAS DIGITALS</span>
+    </div>
+  </div>
+</div>
 
 
 <header class="top">
