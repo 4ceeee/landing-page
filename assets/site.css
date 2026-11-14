@@ -841,6 +841,9 @@ html::-webkit-scrollbar{width:0;height:0;display:none}
 /* v4.18: the first snap point includes the header, so the page never lands with the header scrolled off */
 main > section.hero{scroll-margin-top:120px}
 
+/* v4.19 glide: motion.js moves the page between resting points itself, so the browser's own snapping and smooth jump step aside */
+html.glide{scroll-snap-type:none!important;scroll-behavior:auto!important}
+
 /* reduced motion: show everything, keep only gentle fades */
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}

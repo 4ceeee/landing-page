@@ -124,6 +124,117 @@
   function onScroll() { if (header) header.classList.toggle('scrolled', scrollY > 8); }
   addEventListener('scroll', onScroll, { passive: true }); onScroll();
 
+
+  /* Glide. On laptops and desktops the page moves between resting points (the top, every section,
+     each June 2024 step, and screen-sized stops through anything taller than the screen) with one
+     slow eased scroll per wheel gesture or key press, instead of the browser's quick jump. The rest
+     of a trackpad swipe (momentum) is absorbed, so one gesture is one move. Touch keeps native
+     scrolling and snapping; reduced motion keeps the browser's own behaviour. */
+  var bezier = function (x1, y1, x2, y2) {
+    var A = function (a1, a2) { return 1 - 3 * a2 + 3 * a1; }, B = function (a1, a2) { return 3 * a2 - 6 * a1; }, C = function (a1) { return 3 * a1; };
+    var at = function (t, a1, a2) { return ((A(a1, a2) * t + B(a1, a2)) * t + C(a1)) * t; };
+    var sl = function (t, a1, a2) { return 3 * A(a1, a2) * t * t + 2 * B(a1, a2) * t + C(a1); };
+    return function (x) {
+      if (x <= 0) return 0; if (x >= 1) return 1;
+      var t = x;
+      for (var k = 0; k < 8; k++) { var d = sl(t, x1, x2); if (Math.abs(d) < 1e-6) break; t -= (at(t, x1, x2) - x) / d; t = Math.min(1, Math.max(0, t)); }
+      return at(t, y1, y2);
+    };
+  };
+  var glideEase = bezier(0.65, 0, 0.35, 1); /* easeInOutCubic: settles in, settles out */
+  var glideMQ = matchMedia('(min-width:900px) and (min-height:640px) and (hover:hover) and (pointer:fine)');
+  var glideOn = function () { return !reduce && glideMQ.matches; };
+  var syncGlide = function () { root.classList.toggle('glide', glideOn()); };
+  syncGlide(); if (glideMQ.addEventListener) glideMQ.addEventListener('change', syncGlide);
+  var glide = null, glideRaf = 0;
+  var glideTick = function (now) {
+    var g = glide, p = Math.min(1, (now - g.t0) / g.dur);
+    scrollTo({ top: g.from + (g.to - g.from) * glideEase(p), behavior: 'instant' });
+    if (p < 1) glideRaf = requestAnimationFrame(glideTick); else { glideRaf = 0; glide = null; }
+  };
+  var glideTo = function (y) {
+    var max = root.scrollHeight - innerHeight;
+    y = Math.max(0, Math.min(max, Math.round(y)));
+    var from = scrollY, dist = Math.abs(y - from);
+    if (dist < 1) return;
+    /* one step ≈ 0.8s, one screen ≈ 1.15s, long jumps cap at 1.4s */
+    glide = { from: from, to: y, t0: performance.now(), dur: 700 + Math.min(700, dist * 0.5) };
+    if (!glideRaf) glideRaf = requestAnimationFrame(glideTick);
+  };
+  var topOf = function (el) {
+    if (!el) return 0;
+    var sec = el.closest('main > section');
+    if (sec && sec.classList.contains('hero')) return 0;
+    return el.getBoundingClientRect().top + scrollY;
+  };
+  /* where the page can come to rest, top to bottom */
+  var glidePoints = function () {
+    var vh = innerHeight, pts = [0], sy = scrollY;
+    var wideJourney = matchMedia('(min-width:1000px)').matches;
+    document.querySelectorAll('main > section').forEach(function (s) {
+      if (s.hidden || !s.getClientRects().length || s.classList.contains('hero')) return;
+      var top = s.getBoundingClientRect().top + sy, h = s.offsetHeight;
+      if (wideJourney && s.classList.contains('journey-sec')) {
+        /* each step's title a quarter of the way down the screen */
+        s.querySelectorAll('.journey .step h3').forEach(function (t) {
+          var r = t.getBoundingClientRect(); pts.push(r.top + sy + r.height / 2 - vh * 0.25);
+        });
+        return;
+      }
+      pts.push(top);
+      for (var y = top + vh * 0.8; y < top + h - vh; y += vh * 0.8) pts.push(y);
+      if (h > vh + 4) pts.push(top + h - vh);
+    });
+    pts.push(root.scrollHeight - vh);
+    pts = pts.map(Math.round).sort(function (a, b) { return a - b; });
+    return pts.filter(function (p, k) { return k === 0 || p - pts[k - 1] > 8; });
+  };
+  var glideStep = function (dir) {
+    var base = glide ? glide.to : scrollY, pts = glidePoints(), k, to = null;
+    if (dir > 0) { for (k = 0; k < pts.length; k++) if (pts[k] > base + 4) { to = pts[k]; break; } }
+    else { for (k = pts.length - 1; k >= 0; k--) if (pts[k] < base - 4) { to = pts[k]; break; } }
+    if (to !== null) glideTo(to);
+  };
+  /* everything that moves the page on purpose goes through here */
+  var goTo = function (target) {
+    if (glideOn()) { glideTo(typeof target === 'number' ? target : topOf(target)); return; }
+    if (typeof target === 'number') scrollTo({ top: target, behavior: reduce ? 'auto' : 'smooth' });
+    else target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+  };
+  var lastWheel = 0, wheelUsed = false;
+  addEventListener('wheel', function (e) {
+    if (!glideOn() || e.ctrlKey || e.defaultPrevented || root.classList.contains('gated')) return;
+    if (e.target.closest && e.target.closest('.b-view, textarea, select')) return;
+    if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+    e.preventDefault();
+    var now = performance.now(), fresh = now - lastWheel > 180;
+    lastWheel = now;
+    if (fresh) wheelUsed = false;
+    if (wheelUsed || Math.abs(e.deltaY) < 1.5) return;
+    wheelUsed = true;
+    glideStep(e.deltaY > 0 ? 1 : -1);
+  }, { passive: false });
+  addEventListener('keydown', function (e) {
+    if (!glideOn() || e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey || root.classList.contains('gated')) return;
+    if (e.target.closest && e.target.closest('input, textarea, select, button, summary, [contenteditable], .hx-track')) return;
+    var k = e.key;
+    if (k === 'ArrowDown' || k === 'PageDown' || (k === ' ' && !e.shiftKey)) { e.preventDefault(); glideStep(1); }
+    else if (k === 'ArrowUp' || k === 'PageUp' || (k === ' ' && e.shiftKey)) { e.preventDefault(); glideStep(-1); }
+    else if (k === 'Home') { e.preventDefault(); glideTo(0); }
+    else if (k === 'End') { e.preventDefault(); glideTo(root.scrollHeight - innerHeight); }
+  });
+  /* in-page links (#case-study, #fixes, ...) glide too */
+  document.addEventListener('click', function (e) {
+    if (!glideOn() || e.defaultPrevented) return;
+    var a = e.target.closest && e.target.closest('a[href^="#"]');
+    if (!a || a.getAttribute('href').length < 2) return;
+    var el = document.getElementById(decodeURIComponent(a.getAttribute('href').slice(1)));
+    if (!el) return;
+    e.preventDefault();
+    try { history.replaceState(null, '', a.getAttribute('href')); } catch (err) {}
+    glideTo(topOf(el));
+  });
+
   /* 5b. Back to top: shows after 1.5 screens, hides again near the top; returns focus to the start of the page. */
   var toTop = document.querySelector('.to-top');
   if (toTop) {
@@ -135,7 +246,7 @@
     addEventListener('scroll', checkTop, { passive: true }); checkTop();
     toTop.addEventListener('click', function (e) {
       e.preventDefault();
-      scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+      goTo(0);
       var brand = document.querySelector('.brand'); if (brand) brand.focus({ preventScroll: true });
     });
   }
@@ -149,7 +260,7 @@
       var b = document.createElement('button'); b.type = 'button';
       b.innerHTML = '<span></span><i aria-hidden="true"></i>'; b.firstChild.textContent = lab.trim();
       b.setAttribute('aria-label', 'Go to ' + lab.trim());
-      b.addEventListener('click', function () { sec.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' }); });
+      b.addEventListener('click', function () { goTo(sec); });
       rail.appendChild(b); return b;
     });
     document.body.appendChild(rail);
@@ -205,7 +316,7 @@
   if (chooser && part2 && !document.body.hasAttribute('data-locked')) {
     chooser.querySelectorAll('[data-set-path]').forEach(function (b) {
       b.addEventListener('click', function () {
-        setTimeout(function () { part2.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' }); }, reduce ? 0 : 180);
+        setTimeout(function () { goTo(part2); }, reduce ? 0 : 180);
       });
     });
   }
@@ -317,59 +428,6 @@
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(update);
     setTimeout(update, 400); update();
   });
-
-  /* 5g. June 2024 → now, one scroll per step (laptops). A wheel gesture or arrow/page key moves exactly one
-        step, bringing its bullet a quarter of the way down the screen. Trackpad momentum is absorbed until the
-        gesture ends, so a long swipe still moves one step. Touch keeps the native snapping. */
-  (function () {
-    var sec = document.querySelector('.journey-sec'); if (!sec || reduce) return;
-    var steps = Array.prototype.slice.call(sec.querySelectorAll('.journey .step'));
-    var mq = matchMedia('(min-width:1000px) and (min-height:640px)');
-    if (!steps.length) return;
-    function targets() {
-      return steps.map(function (st) {
-        var h = st.querySelector('h3').getBoundingClientRect();
-        return Math.round(h.top + scrollY + h.height / 2 - innerHeight * 0.25);
-      });
-    }
-    function sectionTop(el) { return el ? Math.round(el.getBoundingClientRect().top + scrollY) : null; }
-    function nextSection(el, dir) {
-      var n = el; do { n = dir > 0 ? n.nextElementSibling : n.previousElementSibling; } while (n && (n.tagName !== 'SECTION' || n.hidden));
-      return n;
-    }
-    var busyUntil = 0, lastEvt = 0, gesture = false;
-    function go(dir) {
-      var t = targets(), y = scrollY, i = -1, k;
-      for (k = 0; k < t.length; k++) if (Math.abs(t[k] - y) < 48) { i = k; break; }
-      if (i < 0 && dir < 0 && Math.abs(sectionTop(nextSection(sec, 1)) - y) < 48) { scrollTo({ top: t[t.length - 1], behavior: 'smooth' }); busyUntil = performance.now() + 650; return true; }
-      if (i < 0) return false; /* not resting on a step: let the page scroll normally */
-      var to;
-      if (dir > 0) to = i < t.length - 1 ? t[i + 1] : sectionTop(nextSection(sec, 1));
-      else to = i > 0 ? t[i - 1] : sectionTop(nextSection(sec, -1));
-      if (to == null) return false;
-      scrollTo({ top: to, behavior: 'smooth' });
-      busyUntil = performance.now() + 650;
-      return true;
-    }
-    addEventListener('wheel', function (e) {
-      if (!mq.matches || e.ctrlKey || Math.abs(e.deltaY) < Math.abs(e.deltaX)) return;
-      var now = performance.now(), quiet = now - lastEvt > 160;
-      lastEvt = now;
-      if (gesture || now < busyUntil) {
-        /* swallow the rest of this gesture (and momentum) while a step move is underway */
-        if (!quiet || now < busyUntil) { e.preventDefault(); return; }
-        gesture = false;
-      }
-      if (Math.abs(e.deltaY) < 2) return;
-      if (go(e.deltaY > 0 ? 1 : -1)) { e.preventDefault(); gesture = true; }
-    }, { passive: false });
-    addEventListener('keydown', function (e) {
-      if (!mq.matches || e.target.closest('input, textarea, select, [contenteditable]')) return;
-      var dir = ({ ArrowDown: 1, PageDown: 1, ' ': e.shiftKey ? -1 : 1, ArrowUp: -1, PageUp: -1 })[e.key];
-      if (!dir || performance.now() < busyUntil) return;
-      if (go(dir)) e.preventDefault();
-    });
-  })();
 
   /* 6. Audience toggle: a thumb that slides between "I sell by DM" and "I have a store". */
   document.querySelectorAll('.path-toggle').forEach(function (t) {
