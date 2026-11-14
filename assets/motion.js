@@ -116,7 +116,7 @@
     }, { rootMargin: '0px 0px -12% 0px', threshold: 0.08 });
     targets.forEach(function (el) { io.observe(el); });
     /* the hero number counts once the headline has landed (after the loading screen hands over) */
-    if (heroTo) onReady(function () { setTimeout(function () { runCount(heroTo, 2200); }, 1500); });
+    /* the headline number counts when its section scrolls into view (see reveal) */
   }
 
   /* 5. Header: hairline appears once the page has moved. */
@@ -145,7 +145,7 @@
   if (secs.length > 2 && 'IntersectionObserver' in window) {
     var rail = document.createElement('nav'); rail.className = 'rail'; rail.setAttribute('aria-label', 'Sections');
     var btns = secs.map(function (sec, i) {
-      var lab = sec.classList.contains('hero') ? 'Intro' : sec.classList.contains('contact') ? 'Contact' : ((sec.querySelector('.section-head .mono') || {}).textContent || 'Section ' + (i + 1));
+      var lab = sec.dataset.rail ? sec.dataset.rail : sec.classList.contains('hero') ? 'Intro' : sec.classList.contains('contact') ? 'Contact' : ((sec.querySelector('.section-head .mono') || {}).textContent || 'Section ' + (i + 1));
       var b = document.createElement('button'); b.type = 'button';
       b.innerHTML = '<span></span><i aria-hidden="true"></i>'; b.firstChild.textContent = lab.trim();
       b.setAttribute('aria-label', 'Go to ' + lab.trim());
@@ -163,6 +163,47 @@
     secs.forEach(function (x) { railIO.observe(x); });
   }
 
+  /* 5d. Scroll gate (main page only). The first screen holds still until the visitor answers
+        "Which sounds like you?". Picking either option unlocks the page and glides to part 2.
+        Skipped when: the page is locked to one audience (/store, /dm), the visitor already chose
+        on an earlier visit, the link has a #section or ?query, or JS is off.
+        Any in-page link (top menu, section rail) also unlocks, so nothing is ever trapped. */
+  var chooser = document.querySelector('.chooser');
+  var part2 = document.querySelector('.hero-2');
+  var savedPath = null; try { savedPath = localStorage.getItem('alas-path'); } catch (e) {}
+  var gated = !!(chooser && part2 && !document.body.hasAttribute('data-locked') && !savedPath && !location.hash && !location.search);
+  if (gated) {
+    root.classList.add('gated');
+    var nudge = function () {
+      chooser.classList.remove('nudge'); void chooser.offsetWidth; chooser.classList.add('nudge');
+    };
+    var onWheel = function (e) { if (root.classList.contains('gated')) { e.preventDefault(); nudge(); } };
+    var onTouch = function (e) { if (root.classList.contains('gated') && !e.target.closest('.chooser')) { e.preventDefault(); nudge(); } };
+    var onKey = function (e) {
+      if (!root.classList.contains('gated')) return;
+      if ([' ', 'PageDown', 'ArrowDown', 'End', 'Spacebar'].indexOf(e.key) > -1 && !e.target.closest('button, input, textarea, select')) { e.preventDefault(); nudge(); }
+    };
+    addEventListener('wheel', onWheel, { passive: false });
+    addEventListener('touchmove', onTouch, { passive: false });
+    addEventListener('keydown', onKey);
+    var unlock = function () {
+      if (!root.classList.contains('gated')) return;
+      root.classList.remove('gated');
+      removeEventListener('wheel', onWheel); removeEventListener('touchmove', onTouch); removeEventListener('keydown', onKey);
+    };
+    chooser.querySelectorAll('[data-set-path]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        unlock();
+        /* let the audience switch start, then glide down to part 2 */
+        setTimeout(function () { part2.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' }); }, reduce ? 0 : 180);
+      });
+    });
+    document.addEventListener('click', function (e) {
+      if (e.target.closest('a[href^="#"], .rail button, [data-need]')) unlock();
+    }, true);
+    addEventListener('hashchange', unlock);
+  }
+
   /* 6. Audience toggle: a thumb that slides between "I sell by DM" and "I have a store". */
   document.querySelectorAll('.path-toggle').forEach(function (t) {
     var thumb = document.createElement('span'); thumb.className = 'thumb'; thumb.setAttribute('aria-hidden', 'true');
@@ -171,7 +212,7 @@
       var on = t.querySelector('[aria-pressed="true"]'); if (!on) return;
       if (instant) thumb.style.transition = 'none';
       thumb.style.width = on.offsetWidth + 'px';
-      thumb.style.transform = 'translateX(' + (on.offsetLeft - 3) + 'px)';
+      thumb.style.transform = 'translateX(' + (on.offsetLeft - (parseFloat(getComputedStyle(t).paddingLeft) || 3)) + 'px)';
       if (instant) { thumb.offsetWidth; thumb.style.transition = ''; }
     }
     place(true);

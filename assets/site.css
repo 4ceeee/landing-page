@@ -71,7 +71,8 @@ html:not(.js) .path-toggle button[aria-pressed="true"]{background:var(--paper-3)
 .hero{border-top:0;padding-top:clamp(44px,7vw,96px)}
 .for-line{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:26px}
 .for-line i{width:6px;height:6px;background:var(--accent);display:inline-block}
-.tagline{font-size:clamp(40px,8.2vw,104px);line-height:.98;letter-spacing:.01em}
+.tagline{font-size:clamp(36px,5.6vw,78px);line-height:.98;letter-spacing:.01em}
+@media (max-width:600px){.tagline{font-size:clamp(34px,10.4vw,48px)}}
 .hero-sub{margin:22px 0 0;font-family:var(--sans);font-size:clamp(14px,1.5vw,16px);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);max-width:56em}
 .hero-sub b{color:var(--ink);font-weight:600}
 .hero-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(32px,5vw,64px);align-items:start;margin-top:clamp(40px,6vw,72px)}
@@ -510,6 +511,93 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 32px;justify-content:space-bet
   .rail button:hover span{opacity:1;color:var(--ink)}
   .rail button:hover i{background:var(--gold-hi)}
 }
+
+/* ============ Two-part hero (v4.6) ============
+   Part 1: one screen. Centred line, audience chooser, then the Vera-Fi lineup filling the rest.
+   Part 2: one screen. Positioning, CTAs and the result on the left, Mark's photo and words on the right.
+   Both the lineup canvas and Mark's photo use lighten, so their black backgrounds melt into the ink. */
+main > section.hero{min-height:calc(100svh - 68px);display:flex;flex-direction:column;padding-block:clamp(36px,7vh,88px) clamp(12px,3vh,32px);border-top:0}
+.hero-top{display:flex;flex-direction:column;align-items:center;text-align:center}
+.hero-top .for-line{justify-content:center}
+.hero-top .hero-sub{margin-inline:auto}
+.chooser{display:flex;flex-direction:column;align-items:center;gap:12px;margin-top:clamp(24px,4vh,40px)}
+.chooser-label{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.path-toggle.path-big{padding:4px}
+.path-toggle.path-big button{font-size:16px;padding:12px 22px;min-height:48px}
+.path-toggle.path-big .thumb{top:4px;bottom:4px;left:4px}
+[data-locked] .chooser{display:none}
+.lineup{flex:1 1 0;min-height:160px;width:100%;max-width:1240px;margin:clamp(8px,2vh,24px) auto 0;position:relative}
+.lineup canvas{opacity:0;transition:opacity 1.4s var(--ease-lux)}
+.lineup.ok canvas{opacity:1}
+.lineup.fail{display:none}
+@media (max-width:600px){.lineup{min-height:140px}.path-toggle.path-big button{font-size:15px;padding:11px 16px}}
+
+main > section.hero-2{min-height:calc(100svh - 68px);display:flex;flex-direction:column;justify-content:center;border-top:0}
+.hero-2 .hero-grid{margin-top:0;align-items:center}
+.hero-2 .pitch{margin:0;font-family:var(--display);font-weight:600;letter-spacing:-.01em;font-size:clamp(28px,3.4vw,44px);line-height:1.12;color:var(--ink-2)}
+.hero-2 .pitch .hl{color:var(--ink)}
+.hero-2 .lede{margin-top:20px}
+.hero-2 .hero-stat{margin-top:clamp(32px,5vh,56px)}
+
+.mark-quote{margin:0;display:flex;flex-direction:column;gap:18px;position:relative}
+.mark-photo{position:relative;width:min(100%,380px);aspect-ratio:1;margin:0 auto -28px;-webkit-mask-image:linear-gradient(to bottom,#000 62%,transparent 98%);mask-image:linear-gradient(to bottom,#000 62%,transparent 98%)}
+.mark-photo img{width:100%;height:100%;object-fit:cover;object-position:50% 18%;display:block}
+.mark-quote blockquote{margin:0;padding-left:20px;border-left:2px solid transparent;border-image:var(--grad) 1;display:flex;flex-direction:column;gap:10px;position:relative}
+.mark-quote blockquote p{margin:0;font-size:16px;line-height:1.55;color:var(--ink-2)}
+.mark-quote blockquote p:first-child{font-family:var(--display);font-weight:600;font-size:clamp(19px,1.8vw,23px);line-height:1.3;color:var(--ink)}
+.mark-quote figcaption{display:flex;flex-direction:column;gap:2px;padding-left:22px}
+.mark-quote figcaption b{font-family:var(--display);font-weight:600;font-size:17px}
+.mark-quote figcaption span{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+@media (max-width:860px){.mark-photo{width:min(100%,300px)}}
+
+/* v4.6 fixes: result number sized for its column, photo edges fade on every side, marquee opens the case study,
+   and on phones the header keeps a Contact link now that the switch is gone */
+.hero-2 .hero-stat .big{font-size:clamp(40px,4.4vw,68px)}
+/* Mark is a cut-out (transparent background); only the bottom edge of the crop fades into the page */
+.mark-photo{width:min(100%,340px);-webkit-mask-image:linear-gradient(to bottom,#000 70%,transparent 99%);mask-image:linear-gradient(to bottom,#000 70%,transparent 99%)}
+.hero-2{padding-block:clamp(40px,7vh,80px)}
+/* lighten sits on the masked/animated wrappers so it blends with the page, not inside its own layer */
+.lineup{mix-blend-mode:lighten}
+/* Tools strip closes part 2: the grid takes the free space and stays centred, the strip sits at the bottom */
+.hero-2 > .hero-grid{flex:1 1 auto;align-content:center}
+.hero-2 .tools-marquee{margin-top:clamp(20px,3.5vh,44px);padding:16px 0 4px;border-top:1px solid var(--line);border-bottom:0}
+.hero-2 .tm-viewport{margin-top:12px}
+.hero-2 .mark-photo{width:min(100%,clamp(220px,34vh,340px))}
+#case-study.after-marquee{border-top:0}
+@media (max-width:980px){.top nav a.link[href="#contact"]{display:inline}}
+
+/* Part 2 scales with screen height so text, Mark and the tools strip fit one view on laptops */
+@media (min-width:861px){
+  .hero-2{padding-block:clamp(20px,3.5vh,56px)}
+  .hero-2 .pitch{font-size:clamp(26px,min(3.4vw,4.8vh),44px)}
+  .hero-2 .lede{margin-top:clamp(12px,2vh,20px);font-size:clamp(16px,min(1.5vw,2.3vh),20px)}
+  .hero-2 .hero-ctas{margin-top:clamp(18px,3vh,32px)}
+  .hero-2 .hero-stat{margin-top:clamp(18px,3.2vh,48px);padding-top:clamp(12px,2vh,22px)}
+  .hero-2 .hero-stat .big{font-size:clamp(36px,min(4.4vw,6.6vh),68px)}
+  .hero-2 .mark-photo{width:min(100%,clamp(200px,30vh,330px))}
+  .mark-quote{gap:clamp(10px,1.6vh,18px)}
+  .mark-quote blockquote p{font-size:clamp(14px,1.9vh,16px)}
+  .mark-quote blockquote p:first-child{font-size:clamp(17px,min(1.8vw,2.7vh),23px)}
+  .hero-2 .tools-marquee{margin-top:clamp(14px,2.5vh,40px);padding-top:clamp(10px,1.6vh,16px)}
+  .hero-2 .tm-list li{font-size:clamp(16px,2.1vh,19px)}
+}
+
+/* ============ Scroll gate + hidden scrollbar (v4.9) ============ */
+html.gated,html.gated body{overflow:hidden}
+.chooser-hint{display:block;height:18px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-deep);opacity:0;transition:opacity .6s var(--ease-lux)}
+html.gated .chooser-hint{opacity:1}
+/* while waiting, neither option looks chosen; the slider appears once one is picked */
+html.gated .path-big .thumb{opacity:0}
+html.gated .path-big button[aria-pressed="true"]{color:var(--ink-2)}
+.path-big .thumb{transition:transform .45s var(--ease-io),width .45s var(--ease-io),opacity .4s var(--ease)}
+@media (hover:hover) and (pointer:fine){html.gated .path-big button:hover{color:var(--accent)}}
+/* trying to scroll before choosing: one calm champagne pulse around the switch */
+.chooser.nudge .path-toggle{animation:gate-pulse 900ms var(--ease-lux)}
+@keyframes gate-pulse{0%{box-shadow:0 0 0 0 rgba(212,180,131,0)}35%{box-shadow:0 0 0 6px rgba(212,180,131,.28)}100%{box-shadow:0 0 0 14px rgba(212,180,131,0)}}
+/* the page scrollbar is hidden; scrolling still works by wheel, touch, keys and the section rail.
+   The before/after windows keep theirs, since that is how visitors know they scroll. */
+html{scrollbar-width:none;-ms-overflow-style:none}
+html::-webkit-scrollbar{width:0;height:0;display:none}
 
 /* reduced motion: show everything, keep only gentle fades */
 @media (prefers-reduced-motion:reduce){

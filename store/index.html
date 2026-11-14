@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Alas Digitals · Ace Dolorito</title>
+<title>Alas Digitals · Great audio deserves a store that sells</title>
 <meta name="description" content="Fixed-price fixes for small audio brands, from $150: welcome emails, product pages, social graphics and more. Case study: Vera-Fi Audio, from about $22K to $121K in average monthly revenue.">
-<meta property="og:title" content="Alas Digitals · Ace Dolorito">
+<meta property="og:title" content="Alas Digitals · Great audio deserves a store that sells">
 <meta property="og:description" content="How a small hi-fi brand went from about $22K to $121K in average monthly revenue on the same Shopify store.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://alas-digitals.vercel.app/store">
@@ -35,6 +35,7 @@
 })(document.documentElement);
 </script>
 <script src="/assets/motion.js" defer></script>
+<script type="importmap">{"imports":{"three":"/assets/vendor/three.module.min.js","three/addons/":"/assets/vendor/jsm/"}}</script>
 
 </head>
 <body data-path="store">
@@ -58,14 +59,9 @@
     <nav aria-label="Main">
       <a class="link" href="#case-study">Case study</a>
       <a class="link" href="#before-after">Before / after</a>
-      <a class="link" href="#work">Work</a>
       <a class="link keep" href="#fixes">Friction fixes</a>
       <a class="link" href="#faq">FAQ</a>
       <a class="link" href="#contact">Contact</a>
-      <div class="path-toggle" role="group" aria-label="Show the page for">
-        <button type="button" data-set-path="dm" aria-pressed="false">I sell by DM</button>
-        <button type="button" data-set-path="store" aria-pressed="true">I have a store</button>
-      </div>
     </nav>
   </div>
 </header>
@@ -73,23 +69,41 @@
 <main id="top">
 
 <!-- HERO -->
-<section class="hero">
-  <div class="wrap">
+<section class="hero" data-rail="Intro">
+  <div class="wrap hero-top">
     <div class="for-line rise"><i aria-hidden="true"></i>For small audio brands · US and Asia</div>
-    <h1 class="tagline"><span class="ln"><span style="--i:0">Reduce friction.</span></span><span class="ln"><span style="--i:1">Increase <span class="gold">impact</span>.</span></span></h1>
-    <p class="hero-sub rise" style="--d:650ms">Store, email, content and social for <b>hi-fi, headphone and IEM brands</b></p>
-  </div>
-  <div class="wrap hero-grid">
-    <div class="rise" style="--d:850ms">
-      <p class="pitch"><span class="only-dm">You already sell by DM. <span class="hl">I build the store, content and distribution that sell without you.</span></span><span class="only-store">Your store already takes orders. <span class="hl">I build what makes it sell.</span></span></p>
-      <p class="lede">I help hi-fi, headphone and IEM brands that want to grow <span class="only-dm">by moving from selling one inbox at a time to a store that does the selling.</span><span class="only-store">by adding the email, product content and store work that turn a working store into one that sells.</span></p>
-      <div class="hero-ctas">
-        <a class="btn" href="#fixes">See the fixes, from $150</a>
-        <a class="text-link" href="#case-study">See the case study <span aria-hidden="true">↓</span></a>
+    <h1 class="tagline"><span class="ln"><span style="--i:0">Great audio deserves</span></span><span class="ln"><span style="--i:1">a store that <span class="gold">sells</span>.</span></span></h1>
+    <p class="hero-sub rise" style="--d:650ms">Store, email, content and social for <b>small audio brands</b></p>
+    <div class="chooser rise" style="--d:850ms">
+      <span class="chooser-label" id="chooser-label">Which sounds like you?</span>
+      <!-- shown only while the page is waiting for a choice (html.gated, set in motion.js) -->
+      <div class="path-toggle path-big" role="group" aria-labelledby="chooser-label">
+        <button type="button" data-set-path="dm" aria-pressed="false">I sell by DM</button>
+        <button type="button" data-set-path="store" aria-pressed="true">I have a store</button>
       </div>
+      <span class="chooser-hint" aria-hidden="true">Pick one to continue</span>
     </div>
-    <figure class="hero-quote rise" style="--d:1050ms">
-      <svg class="qmark" viewBox="0 0 48 36" aria-hidden="true"><path fill="currentColor" d="M0 36V22.4C0 9.6 6.4 2.1 19.2 0l2 5.6C14 7.4 10.6 11.4 10.4 17.6H20V36H0Zm28 0V22.4C28 9.6 34.4 2.1 47.2 0l2 5.6C42 7.4 38.6 11.4 38.4 17.6H48V36H28Z"/></svg>
+  </div>
+  <!-- Vera-Fi lineup: 3D models that turn to follow the cursor (assets/lineup). Blended with lighten so the canvas melts into the page. -->
+  <div class="lineup rise" id="lineup" style="--d:1050ms"></div>
+</section>
+
+<section class="hero-2" data-rail="What I do" aria-label="What I do">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <div data-r="blur" style="--d:80ms"><p class="pitch"><span class="only-dm">You already sell by DM. <span class="hl">I build the store, content and distribution that sell without you.</span></span><span class="only-store">Your store already takes orders. <span class="hl">I build what makes it sell.</span></span></p></div>
+      <div data-r="" style="--d:220ms"><p class="lede">I help small audio brands that want to grow <span class="only-dm">by moving from selling one inbox at a time to a store that does the selling.</span><span class="only-store">by adding the email, product content and store work that turn a working store into one that sells.</span></p></div>
+      <div data-r="" style="--d:360ms"><div class="hero-ctas">
+        <button type="button" class="btn" data-need="A free sketch of one fix (free)">Ask for a free sketch</button>
+        <a class="btn ghost" href="#fixes">See the fixes, from $150</a>
+      </div></div>
+      <div class="hero-stat">
+      <span class="stat-label">Case study · Vera-Fi Audio · Avg monthly revenue</span>
+      <div class="big" aria-label="From $22K to $121K">$22K<span class="arrow"> → </span><span class="to">$121K</span></div>
+    </div>
+    </div>
+    <figure class="mark-quote" data-r="" style="--d:200ms">
+      <div class="mark-photo"><img src="/assets/mark-schifter.webp" alt="Mark Schifter, owner of Vera-Fi Audio" width="800" height="800" loading="lazy"></div>
       <blockquote>
         <p>We mainly sold products through direct sales and promotions. Now people naturally come to buy.</p>
         <p>The change I noticed the most is how everything is systematized, organized and intentional. Ace reports changes and improvements regularly and asks for feedback on a daily basis.</p>
@@ -97,12 +111,6 @@
       </blockquote>
       <figcaption><b>Mark Schifter</b><span>Owner, Vera-Fi Audio</span></figcaption>
     </figure>
-  </div>
-  <div class="wrap">
-    <div class="hero-stat rise" style="--d:1200ms">
-      <span class="stat-label">Case study · Vera-Fi Audio · Avg monthly revenue</span>
-      <div class="big" aria-label="From $22K to $121K">$22K<span class="arrow"> → </span><span class="to">$121K</span></div>
-    </div>
   </div>
 <!-- TOOLS MARQUEE -->
 <div class="tools-marquee" role="region" aria-label="Tools I work in">
@@ -118,6 +126,7 @@
 
 <!-- 01 STARTING POINT -->
 <section id="case-study" aria-labelledby="start-h" class="after-marquee">
+
   <div class="wrap">
     <div class="section-head"><span class="mono">The starting point</span><span class="num">01</span></div>
     <h2 id="start-h"><span class="only-dm">Great products, sold one <span class="gold">inbox</span> at a time.</span><span class="only-store">A working store, with <span class="gold">nothing</span> around it yet.</span></h2>
@@ -130,7 +139,7 @@
       <div class="row"><div class="when">Mar–May 2024</div><div class="what">About $22K a month, carried by paid press ads and YouTuber promotions.</div></div>
       <div class="row only-store"><div class="when">Jun 2024</div><div class="what">Still missing: an Instagram presence, an email program and a product photo standard.</div></div>
     </div>
-    <div class="callout"><span class="only-dm">The products had fans. The store just wasn’t doing the selling.</span><span class="only-store">Having a store isn’t the same as having a store that sells.</span></div>
+    <div class="callout"><span class="only-dm">The products had fans. The store just wasn’t doing the selling.</span><span class="only-store">The store took orders. It wasn’t selling on its own yet.</span></div>
   </div>
 </section>
 
@@ -155,7 +164,7 @@
   <div class="wrap">
     <div class="section-head"><span class="mono">June 2024 → now</span><span class="num">03</span></div>
     <h2 id="built-h">Every step from first look to second order has a <span class="gold">job</span>.</h2>
-    <p class="lede"><span class="only-store">Same Shopify store. Nothing on it is there by accident: each piece moves a customer one step closer to buying, and back again.</span><span class="only-dm">Not just a storefront. Each piece moves a customer one step closer to buying, and back again.</span></p>
+    <p class="lede"><span class="only-store">Same Shopify store. Nothing on it is there by accident: each piece moves a customer one step closer to buying, and back again.</span><span class="only-dm">Each piece moves a customer one step closer to buying, and back again.</span></p>
     <ol class="path-chips" aria-label="The steps"><li>Find</li><li>Trust</li><li>Choose</li><li>Buy</li><li>Own it</li><li>Come back</li></ol>
     <ol class="journey" id="built">
       <li class="step"><div class="step-name"><span class="mono">Step 01</span><h3>Find</h3></div><div class="step-body"><p class="job">Get in front of the right people.</p><p>Built the brand’s Instagram from zero, set up search so the store shows up when people look, and used YouTubers for launches only.</p><div class="tools-row"><span class="tool"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.915 4.03c-1.968 0-3.683 1.28-4.871 3.113C.704 9.208 0 11.883 0 14.449c0 .706.07 1.369.21 1.973a6.624 6.624 0 0 0 .265.86 5.297 5.297 0 0 0 .371.761c.696 1.159 1.818 1.927 3.593 1.927 1.497 0 2.633-.671 3.965-2.444.76-1.012 1.144-1.626 2.663-4.32l.756-1.339.186-.325c.061.1.121.196.183.3l2.152 3.595c.724 1.21 1.665 2.556 2.47 3.314 1.046.987 1.992 1.22 3.06 1.22 1.075 0 1.876-.355 2.455-.843a3.743 3.743 0 0 0 .81-.973c.542-.939.861-2.127.861-3.745 0-2.72-.681-5.357-2.084-7.45-1.282-1.912-2.957-2.93-4.716-2.93-1.047 0-2.088.467-3.053 1.308-.652.57-1.257 1.29-1.82 2.05-.69-.875-1.335-1.547-1.958-2.056-1.182-.966-2.315-1.303-3.454-1.303zm10.16 2.053c1.147 0 2.188.758 2.992 1.999 1.132 1.748 1.647 4.195 1.647 6.4 0 1.548-.368 2.9-1.839 2.9-.58 0-1.027-.23-1.664-1.004-.496-.601-1.343-1.878-2.832-4.358l-.617-1.028a44.908 44.908 0 0 0-1.255-1.98c.07-.109.141-.224.211-.327 1.12-1.667 2.118-2.602 3.358-2.602zm-10.201.553c1.265 0 2.058.791 2.675 1.446.307.327.737.871 1.234 1.579l-1.02 1.566c-.757 1.163-1.882 3.017-2.837 4.338-1.191 1.649-1.81 1.817-2.486 1.817-.524 0-1.038-.237-1.383-.794-.263-.426-.464-1.13-.464-2.046 0-2.221.63-4.535 1.66-6.088.454-.687.964-1.226 1.533-1.533a2.264 2.264 0 0 1 1.088-.285z"/></svg>Meta Business Suite</span><span class="tool"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.548 1.156L6.832 2.872v1.682h1.716zm0 3.398v.035H6.832v-.035H3.386L0 7.844v3.577h2.826V8.94c0-.525.429-.954.954-.954h16.476c.525 0 .954.43.954.954v2.48h2.754V7.844l-3.386-3.29H17.3v.035h-1.717v-.035zm7.035 0H17.3V2.872l-1.717-1.716zM8.679 1.188V2.84h6.773V1.188zm11.471 7.07a.834.834 0 00-.132.01l-.543.002c-5.216.014-10.432-.008-15.648.01-.435-.063-.794.436-.716.883v2.264h17.812c-.016-.888.045-1.782-.034-2.666-.104-.342-.427-.502-.739-.502zm-15.422.634a.689.698 0 01.689.698.689.698 0 01-.689.697.689.698 0 01-.688-.697.689.698 0 01.688-.698zm2.134 0a.689.698 0 01.689.698.689.698 0 01-.689.697.689.698 0 01-.688-.697.689.698 0 01.688-.698zM.036 11.645v9.156c0 1.05.858 1.908 1.907 1.908h.883V11.645zm21.174 0v11.064h.882c1.05 0 1.908-.858 1.908-1.908v-9.156zM4.057 13.133v6.85h6.137v-6.85zm13.243.021v3.777l-1.708.977-1.708-.977v-3.758a4.006 4.006 0 000 7.23v2.441h3.457v-2.442a4.006 4.006 0 00-.041-7.248zm-13.243 8.26v1.43h7.925v-1.43z"/></svg>Search Console</span><span class="tool"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22.84 2.9982v17.9987c.0086 1.6473-1.3197 2.9897-2.967 2.9984a2.9808 2.9808 0 01-.3677-.0208c-1.528-.226-2.6477-1.5558-2.6105-3.1V3.1204c-.0369-1.5458 1.0856-2.8762 2.6157-3.1 1.6361-.1915 3.1178.9796 3.3093 2.6158.014.1201.0208.241.0202.3619zM4.1326 18.0548c-1.6417 0-2.9726 1.331-2.9726 2.9726C1.16 22.6691 2.4909 24 4.1326 24s2.9726-1.3309 2.9726-2.9726-1.331-2.9726-2.9726-2.9726zm7.8728-9.0098c-.0171 0-.0342 0-.0513.0003-1.6495.0904-2.9293 1.474-2.891 3.1256v7.9846c0 2.167.9535 3.4825 2.3505 3.763 1.6118.3266 3.1832-.7152 3.5098-2.327.04-.1974.06-.3983.0593-.5998v-8.9585c.003-1.6474-1.33-2.9852-2.9773-2.9882z"/></svg>Google Analytics</span></div></div></li>
@@ -178,18 +187,18 @@
     <div class="ba">
       <div class="ba-pair">
         <h3>The homepage</h3>
-        <p>From a generic header and an empty image block to a page with a clear product hero, press logos, reviews and guarantees.</p>
-        <p class="ba-hint">Scroll inside each window to see more of the page.</p>
+        <p>From a plain heading and image blocks, two of them broken, to a page with a clear hero, press logos, guarantees and customer reviews.</p>
+        <p class="ba-hint">Scroll inside each window to see the whole homepage.</p>
         <div class="ba-grid">
           <figure><div class="browser">
             <div class="b-bar"><span class="b-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="b-tab">Vera-Fi Audio LLC</span></div>
             <div class="b-url"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 11V8a5 5 0 0 1 10 0v3" fill="none" stroke="currentColor" stroke-width="2"/><rect x="5" y="11" width="14" height="10" rx="2" fill="currentColor"/></svg><span>Archived homepage · 2024</span></div>
-            <div class="b-view" tabindex="0" aria-label="Old Vera-Fi Audio homepage with a generic header and an empty image block. Scroll to see more of the page."><img src="/assets/store-before.jpg" alt="Old Vera-Fi Audio homepage with a generic header and an empty image block" width="680" height="863" loading="lazy"></div>
+            <div class="b-view" tabindex="0" aria-label="Old Vera-Fi Audio homepage: a plain heading and category image blocks, two of them broken. Scroll to see the whole page."><img src="/assets/store-before.jpg" alt="Old Vera-Fi Audio homepage with a plain heading and category image blocks, two of them broken" width="1040" height="4099" loading="lazy"></div>
           </div><figcaption><b>Before</b>Archived homepage, before I took over</figcaption></figure>
           <figure class="after"><div class="browser">
             <div class="b-bar"><span class="b-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="b-tab">Vera-Fi Audio</span></div>
             <div class="b-url"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 11V8a5 5 0 0 1 10 0v3" fill="none" stroke="currentColor" stroke-width="2"/><rect x="5" y="11" width="14" height="10" rx="2" fill="currentColor"/></svg><span>Current homepage</span></div>
-            <div class="b-view" tabindex="0" aria-label="Current Vera-Fi Audio homepage with product hero, press logos, reviews and guarantees. Scroll to see more of the page."><img src="/assets/store-after.jpg" alt="Current Vera-Fi Audio homepage with product hero, press logos, reviews and guarantees" width="1120" height="1028" loading="lazy"></div>
+            <div class="b-view" tabindex="0" aria-label="Current Vera-Fi Audio homepage: hero, press logos, guarantees, shop by category, product updates and customer reviews. Scroll to see the whole page."><img src="/assets/store-after.jpg" alt="Current Vera-Fi Audio homepage with a hero, press logos, guarantees, shop by category, product updates and customer reviews" width="1040" height="3631" loading="lazy"></div>
           </div><figcaption><b>After</b>Current homepage</figcaption></figure>
         </div>
       </div>
@@ -219,14 +228,14 @@
     </div>
     <p class="source">Sources: Shopify gross sales, Jan 2024 – Dec 2025. Brevo campaign reports, Aug 2024 – Apr 2026.</p>
     <div class="mid-cta">
-      <p>Curious what this could look like for your store? Start with one small fix.</p>
-      <a class="btn" href="#fixes">See the fixes</a>
+      <p>Curious what this could look like for your store? I’ll sketch one fix for you first, free.</p>
+      <button type="button" class="btn" data-need="A free sketch of one fix (free)">Ask for a free sketch</button>
     </div>
   </div>
 </section>
 
 <!-- 06 MORE WORK  (placeholders: swap each .ph for <img src="/assets/work-1.jpg" alt="..." width="1600" height="1000" loading="lazy">) -->
-<section id="work" aria-labelledby="work-h">
+<section id="work" aria-labelledby="work-h" hidden><!-- Hidden for now (Nov 14). To show it again: remove "hidden", restore the Work nav link, and renumber What worked to Questions as 07 to 11. -->
   <div class="wrap">
     <div class="section-head"><span class="mono">More work</span><span class="num">06</span></div>
     <h2 id="work-h">Other sites I’ve <span class="gold">designed</span>.</h2>
@@ -266,13 +275,13 @@
 <!-- 07 LESSONS -->
 <section id="lessons" aria-labelledby="lessons-h">
   <div class="wrap">
-    <div class="section-head"><span class="mono">What worked</span><span class="num">07</span></div>
+    <div class="section-head"><span class="mono">What worked</span><span class="num">06</span></div>
     <h2 id="lessons-h">Four things you can use this <span class="gold">week</span>.</h2>
     <p class="lede">You don’t need to hire anyone for these. They’re a few of the things I did at Vera-Fi Audio that you can try on your own.</p>
     <div class="lessons">
       <article class="lesson"><div class="tag" data-n="01">Product photos</div><h3>Shoot every product on the same background, at 1:1.</h3><p>Shoppers compare products side by side. When every photo matches, the products look like one brand, and the store looks like a store you can trust.</p></article>
       <article class="lesson"><div class="tag" data-n="02">Email</div><h3>Email the people who already bought from you, by interest.</h3><p>Past buyers and sign-ups are usually the easiest sales to win. Send each group the emails that match what they bought or asked about. At Vera-Fi Audio, campaigns averaged an 11.6% click rate.</p></article>
-      <article class="lesson"><div class="tag" data-n="03">Promotion</div><h3>Use YouTubers for launches, not for steady sales.</h3><p>Lead with your award winners the rest of the time. Reviews give a launch its spike, and the store and email have to carry the months in between.</p></article>
+      <article class="lesson"><div class="tag" data-n="03">Promotion</div><h3>Save YouTubers for launches.</h3><p>Lead with your award winners the rest of the time. Reviews give a launch its spike. The store and email carry the months in between.</p></article>
       <article class="lesson"><div class="tag" data-n="04">Support</div><h3>Write the manual so customers don’t have to email you.</h3><p>A clear, designed manual answers the setup questions before they reach your inbox, and it makes the product feel finished.</p></article>
     </div>
   </div>
@@ -282,9 +291,9 @@
 <section id="fixes" aria-labelledby="fixes-h">
   <span id="start" aria-hidden="true"></span>
   <div class="wrap">
-    <div class="section-head"><span class="mono">Friction fixes</span><span class="num">08</span></div>
+    <div class="section-head"><span class="mono">Friction fixes</span><span class="num">07</span></div>
     <h2 id="fixes-h">Start <span class="gold">small</span>. One fix at a time.</h2>
-    <p class="lede">Hiring someone new is a risk. So start with one fixed-price job on whatever is slowing your buyers down: the store, the email, the content. If it helps, we keep going. If not, you’ve lost very little.</p>
+    <p class="lede">Hiring someone new is a risk. So start small. I’ll sketch the fix first, for free, so you can judge it. Then pick one fixed-price job on whatever is slowing your buyers down: the store, the email, the content. If it helps, we keep going.</p>
     <div class="fixes">
       <article class="fix feature"><div class="meta"><span>Email</span><span>~1 week</span></div><h3>Signup offer + welcome emails</h3><div class="price"><b>$350</b><span>one-time</span></div><p>A real reason to join your list, plus three welcome emails in your voice. Set up in Klaviyo, Mailchimp, Brevo or Shopify Email, or ready to paste.</p><button type="button" class="pick" data-need="Welcome emails ($350)">Pick this fix</button></article>
       <article class="fix"><div class="meta"><span>Store</span><span>~1 week</span></div><h3>One product page, rewritten</h3><div class="price"><b>$300</b><span>per page</span></div><p>Plain, accurate copy, one clean spec table, two or three review quotes with sources, and a clear “how to buy” block.</p><button type="button" class="pick" data-need="Product page ($300)">Pick this fix</button></article>
@@ -302,8 +311,8 @@
       <div><b>Any platform</b><span>Shopify, WordPress, Squarespace, Wix, or ready to paste.</span></div>
     </div>
     <div class="bigger">
-      <p><b>Want more than one fix?</b>Larger projects start at $1,200 and usually run up to two months, one change at a time, so nothing that sells today gets switched off.</p>
-      <button type="button" class="btn ghost pick-btn" data-need="A larger project (from $1,200)">Ask about a project</button>
+      <p><b>Want more than one fix?</b>Larger projects start at $2,000 and usually run up to two months, one change at a time, so nothing that sells today gets switched off.</p>
+      <button type="button" class="btn ghost pick-btn" data-need="A larger project (from $2,000)">Ask about a project</button>
     </div>
   </div>
 </section>
@@ -311,9 +320,9 @@
 <!-- 09 FIT AND TRUST -->
 <section id="fit" aria-labelledby="fit-h">
   <div class="wrap">
-    <div class="section-head"><span class="mono">Who this is for</span><span class="num">09</span></div>
+    <div class="section-head"><span class="mono">Who this is for</span><span class="num">08</span></div>
     <h2 id="fit-h"><span class="only-dm">Small audio brands with real <span class="gold">fans</span>.</span><span class="only-store">Your store is live. Is it <span class="gold">selling</span>?</span></h2>
-    <p class="lede">For hi-fi, headphone, IEM and turntable brands with a proven product and plans to grow.</p>
+    <p class="lede">Small premium audio brands: headphones and IEMs, headphone accessories, amps and DACs, turntables and analog, phono and record care. A proven product, an enthusiast following and plans to grow.</p>
     <div class="fit">
       <div class="fit-col">
         <h3>A good fit if</h3>
@@ -344,7 +353,7 @@
 <!-- 10 ABOUT -->
 <section aria-labelledby="about-h">
   <div class="wrap">
-    <div class="section-head"><span class="mono">Who I am</span><span class="num">10</span></div>
+    <div class="section-head"><span class="mono">Who I am</span><span class="num">09</span></div>
     <div class="about">
       <img src="/assets/ace.jpg" alt="Ace Dolorito" width="900" height="900" loading="lazy">
       <div class="bio">
@@ -367,15 +376,15 @@
 <!-- 11 FAQ -->
 <section id="faq" aria-labelledby="faq-h">
   <div class="wrap">
-    <div class="section-head"><span class="mono">Questions</span><span class="num">11</span></div>
+    <div class="section-head"><span class="mono">Questions</span><span class="num">10</span></div>
     <h2 id="faq-h">Fair <span class="gold">questions</span>.</h2>
     <div class="faq">
-      <details><summary>Will a store take away the personal touch my customers like?</summary><p>It didn’t at Vera-Fi Audio. Customers still talk to us personally through the store chat and email. Email campaigns are sent by interest, so people get the emails that match what they care about, not a blast to everyone.</p></details>
+      <details><summary>Will a store take away the personal touch my customers like?</summary><p>It didn’t at Vera-Fi Audio. Customers still talk to us personally through the store chat and email. Email campaigns are sent by interest, so people only get the emails that match what they care about.</p></details>
       <details><summary>You work with an audio brand. Is that a conflict?</summary><p>I don’t work with direct competitors of my clients. If you make a different kind of equipment, serve a different market, or go for a different sound, it isn’t a conflict. Your numbers stay private unless you agree otherwise.</p></details>
       <details><summary>Why start with something so small?</summary><p>Because hiring someone you’ve never worked with is a risk. A small fix lets you judge the work, the communication and the timing first. It’s how I started with Vera-Fi Audio: social graphics first, then the store, email and the rest.</p></details>
       <details><summary>Do you have time for another brand?</summary><p>Yes. Vera-Fi Audio runs on systems that are already in place, so I have room for small fixes and one larger project at a time.</p></details>
       <details><summary>Will the changes break what already sells?</summary><p>No. I add improvements one at a time, the way I did at Vera-Fi Audio. Nothing that sells today gets switched off.</p></details>
-      <details><summary>How much does it cost, and how long does it take?</summary><p>Small fixes are fixed-price, from $150, and most take about a week. Larger projects start at $1,200 and usually run up to two months. Either way: half up front, the rest once you’ve approved the work.</p></details>
+      <details><summary>How much does it cost, and how long does it take?</summary><p>Small fixes are fixed-price, from $150, and most take about a week. Larger projects start at $2,000 and usually run up to two months. Either way: half up front, the rest once you’ve approved the work.</p></details>
       <details><summary>Do you work with brands outside the US?</summary><p>Yes. I work remotely with US and Asian brands.</p></details>
     </div>
   </div>
@@ -387,10 +396,10 @@
     <h2 id="contact-h"><span class="only-dm">You already sell by DM. <span class="hl">I build the store, content and distribution that sell without you.</span></span><span class="only-store">Your store already takes orders. <span class="hl">I build what makes it sell.</span></span></h2>
     <div class="contact-grid">
       <div class="offer">
-        <p class="big-p">Pick a fix, or send <span class="only-store">your store link</span><span class="only-dm">how you sell today</span> and I’ll suggest one. Not ready to spend anything? I’ll still send three specific ideas, free.</p>
+        <p class="big-p">Start with something free. Send <span class="only-store">your store link</span><span class="only-dm">how you sell today</span> and I’ll sketch one fix for you, or send three specific ideas. They’re yours to use either way.</p>
         <ol class="steps">
-          <li>You pick a fix, or send your link and I suggest one.</li>
-          <li>I reply within a day with a fixed price and a date.</li>
+          <li>Send your link. I reply within a day with a free sketch or three ideas.</li>
+          <li>If you want it built, pick a fix. I confirm a fixed price and a date.</li>
           <li>Half up front. The rest once you’ve approved the work.</li>
         </ol>
         <div class="email-pill" style="margin-top:28px">
@@ -410,6 +419,8 @@
         <label>Your name<input type="text" name="name" autocomplete="name" required></label>
         <label>Email<input type="email" name="email" autocomplete="email" required></label>
         <label>What do you need?<select name="need" id="need-field">
+          <option>A free sketch of one fix (free)</option>
+          <option>Three free ideas (free)</option>
           <option>Welcome emails ($350)</option>
           <option>Product page ($300)</option>
           <option>Social graphics ($250)</option>
@@ -418,8 +429,7 @@
           <option>Manual or spec sheet (from $300)</option>
           <option>Site cleanup ($150)</option>
           <option>Something smaller (quote first)</option>
-          <option>A larger project (from $1,200)</option>
-          <option>Three free ideas (free)</option>
+          <option>A larger project (from $2,000)</option>
         </select></label>
         <label><span class="only-store">Store link</span><span class="only-dm">Website, or how you sell today</span><input type="text" name="store" id="store-field" placeholder="yourbrand.com" required></label>
         <label><span>Anything else? <span class="opt">(optional)</span></span><textarea name="message" placeholder="Which page, which email tool, or what the graphics are for"></textarea></label>
@@ -440,7 +450,7 @@
 
 <footer>
   <div class="wrap">
-    <span>© 2026 Alas Digitals · Ace Dolorito · Reduce friction. Increase impact.</span>
+    <span>© 2026 Alas Digitals · Ace Dolorito · Great audio deserves a store that sells.</span>
     <span>Vera-Fi Audio name, photos and figures used with the owner’s permission.</span>
   </div>
 </footer>
@@ -567,6 +577,14 @@
       .then(function () { btn.disabled = false; btn.textContent = 'Send it'; });
   });
 })();
+</script>
+<script type="module">
+/* Vera-Fi lineup: three.js 0.169.0 is self-hosted in assets/vendor. If WebGL fails, the space collapses quietly. */
+const el = document.getElementById("lineup");
+if (el) import("/assets/lineup/vera-fi-lineup.js")
+  .then((m) => m.mountLineup(el))
+  .then(() => el.classList.add("ok"))
+  .catch(() => el.classList.add("fail"));
 </script>
 </body>
 </html>
