@@ -49,7 +49,7 @@ section{padding:clamp(64px,9vw,112px) 0;border-top:1px solid var(--line)}
 .source{font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:24px;letter-spacing:.02em}
 
 /* header */
-header.top{position:sticky;top:0;z-index:20;background:rgba(13,14,17,.86);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom:1px solid transparent;transition:border-color .6s var(--ease),background-color .6s var(--ease)}
+header.top{position:relative;z-index:20;background:rgba(13,14,17,.86);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom:1px solid transparent;transition:border-color .6s var(--ease),background-color .6s var(--ease)}
 header.top.scrolled{border-bottom-color:var(--line)}
 .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:68px}
 .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink)}
@@ -320,14 +320,24 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 32px;justify-content:space-bet
 :root{interpolate-size:allow-keywords}
 
 /* gold word: a single slow light pass after it lands */
-.gold{background-image:linear-gradient(100deg,transparent 38%,rgba(255,249,232,.95) 50%,transparent 62%),var(--grad);background-size:300% 100%,100% 100%;background-repeat:no-repeat;background-position:0 0,0 0}
+.gold{background-image:linear-gradient(100deg,transparent 36%,rgba(255,251,240,.7) 44%,#FFFDF6 50%,rgba(255,251,240,.7) 56%,transparent 64%),var(--grad);background-size:300% 100%,100% 100%;background-repeat:no-repeat;background-position:0 0,0 0}
 .js .hero .gold,.js .lit .gold{animation:sheen 2.6s var(--ease-io) both;animation-delay:var(--sheen-d,1.5s)}
+/* the glow is a copy of the word behind it (a filter on clipped text glows as a box), so only its opacity animates */
+.gold{position:relative}
+.gold::before{content:attr(data-text);position:absolute;left:0;top:0;z-index:-1;white-space:nowrap;pointer-events:none;line-height:normal;color:transparent;text-shadow:0 0 18px rgba(255,255,255,.7),0 0 5px rgba(255,255,255,.5);opacity:0}
+.js .hero .gold::before,.js .lit .gold::before{animation:gold-glow 2.6s linear both;animation-delay:var(--sheen-d,1.5s)}
+/* White flash timed to the shine: the sheen's ease is symmetric, so its band crosses the word’s centre at about 47.5% (measured).
+   The glow eases up over the 200ms before that point and fades over the next 430ms. */
+@keyframes gold-glow{0%,40%{opacity:0}47.5%{opacity:.8}64%,100%{opacity:0}}
 .js .lit .gold{--sheen-d:.8s}
 @keyframes sheen{from{background-position:0 0,0 0}to{background-position:100% 0,0 0}}
 
 /* hero entrance (page load) */
 .tagline .ln{display:block;overflow:hidden;padding:.04em 0 .08em;margin:-.04em 0 -.08em}
 .tagline .ln>span{display:inline-block}
+/* the line mask opens once the lines have landed, so the gold glow is not cut off */
+.js .tagline .ln{animation:ln-open 1ms linear 1.95s forwards}
+@keyframes ln-open{to{overflow:visible}}
 .js .tagline .ln>span{transform:translateY(108%);animation:line-up 1.5s var(--ease-line) forwards;animation-delay:calc(160ms + var(--i,0) * 170ms)}
 @keyframes line-up{to{transform:none}}
 .js .rise{opacity:0;animation:rise 1.3s var(--ease-lux) forwards;animation-delay:var(--d,0ms)}
@@ -422,7 +432,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 32px;justify-content:space-bet
 .splash-mark{position:relative;z-index:1;width:var(--mark);height:var(--mark);overflow:visible;clip-path:inset(100% 0 0 0);transform:translateY(8px);animation:splash-rise 1000ms cubic-bezier(.23,1,.32,1) 200ms forwards,splash-glow 3.6s ease-in-out 2.4s infinite}
 .splash-path{fill:#D4B483}
 /* Brand Kit v2 wordmark: Outfit 200, tracked +12% */
-.splash-word{font:200 30px/1 var(--display);letter-spacing:.12em;margin-right:-.12em;white-space:nowrap;color:transparent;background:linear-gradient(105deg,#D4B483 0%,#E6CC94 38%,#FFF3D6 50%,#E6CC94 62%,#D4B483 100%) 100% 0/260% 100%;-webkit-background-clip:text;background-clip:text;clip-path:inset(-10% 100% -10% 0);transform:translateX(-12px);animation:splash-unveil 1100ms cubic-bezier(.77,0,.175,1) 1150ms forwards,splash-sheen 1200ms cubic-bezier(.45,0,.25,1) 2200ms forwards}
+.splash-word{font:200 30px/1 var(--display);letter-spacing:.12em;margin-right:-.12em;white-space:nowrap;color:transparent;background:linear-gradient(105deg,var(--ink) 0%,var(--ink) 38%,#fff 50%,var(--ink) 62%,var(--ink) 100%) 100% 0/260% 100%;-webkit-background-clip:text;background-clip:text;clip-path:inset(-10% 100% -10% 0);transform:translateX(-12px);animation:splash-unveil 1100ms cubic-bezier(.77,0,.175,1) 1150ms forwards,splash-sheen 1200ms cubic-bezier(.45,0,.25,1) 2200ms forwards}
 @media (max-width:420px){.splash-lockup{--mark:40px;gap:12px}.splash-word{font-size:23px}}
 @keyframes splash-bloom{from{opacity:0}}
 @keyframes splash-rise{to{clip-path:inset(0 0 0 0);transform:translateY(0)}}
@@ -433,14 +443,14 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 32px;justify-content:space-bet
 [data-ready] .splash{opacity:0;visibility:hidden;pointer-events:none}
 [data-ready] .splash-inner{opacity:0;transform:scale(1.03);filter:blur(3px)}
 /* the hero waits for the hand-over, then rises under the leaving splash */
-.js:not([data-ready]) .rise,.js:not([data-ready]) .tagline .ln>span,.js:not([data-ready]) .for-line i,.js:not([data-ready]) .hero .gold{animation-play-state:paused}
+.js:not([data-ready]) .rise,.js:not([data-ready]) .tagline .ln>span,.js:not([data-ready]) .for-line i,.js:not([data-ready]) .hero .gold,.js:not([data-ready]) .hero .gold::before,.js:not([data-ready]) .tagline .ln{animation-play-state:paused}
 
 /* ============ Full-height sections + scroll-linked motion (v4.2) ============ */
 /* Laptop and up, on screens tall enough: every section fills at least one screen and centres its content.
    Longer sections (the journey, the fixes, the FAQ) simply run longer: nothing is cut or scrolled inside a box.
    Phones keep natural heights so short sections don't become empty screens. */
 @media (min-width:900px) and (min-height:640px){
-  main > section{min-height:calc(100svh - 68px);display:flex;flex-direction:column;justify-content:center}
+  main > section{min-height:100svh;display:flex;flex-direction:column;justify-content:center}
   main > section > .wrap{width:100%}
   main > section.hero{min-height:calc(100svh - 68px)}
 }
@@ -484,12 +494,12 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 32px;justify-content:space-bet
    Sections taller than a screen (the journey, before/after, the fixes) scroll freely inside, then hand over to the next.
    Phones keep free scrolling: their sections run several screens long and snapping fights the thumb. */
 @media (min-width:900px) and (min-height:640px) and (prefers-reduced-motion:no-preference){
-  html{scroll-snap-type:y mandatory;scroll-padding-top:68px}
+  html{scroll-snap-type:y mandatory;scroll-padding-top:0}
   main > section{scroll-snap-align:start;scroll-snap-stop:normal}
   footer{scroll-snap-align:end}
 }
 @media (min-width:900px) and (min-height:640px) and (prefers-reduced-motion:reduce){
-  html{scroll-snap-type:y proximity;scroll-padding-top:68px}
+  html{scroll-snap-type:y proximity;scroll-padding-top:0}
   main > section{scroll-snap-align:start}
 }
 .hero .tools-marquee{margin-top:clamp(40px,6vw,72px);border-bottom:0}
@@ -532,7 +542,7 @@ main > section.hero{min-height:calc(100svh - 68px);display:flex;flex-direction:c
 .lineup.fail{display:none}
 @media (max-width:600px){.lineup{min-height:140px}.path-toggle.path-big button{font-size:15px;padding:11px 16px}}
 
-main > section.hero-2{min-height:calc(100svh - 68px);display:flex;flex-direction:column;justify-content:center;border-top:0}
+main > section.hero-2{min-height:100svh;display:flex;flex-direction:column;justify-content:center;border-top:0}
 .hero-2 .hero-grid{margin-top:0;align-items:center}
 .hero-2 .pitch{margin:0;font-family:var(--display);font-weight:600;letter-spacing:-.01em;font-size:clamp(28px,3.4vw,44px);line-height:1.12;color:var(--ink-2)}
 .hero-2 .pitch .hl{color:var(--ink)}
@@ -598,6 +608,235 @@ html.gated .path-big button[aria-pressed="true"]{color:var(--ink-2)}
    The before/after windows keep theirs, since that is how visitors know they scroll. */
 html{scrollbar-width:none;-ms-overflow-style:none}
 html::-webkit-scrollbar{width:0;height:0;display:none}
+
+/* ============ Recommendations (v4.10) ============
+   Cards share one height. Long ones are cut at seven lines with a fade and a "Read more" toggle. */
+.recs{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;margin-top:40px;align-items:stretch}
+@media (min-width:760px){.recs{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (min-width:1100px){.recs{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.rec{margin:0;background:var(--paper-2);border:1px solid var(--line);border-radius:var(--r);padding:clamp(22px,2.4vw,30px);display:flex;flex-direction:column;gap:14px;min-width:0;transition:border-color .5s var(--ease),transform .6s var(--ease-lux)}
+@media (hover:hover) and (pointer:fine){.rec:hover{border-color:var(--gold-deep);transform:translateY(-3px)}}
+.rec-text{--lines:7;margin:0;display:flex;flex-direction:column;gap:12px;max-height:calc(1.6em * var(--lines));overflow:hidden;font-size:16px;transition:max-height .8s var(--ease-lux)}
+.rec-text p{margin:0;font-size:16px;line-height:1.6;color:var(--ink)}
+/* rows shared across a line of cards (subgrid): text, Read more, name. Dividers and names line up. */
+@supports (grid-template-rows:subgrid){
+  .rec{display:grid;grid-template-rows:subgrid;grid-row:span 3;row-gap:14px}
+  .rec .rec-toggle[hidden]{display:inline-flex!important;visibility:hidden}
+  .rec figcaption{margin-top:0;align-self:start}
+}
+.rec.clamped .rec-text{-webkit-mask-image:linear-gradient(to bottom,#000 55%,transparent);mask-image:linear-gradient(to bottom,#000 55%,transparent)}
+.rec.clamped.open .rec-text{max-height:var(--full,2000px);-webkit-mask-image:none;mask-image:none}
+.rec-toggle{align-self:flex-start;border:0;background:none;padding:0;min-height:44px;cursor:pointer;font:600 15px var(--sans);color:var(--accent);display:inline-flex;align-items:center;gap:8px;transition:color .3s var(--ease)}
+.rec-toggle::after{content:"+";font-family:var(--mono);font-weight:400;transition:transform .45s var(--ease-io)}
+.rec.open .rec-toggle::after{transform:rotate(45deg)}
+.rec-toggle:active{transform:scale(.97)}
+@media (hover:hover) and (pointer:fine){.rec-toggle:hover{color:var(--gold-hi)}}
+.rec figcaption{padding-top:16px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:4px}
+.rec figcaption a{font-family:var(--display);font-weight:600;font-size:17px;color:var(--ink);text-decoration:none;width:fit-content}
+@media (hover:hover) and (pointer:fine){.rec figcaption a:hover{color:var(--accent)}}
+.rec figcaption span{font-size:13.5px;line-height:1.45;color:var(--muted)}
+
+/* ============ v4.12 ============ */
+/* Hidden scrollbars on the page and the sideways rows (they still scroll) */
+.hx-track{scrollbar-width:none;-ms-overflow-style:none}
+.hx-track::-webkit-scrollbar{display:none;width:0;height:0}
+/* the homepage windows keep a normal browser scrollbar, so they read as real browsers */
+
+/* Starting point: rows light up under the pointer */
+.timeline .row{position:relative;isolation:isolate}
+.timeline .row::before{content:"";position:absolute;inset:0 -16px;z-index:-1;border-radius:var(--r);background:linear-gradient(90deg,rgba(212,180,131,.09),rgba(212,180,131,0) 75%);opacity:0;transition:opacity .5s var(--ease)}
+.timeline .row::after{content:"";position:absolute;left:-16px;top:14px;bottom:14px;width:2px;background:var(--grad);transform:scaleY(0);transform-origin:top;transition:transform .55s var(--ease-lux)}
+.timeline .when,.timeline .what{transition:transform .55s var(--ease-lux),color .4s var(--ease)}
+@media (hover:hover) and (pointer:fine){
+  .timeline .row:hover::before{opacity:1}
+  .timeline .row:hover::after{transform:none}
+  .timeline .row:hover .when{color:var(--gold-hi)}
+  .timeline .row:hover .what{transform:translateX(8px);color:var(--ink)}
+}
+
+/* June 2024 → now: heading block stays while the steps pass; each step comes into focus at the centre */
+@media (min-width:1000px){
+  .j-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:0 64px;align-items:start}
+  .j-head{position:sticky;top:clamp(48px,14vh,140px)}
+  .j-grid .journey{margin-top:0;border-bottom:0}
+  .j-grid .step{grid-template-columns:minmax(0,1fr);gap:10px;padding:clamp(28px,5vh,48px) 0}
+  .j-grid .step:first-child{border-top:0;padding-top:0}
+  .j-grid .step-name{display:flex;align-items:baseline;gap:16px}
+  .j-grid .step-name .mono{margin:0;order:2}
+}
+/* v4.16 journey: heading pinned at the top, the first step starts a quarter of the way down,
+   a gold path runs through the step bullets as you scroll. Only the step on that line is in full focus:
+   the steps still to come wait at a soft fade, the ones already passed fade away. */
+.journey{--focus:25vh;--sp:28px;--dy:8px;--dot:12px;--rail:44px;position:relative;padding-left:var(--rail)}
+.journey .step{position:relative}
+/* the line from this bullet down to the next one: grey track, gold fill */
+.journey .step::before{content:"";position:absolute;left:calc(var(--rail) * -1 + var(--dot) / 2 - 1px);top:calc(var(--sp) + var(--dy));height:100%;width:2px;border-radius:1px;
+  background:linear-gradient(var(--accent),var(--accent)) top/100% 100% no-repeat,var(--line)}
+.journey .step:last-child::before{display:none}
+@media (max-width:760px){.journey{--rail:28px}}
+/* the bullet */
+.journey .step::after{content:"";position:absolute;left:calc(var(--rail) * -1);top:calc(var(--sp) + var(--dy) - var(--dot) / 2);width:var(--dot);height:var(--dot);border-radius:50%;box-sizing:border-box;
+  background:var(--accent);border:1px solid var(--accent);box-shadow:0 0 0 5px rgba(212,180,131,.12)}
+.journey .step.beyond::after{background:var(--paper);border-style:dashed}
+@media (min-width:1000px){
+  main > section.journey-sec{padding-top:clamp(48px,8vh,96px);justify-content:flex-start}
+  .j-head{top:clamp(48px,8vh,96px)}
+  .j-grid .journey{--sp:clamp(28px,5vh,48px);--dy:16px;padding-top:max(0px,calc(var(--focus) - clamp(48px,8vh,96px) - var(--sp) - var(--dy)));padding-bottom:calc(100vh - var(--focus) - 140px)}
+  .j-grid .step,.j-grid .step:first-child{border-top:0;padding-top:var(--sp)}
+}
+/* one scroll, one step: each step is a snap point with its bullet a quarter of the way down */
+@media (min-width:1000px) and (min-height:640px){
+  .j-grid .step{scroll-snap-align:start;scroll-snap-stop:always;scroll-margin-top:calc(var(--focus) - var(--sp) - var(--dy))}
+}
+@supports (animation-timeline: view()){
+  @media (prefers-reduced-motion:no-preference){
+    .journey .step{view-timeline:--step block}
+    .journey .step > *{animation:step-focus linear both;animation-timeline:--step;animation-range:cover calc(100vh - var(--focus) + var(--sp) + var(--dy) - 50vh) cover calc(100vh - var(--focus) + var(--sp) + var(--dy) + 50vh)}
+    /* the path fills from this bullet to the next while the step passes the middle of the screen */
+    .journey .step::before{background-size:100% 0%;animation:path-fill linear both;animation-timeline:--step;animation-range:cover calc(100vh - var(--focus) + var(--sp) + var(--dy)) cover calc(100% - var(--focus) + var(--sp) + var(--dy))}
+    /* each bullet lights as its step reaches the middle, then stays lit */
+    .journey .step::after{animation:dot-on linear both;animation-timeline:--step;animation-range:cover calc(100vh - var(--focus) + var(--sp) + var(--dy) - 40px) cover calc(100vh - var(--focus) + var(--sp) + var(--dy))}
+  }
+}
+@keyframes step-focus{0%{opacity:.22;transform:translateY(14px)}32%{opacity:.36;transform:translateY(6px)}46%,54%{opacity:1;transform:none}68%{opacity:.1;transform:translateY(-6px)}100%{opacity:0;transform:translateY(-14px)}}
+@keyframes path-fill{to{background-size:100% 100%}}
+@keyframes dot-on{from{background:var(--paper);border-color:var(--line-2);box-shadow:0 0 0 0 rgba(212,180,131,0);transform:scale(.8)}to{background:var(--accent);border-color:var(--accent);box-shadow:0 0 0 5px rgba(212,180,131,.12);transform:none}}
+
+/* Sideways rows (before/after, fixes, recommendations) */
+.hx{position:relative;margin-top:clamp(20px,3.5vh,40px)}
+.hx-track{display:flex;gap:16px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-padding-inline:0;margin:0;padding-bottom:2px;
+  -webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 56px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 56px),transparent);transition:-webkit-mask-image .4s,mask-image .4s}
+.hx.at-end .hx-track{-webkit-mask-image:none;mask-image:none}
+.hx.no-overflow .hx-track{-webkit-mask-image:none;mask-image:none}
+.hx-track > *{flex:0 0 auto;scroll-snap-align:start}
+.hx-track:focus-visible{outline:2px solid var(--accent);outline-offset:6px;border-radius:var(--r)}
+.hx-nav{display:flex;justify-content:flex-end;gap:10px;margin-top:clamp(12px,2vh,20px)}
+.hx.no-overflow .hx-nav{visibility:hidden}
+.hx-btn{width:44px;height:44px;border-radius:50%;border:1px solid var(--line-2);background:transparent;color:var(--ink);display:grid;place-items:center;cursor:pointer;transition:border-color .3s var(--ease),color .3s var(--ease),opacity .3s var(--ease),transform .16s var(--ease)}
+.hx-btn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.hx-btn:active{transform:scale(.95)}
+.hx-btn:disabled{opacity:.3;cursor:default}
+@media (hover:hover) and (pointer:fine){.hx-btn:not(:disabled):hover{border-color:var(--accent);color:var(--accent)}}
+
+/* one-screen sections: tighter top and bottom */
+@media (min-width:900px) and (min-height:640px){
+  main > section.fit1{padding-block:clamp(28px,5vh,64px);justify-content:center}
+  .fit1 h2{font-size:clamp(30px,min(4.2vw,6vh),56px)}
+  .fit1 .lede{margin-top:clamp(10px,1.6vh,18px)}
+  .fit1 .section-head{margin-bottom:clamp(14px,2.4vh,28px)}
+}
+
+/* Before / after: two slides, homepage pair then photo pair */
+.hx .ba{flex-direction:row;gap:24px;margin-top:0}
+.hx .ba-pair{width:100%;display:flex;flex-direction:column}
+.hx .ba-pair > p{margin-bottom:clamp(10px,1.6vh,18px)}
+.hx .ba-hint{margin:-4px 0 clamp(10px,1.6vh,16px)}
+.hx .ba-grid{gap:20px}
+.hx .b-view{aspect-ratio:auto;height:clamp(220px,40vh,440px)}
+.hx .ba-grid .frame.square{aspect-ratio:1/1;height:clamp(220px,calc(40vh + 76px),520px);width:auto;max-width:100%}
+.hx .ba-pair:last-child .ba-grid{grid-template-columns:repeat(2,max-content);justify-content:start}
+.hx .ba-pair:last-child figure{width:fit-content}
+/* phones: before above after in each slide; photo pair stays side by side */
+@media (max-width:700px){.hx .ba-grid{grid-template-columns:minmax(0,1fr);gap:18px}.hx .b-view{height:46vh}.hx .ba-pair:last-child .ba-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}.hx .ba-pair:last-child figure{width:auto}.hx .ba-grid .frame.square{height:auto;width:100%}.hx .ba-pair:last-child figcaption{font-size:13px;flex-direction:column;gap:6px}}
+
+/* Friction fixes: one row */
+.hx .fixes{display:flex;margin-top:0}
+.hx .fix{width:clamp(250px,22vw,290px)}
+.hx .fix p{font-size:15px}
+.fit1 .terms{margin-top:clamp(14px,2.4vh,28px)}
+.fit1 .terms div{padding-block:clamp(10px,1.6vh,18px)}
+.fit1 .bigger{margin-top:clamp(14px,2.4vh,28px);padding:clamp(14px,2.2vh,24px) 28px}
+
+/* Recommendations: one row, cards share a height */
+.hx .recs{display:flex;align-items:stretch;margin-top:0}
+.hx .rec{width:min(420px,84vw);display:flex}
+.hx .rec figcaption{margin-top:auto;align-self:stretch;min-height:7.6em;box-sizing:border-box}
+.hx .rec .rec-toggle[hidden]{display:none!important}
+.rec figcaption b{font-family:var(--display);font-weight:600;font-size:17px;color:var(--ink)}
+
+/* v4.12 fit pass: arrows sit beside the intro on laptops; tighter type and cards so each section is one screen */
+@media (min-width:900px) and (min-height:640px){
+  .fit1 h2{font-size:clamp(30px,min(4.2vw,5.4vh),56px)}
+  .fit1 .lede{font-size:clamp(16px,min(1.6vw,2.4vh),21px);max-width:640px}
+  .fit1 .hx-nav{position:absolute;right:0;bottom:calc(100% + 14px);margin:0}
+  .fit1 .hx{margin-top:clamp(18px,3vh,36px)}
+  .hx .b-view{height:clamp(200px,34vh,420px)}
+  .hx .ba-grid .frame.square{height:clamp(200px,calc(34vh + 76px),500px)}
+  .hx .ba-pair h3{font-size:clamp(20px,2.6vh,26px)}
+  .hx .ba-pair > p{font-size:clamp(15px,2vh,17px);max-width:620px}
+  .hx .fix{padding:clamp(14px,2.2vh,22px) 18px;gap:clamp(6px,1.2vh,12px)}
+  .hx .fix h3{font-size:clamp(17px,2.3vh,21px)}
+  .hx .fix .price b{font-size:clamp(24px,3.4vh,34px)}
+  .hx .fix p{font-size:clamp(13.5px,1.8vh,15px);line-height:1.45}
+  .fit1 .terms b{font-size:clamp(15px,2vh,18px)}
+  .fit1 .terms span{font-size:clamp(13px,1.7vh,15px)}
+  .fit1 .bigger p{font-size:clamp(14px,1.8vh,16px)}
+  .fit1 .bigger p b{font-size:clamp(16px,2.2vh,20px)}
+}
+.fix.more-card{border-color:var(--line-2);background:linear-gradient(180deg,rgba(212,180,131,.06),transparent 60%),var(--paper-2)}
+.fix.more-card .price b{font-size:clamp(22px,3vh,30px)}
+@media (min-width:900px) and (min-height:640px){#fixes .lede{max-width:860px}}
+/* whole slides, no edge fade */
+.hx .ba.hx-track{-webkit-mask-image:none;mask-image:none}
+
+/* ============ v4.13 refine ============ */
+/* Hovers and controls: quick and quiet. Reveals stay slow; anything the visitor triggers answers in under 300ms. */
+.fix,.lesson,.work-card,.rec{transition:border-color .2s var(--ease),transform .25s var(--ease),background-color .2s var(--ease)}
+.fix .pick::after,.text-link span,.to-top .arrow{transition:transform .2s var(--ease)}
+.text-link{transition:color .2s var(--ease),text-decoration-color .2s var(--ease)}
+.timeline .row::before{transition:opacity .25s var(--ease)}
+.timeline .row::after{transition:transform .3s var(--ease)}
+.timeline .when,.timeline .what{transition:transform .3s var(--ease),color .2s var(--ease)}
+.path-toggle button{transition:color .2s var(--ease),transform .16s var(--ease)}
+.path-toggle .thumb,.path-big .thumb{transition:transform .3s var(--ease-io),width .3s var(--ease-io),opacity .2s var(--ease)}
+.rec-text{transition:max-height .4s var(--ease)}
+.rec-toggle,.hx-btn{transition:border-color .2s var(--ease),color .2s var(--ease),opacity .2s var(--ease),transform .16s var(--ease)}
+.rec-toggle::after,.faq summary::after{transition:transform .25s var(--ease)}
+.faq details::details-content{transition:block-size .35s var(--ease),content-visibility .35s allow-discrete}
+@media (min-width:1200px) and (min-height:640px){.rail button i{transition:height .3s var(--ease),background-color .2s var(--ease)}.rail button span{transition:opacity .2s var(--ease),transform .2s var(--ease)}}
+/* phones: row arrows sit on the left so they never sit under the back-to-top button */
+@media not ((min-width:900px) and (min-height:640px)){.hx-nav{justify-content:flex-start}}
+
+/* One screen per section on laptops: spacing and type scale with the screen height */
+@media (min-width:900px) and (min-height:640px){
+  .fit1 .timeline,.fit1 .numbers,.fit1 .lessons,.fit1 .fit,.fit1 .faq,.fit1 .callout{margin-top:clamp(16px,3vh,40px)}
+  .fit1 .timeline .row{padding-block:clamp(10px,1.9vh,22px)}
+  .fit1 .timeline .what{font-size:clamp(17px,min(2vw,2.8vh),24px)}
+  .fit1 .callout{padding:clamp(16px,2.8vh,40px) clamp(24px,4vw,40px);font-size:clamp(20px,min(2.8vw,3.4vh),32px)}
+  .fit1 .chart{height:clamp(220px,38vh,460px);margin-top:clamp(16px,3vh,40px)}
+  .fit1 .chart-legend{margin:clamp(12px,2.2vh,28px) 0 clamp(8px,1.6vh,20px)}
+  .fit1 .numbers .stat{padding:clamp(10px,2vh,24px) 0 clamp(12px,2.6vh,32px)}
+  .fit1 .numbers .v{font-size:clamp(40px,min(5.6vw,7vh),72px)}
+  .fit1 .mid-cta{margin-top:clamp(16px,3vh,48px);padding:clamp(14px,2.2vh,26px) 30px}
+  .fit1 .lesson{padding:clamp(16px,2.6vh,26px);gap:clamp(6px,1.1vh,12px)}
+  .fit1 .lesson h3{font-size:clamp(19px,2.8vh,24px)}
+  .fit1 .lesson p{font-size:clamp(14.5px,1.95vh,17px);line-height:1.5}
+  .fit1 .fit-col{padding:clamp(16px,2.6vh,26px)}
+  .fit1 .fit-col h3{margin-bottom:clamp(8px,1.6vh,16px)}
+  .fit1 .fit-col ul{gap:clamp(8px,1.4vh,14px)}
+  .fit1 .fit-col li{font-size:clamp(15px,2vh,17px)}
+  .fit1 .trust div{padding-block:clamp(10px,1.9vh,22px)}
+  .fit1 .about{grid-template-columns:clamp(220px,34vh,320px) minmax(0,1fr)}
+  .fit1 .about .bio p{font-size:clamp(16px,2.2vh,19px);margin-bottom:clamp(10px,1.7vh,18px)}
+  .fit1 .about dl{margin-top:clamp(12px,2.4vh,28px)}
+  .fit1 .faq summary{padding-block:clamp(10px,1.9vh,22px)}
+}
+
+/* phones: before/after pairs stack instead of scrolling sideways, so the photo pair never sits in an empty, stretched slide */
+@media (max-width:700px){
+  #before-after .hx-track{flex-direction:column;overflow:visible;scroll-snap-type:none;gap:56px;-webkit-mask-image:none;mask-image:none}
+  #before-after .hx-nav{display:none}
+}
+
+/* v4.15: room above the cards so the hover lift is not cut off by the row's edge */
+.hx > .hx-track.hx-track{padding-top:6px;margin-top:-6px}
+/* grab to drag the rows with a mouse; while dragging, snapping and the hover lift pause */
+@media (hover:hover) and (pointer:fine){
+  .hx:not(.no-overflow) .hx-track{cursor:grab}
+  .hx.dragging .hx-track{cursor:grabbing;scroll-snap-type:none;user-select:none;-webkit-user-select:none}
+  .hx.dragging .hx-track > *{pointer-events:none}
+  .hx:not(.no-overflow) .b-view{cursor:auto}
+}
 
 /* reduced motion: show everything, keep only gentle fades */
 @media (prefers-reduced-motion:reduce){

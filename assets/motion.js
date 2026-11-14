@@ -39,14 +39,14 @@
     el.setAttribute('data-r', kind || '');
     if (delay) el.style.setProperty('--d', delay + 'ms');
   }
-  var STAGGER = 90, CAP = 6;
+  var STAGGER = 60, CAP = 6;
   document.querySelectorAll('main section:not(.hero)').forEach(function (sec) {
     var head = sec.querySelector('.section-head'); if (head) head.classList.add('draw');
     tag(sec.querySelector('.section-head .mono'), '', 0);
     tag(sec.querySelector('h2:not(.sr-only)'), 'blur', 120);
-    sec.querySelectorAll(':scope > .wrap > .lede, :scope > .wrap > .source, :scope > .wrap > .chart-legend, .ba-hint, .callout, .mid-cta, .bigger, .clients').forEach(function (el) { tag(el, '', 220); });
+    sec.querySelectorAll(':scope > .wrap > .lede, :scope > .wrap > .source, :scope > .wrap > .chart-legend, .callout, .mid-cta, .bigger, .clients, .hx').forEach(function (el) { tag(el, '', 220); });
   });
-  ['.timeline', '.journey', '.path-chips', '.numbers', '.lessons', '.fixes', '.terms', '.fit', '.trust', '.faq', '.work', '.steps', '.ba', '.about'].forEach(function (sel) {
+  ['.timeline', '.path-chips', '.numbers', '.lessons', '.terms', '.fit', '.trust', '.faq', '.work', '.steps', '.about'].forEach(function (sel) {
     document.querySelectorAll(sel).forEach(function (group) {
       Array.prototype.forEach.call(group.children, function (child, i) {
         if (child.tagName === 'SPAN' && !child.className) return;
@@ -163,6 +163,9 @@
     secs.forEach(function (x) { railIO.observe(x); });
   }
 
+  /* 5c2. Gold words: a copy of the word for the white glow behind it (see .gold::before) */
+  document.querySelectorAll('.gold').forEach(function (g) { g.setAttribute('data-text', g.textContent); });
+
   /* 5d. Scroll gate (main page only). The first screen holds still until the visitor answers
         "Which sounds like you?". Picking either option unlocks the page and glides to part 2.
         Skipped when: the page is locked to one audience (/store, /dm), the visitor already chose
@@ -191,18 +194,182 @@
       root.classList.remove('gated');
       removeEventListener('wheel', onWheel); removeEventListener('touchmove', onTouch); removeEventListener('keydown', onKey);
     };
-    chooser.querySelectorAll('[data-set-path]').forEach(function (b) {
-      b.addEventListener('click', function () {
-        unlock();
-        /* let the audience switch start, then glide down to part 2 */
-        setTimeout(function () { part2.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' }); }, reduce ? 0 : 180);
-      });
-    });
+    chooser.querySelectorAll('[data-set-path]').forEach(function (b) { b.addEventListener('click', unlock); });
     document.addEventListener('click', function (e) {
       if (e.target.closest('a[href^="#"], .rail button, [data-need]')) unlock();
     }, true);
     addEventListener('hashchange', unlock);
   }
+  /* Every pick on the first screen (not just the first one) glides down to part 2,
+     after the audience switch has started. */
+  if (chooser && part2 && !document.body.hasAttribute('data-locked')) {
+    chooser.querySelectorAll('[data-set-path]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        setTimeout(function () { part2.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' }); }, reduce ? 0 : 180);
+      });
+    });
+  }
+
+  /* 5e. Recommendations: same-height cards. Any text longer than seven lines gets a fade and "Read more". */
+  var recs = Array.prototype.slice.call(document.querySelectorAll('.rec'));
+  function measureRecs() {
+    recs.forEach(function (rec) {
+      var text = rec.querySelector('.rec-text'), btn = rec.querySelector('.rec-toggle');
+      if (!text || !btn) return;
+      text.style.setProperty('--full', text.scrollHeight + 'px');
+      if (rec.classList.contains('open')) return;
+      var over = text.scrollHeight > text.clientHeight + 4;
+      rec.classList.toggle('clamped', over); btn.hidden = !over;
+    });
+  }
+  recs.forEach(function (rec) {
+    var btn = rec.querySelector('.rec-toggle'); if (!btn) return;
+    btn.addEventListener('click', function () {
+      var open = !rec.classList.contains('open');
+      rec.querySelector('.rec-text').style.setProperty('--full', rec.querySelector('.rec-text').scrollHeight + 'px');
+      rec.classList.toggle('open', open);
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      btn.textContent = open ? 'Show less' : 'Read more';
+    });
+  });
+  if (recs.length) {
+    measureRecs();
+    addEventListener('resize', measureRecs);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(measureRecs);
+  }
+
+  /* 5f. Sideways rows: arrows scroll by one item; they dim at the ends and hide when everything fits. */
+  document.querySelectorAll('.hx').forEach(function (hx) {
+    var track = hx.querySelector('.hx-track'), btns = hx.querySelectorAll('.hx-btn');
+    if (!track) return;
+    function update() {
+      var max = track.scrollWidth - track.clientWidth;
+      hx.classList.toggle('no-overflow', max <= 2);
+      hx.classList.toggle('at-end', track.scrollLeft >= max - 2);
+      btns.forEach(function (b) {
+        b.disabled = b.dataset.dir === '-1' ? track.scrollLeft <= 2 : track.scrollLeft >= max - 2;
+      });
+    }
+    btns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        var item = track.firstElementChild, step = item ? item.getBoundingClientRect().width + parseFloat(getComputedStyle(track).columnGap || 16) : track.clientWidth;
+        track.scrollBy({ left: step * Number(b.dataset.dir), behavior: reduce ? 'auto' : 'smooth' });
+      });
+    });
+    track.addEventListener('scroll', update, { passive: true });
+    addEventListener('resize', update);
+
+    /* Mouse wheel: an up/down scroll over the row moves it sideways until it reaches an end,
+       then the page takes over again. Trackpads already scroll sideways natively. Inside the
+       homepage windows the wheel keeps scrolling the window. */
+    track.addEventListener('wheel', function (e) {
+      if (e.ctrlKey || Math.abs(e.deltaX) >= Math.abs(e.deltaY)) return;
+      if (e.target.closest('.b-view')) return;
+      var max = track.scrollWidth - track.clientWidth;
+      if (max <= 2) return;
+      var dy = e.deltaMode === 1 ? e.deltaY * 16 : e.deltaY;
+      if ((dy > 0 && track.scrollLeft >= max - 2) || (dy < 0 && track.scrollLeft <= 2)) return;
+      e.preventDefault();
+      track.scrollBy({ left: dy, behavior: reduce || Math.abs(dy) < 40 ? 'auto' : 'smooth' });
+    }, { passive: false });
+
+    /* Mouse drag: grab the row and throw it. Touch already swipes natively. On release it settles
+       on the nearest card, carrying a little of the throw. A drag never counts as a click. */
+    var drag = null, moved = false;
+    track.addEventListener('pointerdown', function (e) {
+      if (e.pointerType !== 'mouse' || e.button !== 0) return;
+      if (track.scrollWidth - track.clientWidth <= 2) return;
+      if (e.target.closest('input, textarea, select, .b-view')) return;
+      drag = { x: e.clientX, left: track.scrollLeft, t: e.timeStamp, v: 0, lastX: e.clientX, lastT: e.timeStamp, id: e.pointerId };
+      moved = false;
+    });
+    track.addEventListener('pointermove', function (e) {
+      if (!drag || e.pointerId !== drag.id) return;
+      var dx = e.clientX - drag.x;
+      if (!moved) {
+        if (Math.abs(dx) < 6) return;
+        moved = true;
+        track.setPointerCapture(e.pointerId);
+        hx.classList.add('dragging');
+      }
+      var dt = Math.max(1, e.timeStamp - drag.lastT);
+      drag.v = (e.clientX - drag.lastX) / dt; /* px per ms */
+      drag.lastX = e.clientX; drag.lastT = e.timeStamp;
+      track.scrollLeft = drag.left - dx;
+    });
+    function release(e) {
+      if (!drag || (e && e.pointerId !== drag.id)) return;
+      var wasMoved = moved, v = drag.v; drag = null;
+      if (!wasMoved) return;
+      /* settle on the nearest card, nudged by the throw */
+      var target = track.scrollLeft - v * 220, best = 0, bestD = Infinity, origin = track.firstElementChild ? track.firstElementChild.offsetLeft : 0;
+      Array.prototype.forEach.call(track.children, function (c) {
+        var d = Math.abs(c.offsetLeft - origin - target); if (d < bestD) { bestD = d; best = c.offsetLeft - origin; }
+      });
+      best = Math.min(best, track.scrollWidth - track.clientWidth);
+      track.scrollTo({ left: best, behavior: reduce ? 'auto' : 'smooth' });
+      setTimeout(function () { hx.classList.remove('dragging'); }, reduce ? 0 : 450);
+    }
+    track.addEventListener('pointerup', release);
+    track.addEventListener('pointercancel', release);
+    track.addEventListener('click', function (e) { if (moved) { e.preventDefault(); e.stopPropagation(); moved = false; } }, true);
+    track.addEventListener('dragstart', function (e) { e.preventDefault(); });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(update);
+    setTimeout(update, 400); update();
+  });
+
+  /* 5g. June 2024 → now, one scroll per step (laptops). A wheel gesture or arrow/page key moves exactly one
+        step, bringing its bullet a quarter of the way down the screen. Trackpad momentum is absorbed until the
+        gesture ends, so a long swipe still moves one step. Touch keeps the native snapping. */
+  (function () {
+    var sec = document.querySelector('.journey-sec'); if (!sec || reduce) return;
+    var steps = Array.prototype.slice.call(sec.querySelectorAll('.journey .step'));
+    var mq = matchMedia('(min-width:1000px) and (min-height:640px)');
+    if (!steps.length) return;
+    function targets() {
+      return steps.map(function (st) {
+        var h = st.querySelector('h3').getBoundingClientRect();
+        return Math.round(h.top + scrollY + h.height / 2 - innerHeight * 0.25);
+      });
+    }
+    function sectionTop(el) { return el ? Math.round(el.getBoundingClientRect().top + scrollY) : null; }
+    function nextSection(el, dir) {
+      var n = el; do { n = dir > 0 ? n.nextElementSibling : n.previousElementSibling; } while (n && (n.tagName !== 'SECTION' || n.hidden));
+      return n;
+    }
+    var busyUntil = 0, lastEvt = 0, gesture = false;
+    function go(dir) {
+      var t = targets(), y = scrollY, i = -1, k;
+      for (k = 0; k < t.length; k++) if (Math.abs(t[k] - y) < 48) { i = k; break; }
+      if (i < 0 && dir < 0 && Math.abs(sectionTop(nextSection(sec, 1)) - y) < 48) { scrollTo({ top: t[t.length - 1], behavior: 'smooth' }); busyUntil = performance.now() + 650; return true; }
+      if (i < 0) return false; /* not resting on a step: let the page scroll normally */
+      var to;
+      if (dir > 0) to = i < t.length - 1 ? t[i + 1] : sectionTop(nextSection(sec, 1));
+      else to = i > 0 ? t[i - 1] : sectionTop(nextSection(sec, -1));
+      if (to == null) return false;
+      scrollTo({ top: to, behavior: 'smooth' });
+      busyUntil = performance.now() + 650;
+      return true;
+    }
+    addEventListener('wheel', function (e) {
+      if (!mq.matches || e.ctrlKey || Math.abs(e.deltaY) < Math.abs(e.deltaX)) return;
+      var now = performance.now(), quiet = now - lastEvt > 160;
+      lastEvt = now;
+      if (gesture || now < busyUntil) {
+        /* swallow the rest of this gesture (and momentum) while a step move is underway */
+        if (!quiet || now < busyUntil) { e.preventDefault(); return; }
+        gesture = false;
+      }
+      if (Math.abs(e.deltaY) < 2) return;
+      if (go(e.deltaY > 0 ? 1 : -1)) { e.preventDefault(); gesture = true; }
+    }, { passive: false });
+    addEventListener('keydown', function (e) {
+      if (!mq.matches || e.target.closest('input, textarea, select, [contenteditable]')) return;
+      var dir = ({ ArrowDown: 1, PageDown: 1, ' ': e.shiftKey ? -1 : 1, ArrowUp: -1, PageUp: -1 })[e.key];
+      if (!dir || performance.now() < busyUntil) return;
+      if (go(dir)) e.preventDefault();
+    });
+  })();
 
   /* 6. Audience toggle: a thumb that slides between "I sell by DM" and "I have a store". */
   document.querySelectorAll('.path-toggle').forEach(function (t) {
