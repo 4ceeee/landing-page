@@ -838,6 +838,9 @@ html::-webkit-scrollbar{width:0;height:0;display:none}
   .hx:not(.no-overflow) .b-view{cursor:auto}
 }
 
+/* v4.18: the first snap point includes the header, so the page never lands with the header scrolled off */
+main > section.hero{scroll-margin-top:120px}
+
 /* reduced motion: show everything, keep only gentle fades */
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
