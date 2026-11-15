@@ -4,7 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Alas Digitals · Great audio deserves a store that sells</title>
-<meta name="description" content="Fixed-price fixes for small audio brands, from $150: welcome emails, product pages, social graphics and more. Case study: Vera-Fi Audio, from about $22K to $121K in average monthly revenue.">
+<meta name="description" content="Fixed-price fixes for small audio brands, from $150. Case study: Vera-Fi Audio grew from about $22K to $121K in average monthly revenue.">
+<link rel="canonical" href="https://alas-digitals.vercel.app/">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://alas-digitals.vercel.app/#website","url":"https://alas-digitals.vercel.app/","name":"Alas Digitals","publisher":{"@id":"https://alas-digitals.vercel.app/#business"}},{"@type":"ProfessionalService","@id":"https://alas-digitals.vercel.app/#business","name":"Alas Digitals","url":"https://alas-digitals.vercel.app/","image":"https://alas-digitals.vercel.app/assets/og.png","description":"Fixed-price store, email and content fixes for small audio brands.","foundingDate":"2023-03","founder":{"@id":"https://alas-digitals.vercel.app/#ace"},"priceRange":"From $150","hasOfferCatalog":{"@type":"OfferCatalog","name":"Fixes","itemListElement":[{"@type":"Offer","price":350,"priceCurrency":"USD","itemOffered":{"@type":"Service","name":"Signup offer + welcome emails"}},{"@type":"Offer","price":300,"priceCurrency":"USD","itemOffered":{"@type":"Service","name":"One product page, rewritten"}},{"@type":"Offer","price":250,"priceCurrency":"USD","itemOffered":{"@type":"Service","name":"Social graphics pack"}},{"@type":"Offer","price":250,"priceCurrency":"USD","itemOffered":{"@type":"Service","name":"Press and reviews block"}},{"@type":"Offer","price":200,"priceCurrency":"USD","itemOffered":{"@type":"Service","name":"Where-to-buy page"}},{"@type":"Offer","priceSpecification":{"@type":"PriceSpecification","minPrice":300,"priceCurrency":"USD"},"itemOffered":{"@type":"Service","name":"Manual or spec sheet"}},{"@type":"Offer","price":150,"priceCurrency":"USD","itemOffered":{"@type":"Service","name":"Site cleanup"}},{"@type":"Offer","priceSpecification":{"@type":"PriceSpecification","minPrice":2000,"priceCurrency":"USD"},"itemOffered":{"@type":"Service","name":"Larger project"}}]}},{"@type":"Person","@id":"https://alas-digitals.vercel.app/#ace","name":"Ace Dolorito","jobTitle":"Head of Marketing & International Sales, Vera-Fi Audio","worksFor":{"@type":"Organization","name":"Vera-Fi Audio"}}]}</script>
 <meta property="og:title" content="Alas Digitals · Great audio deserves a store that sells">
 <meta property="og:description" content="How a small hi-fi brand went from about $22K to $121K in average monthly revenue on the same Shopify store.">
 <meta property="og:type" content="website">
@@ -19,7 +21,7 @@
 <link rel="preload" href="/assets/fonts/instrument-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/site.css">
 <script>
-/* Loading screen: plays on every arrival and every reload. Skipped when moving between pages of this site,
+/* Loading screen: plays once per visit (browser session). Skipped when moving between pages of this site,
    with reduced motion, or after 6 s at most. Add ?splash to any URL to force it. */
 (function (h) {
   h.classList.add('js');
@@ -28,6 +30,7 @@
     var nav = performance.getEntriesByType('navigation')[0];
     internal = !!document.referrer && new URL(document.referrer).origin === location.origin && !(nav && nav.type === 'reload');
   } catch (e) {}
+  try { if (sessionStorage.getItem('alas-splash')) internal = true; sessionStorage.setItem('alas-splash', '1'); } catch (e) {}
   if (/[?&]splash\b/.test(location.search)) internal = false;
   if (internal || matchMedia('(prefers-reduced-motion: reduce)').matches) { h.setAttribute('data-ready', ''); h.setAttribute('data-nosplash', ''); }
   setTimeout(function () { h.setAttribute('data-ready', ''); }, 6000);
@@ -235,44 +238,6 @@
     <div class="mid-cta">
       <p>Curious what this could look like for your store? I’ll sketch one fix for you first, free.</p>
       <button type="button" class="btn" data-need="A free sketch of one fix (free)">Ask for a free sketch</button>
-    </div>
-  </div>
-</section>
-
-<!-- 06 MORE WORK  (placeholders: swap each .ph for <img src="/assets/work-1.jpg" alt="..." width="1600" height="1000" loading="lazy">) -->
-<section id="work" aria-labelledby="work-h" hidden><!-- Hidden for now (Nov 14). To show it again: remove "hidden", restore the Work nav link, and renumber What worked to Questions as 07 to 11. -->
-  <div class="wrap">
-    <div class="section-head"><span class="mono">More work</span><span class="num">06</span></div>
-    <h2 id="work-h">Other sites I’ve <span class="gold">designed</span>.</h2>
-    <p class="lede">Beyond Vera-Fi Audio: sites and pages I’ve designed and built for other brands.</p>
-    <div class="work">
-      <article class="work-card">
-        <div class="shot"><div class="ph" role="img" aria-label="Screenshot placeholder">[Screenshot · 1600 × 1000]</div></div>
-        <div class="body">
-          <div class="wmeta"><span>Audio publication · USA</span><span>WordPress</span></div>
-          <h3>[Project name]</h3>
-          <p>Custom sections for an audio publication’s WordPress site. [One line on what changed for them.]</p>
-          <span class="wlink">[Link to the live site]</span>
-        </div>
-      </article>
-      <article class="work-card">
-        <div class="shot"><div class="ph" role="img" aria-label="Screenshot placeholder">[Screenshot · 1600 × 1000]</div></div>
-        <div class="body">
-          <div class="wmeta"><span>[Client type]</span><span>[Platform]</span></div>
-          <h3>[Project name]</h3>
-          <p>[One line: what you designed or built, and the result if you have one.]</p>
-          <span class="wlink">[Link to the live site]</span>
-        </div>
-      </article>
-      <article class="work-card">
-        <div class="shot"><div class="ph" role="img" aria-label="Screenshot placeholder">[Screenshot · 1600 × 1000]</div></div>
-        <div class="body">
-          <div class="wmeta"><span>[Client type]</span><span>[Platform]</span></div>
-          <h3>[Project name]</h3>
-          <p>[One line: what you designed or built, and the result if you have one.]</p>
-          <span class="wlink">[Link to the live site]</span>
-        </div>
-      </article>
     </div>
   </div>
 </section>
@@ -498,7 +463,6 @@
 <script>
 (function () {
   var KEY = 'alas-path';
-  var EMAIL = 'acedolorito@gmail.com';
   var body = document.body;
 
   function store(k, v) { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) { return null; } }
@@ -565,64 +529,14 @@
   })();
 
 
-  /* Fix cards pre-select the form, then scroll to it */
-  var needField = document.getElementById('need-field');
-  document.querySelectorAll('[data-need]').forEach(function (b) {
-    b.addEventListener('click', function () {
-      needField.value = b.getAttribute('data-need');
-      var c = document.getElementById('contact');
-      c.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
-      setTimeout(function () { needField.focus({ preventScroll: true }); }, 450);
-    });
-  });
-
-  /* Copy email */
-  var copyBtn = document.getElementById('copy-email');
-  copyBtn.addEventListener('click', function () {
-    function done(ok) { copyBtn.textContent = ok ? 'Copied' : 'Select and copy'; setTimeout(function () { copyBtn.innerHTML = 'Copy<span class="wide"> email</span>'; }, 2200); }
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(EMAIL).then(function () { done(true); }, function () { done(false); });
-    } else { done(false); }
-  });
-
-  /* Form */
-  var form = document.getElementById('lead-form');
-  var status = document.getElementById('form-status');
-  var btn = document.getElementById('submit-btn');
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    status.className = 'form-status'; status.textContent = '';
-    var f = form.elements;
-    if (!f.name.value.trim() || !f.email.value.trim() || !f.store.value.trim()) {
-      status.className = 'form-status err'; status.textContent = 'Please fill in your name, email and store link.'; return;
-    }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email.value.trim())) {
-      status.className = 'form-status err'; status.textContent = 'That email address doesn’t look right. Please check it.'; return;
-    }
-    var key = f.access_key.value;
-    if (!key || key.indexOf('YOUR_') === 0) {
-      var lines = ['Hi Ace,', '', 'Name: ' + f.name.value, 'Email: ' + f.email.value, 'Need: ' + f.need.value, (body.getAttribute('data-path') === 'store' ? 'Store link: ' : 'How we sell today: ') + f.store.value, '', f.message.value, '', 'Thanks,'];
-      location.href = 'mailto:' + EMAIL + '?subject=' + encodeURIComponent('Three ideas for my store') + '&body=' + encodeURIComponent(lines.join('\n'));
-      status.className = 'form-status ok'; status.textContent = 'Your email app should open with your answers filled in.';
-      return;
-    }
-    btn.disabled = true; btn.textContent = 'Sending…';
-    fetch(form.action, { method: 'POST', headers: { 'Accept': 'application/json' }, body: new FormData(form) })
-      .then(function (r) { return r.json().then(function (j) { return { ok: r.ok && j.success, j: j }; }); })
-      .then(function (res) {
-        if (res.ok) { form.reset(); setPath(body.getAttribute('data-path')); status.className = 'form-status ok'; status.textContent = 'Thanks. I’ll reply by email.'; }
-        else { throw new Error('send failed'); }
-      })
-      .catch(function () { status.className = 'form-status err'; status.textContent = 'Something went wrong sending that. Please email me at ' + EMAIL + ' instead.'; })
-      .then(function () { btn.disabled = false; btn.textContent = 'Send it'; });
-  });
 })();
 </script>
+<script src="/assets/form.js"></script>
 <script type="module">
 /* Vera-Fi lineup: three.js 0.169.0 is self-hosted in assets/vendor. If WebGL fails, the space collapses quietly. */
 const el = document.getElementById("lineup");
 if (el) import("/assets/lineup/vera-fi-lineup.js")
-  .then((m) => m.mountLineup(el))
+  .then((m) => m.mountLineup(el, { idleSway: false }))
   .then(() => el.classList.add("ok"))
   .catch(() => el.classList.add("fail"));
 </script>

@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="canonical" href="https://alas-digitals.vercel.app/start">
 <title>Friction fixes · Alas Digitals</title>
 <meta name="description" content="Friction fixes for small audio brands: fixed-price jobs from $150, about a week each. Half up front, the rest on approval.">
 <meta property="og:title" content="Friction fixes · Alas Digitals">
@@ -19,7 +20,7 @@
 <link rel="preload" href="/assets/fonts/instrument-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/site.css">
 <script>
-/* Loading screen: plays on every arrival and every reload. Skipped when moving between pages of this site,
+/* Loading screen: plays once per visit (browser session). Skipped when moving between pages of this site,
    with reduced motion, or after 6 s at most. Add ?splash to any URL to force it. */
 (function (h) {
   h.classList.add('js');
@@ -28,6 +29,7 @@
     var nav = performance.getEntriesByType('navigation')[0];
     internal = !!document.referrer && new URL(document.referrer).origin === location.origin && !(nav && nav.type === 'reload');
   } catch (e) {}
+  try { if (sessionStorage.getItem('alas-splash')) internal = true; sessionStorage.setItem('alas-splash', '1'); } catch (e) {}
   if (/[?&]splash\b/.test(location.search)) internal = false;
   if (internal || matchMedia('(prefers-reduced-motion: reduce)').matches) { h.setAttribute('data-ready', ''); h.setAttribute('data-nosplash', ''); }
   setTimeout(function () { h.setAttribute('data-ready', ''); }, 6000);
@@ -200,7 +202,6 @@
 <script>
 (function () {
   var KEY = 'alas-path';
-  var EMAIL = 'acedolorito@gmail.com';
   var body = document.body;
 
   function store(k, v) { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) { return null; } }
@@ -235,58 +236,8 @@
 
 
 
-  /* Fix cards pre-select the form, then scroll to it */
-  var needField = document.getElementById('need-field');
-  document.querySelectorAll('[data-need]').forEach(function (b) {
-    b.addEventListener('click', function () {
-      needField.value = b.getAttribute('data-need');
-      var c = document.getElementById('contact');
-      c.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
-      setTimeout(function () { needField.focus({ preventScroll: true }); }, 450);
-    });
-  });
-
-  /* Copy email */
-  var copyBtn = document.getElementById('copy-email');
-  copyBtn.addEventListener('click', function () {
-    function done(ok) { copyBtn.textContent = ok ? 'Copied' : 'Select and copy'; setTimeout(function () { copyBtn.innerHTML = 'Copy<span class="wide"> email</span>'; }, 2200); }
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(EMAIL).then(function () { done(true); }, function () { done(false); });
-    } else { done(false); }
-  });
-
-  /* Form */
-  var form = document.getElementById('lead-form');
-  var status = document.getElementById('form-status');
-  var btn = document.getElementById('submit-btn');
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    status.className = 'form-status'; status.textContent = '';
-    var f = form.elements;
-    if (!f.name.value.trim() || !f.email.value.trim() || !f.store.value.trim()) {
-      status.className = 'form-status err'; status.textContent = 'Please fill in your name, email and store link.'; return;
-    }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email.value.trim())) {
-      status.className = 'form-status err'; status.textContent = 'That email address doesn’t look right. Please check it.'; return;
-    }
-    var key = f.access_key.value;
-    if (!key || key.indexOf('YOUR_') === 0) {
-      var lines = ['Hi Ace,', '', 'Name: ' + f.name.value, 'Email: ' + f.email.value, 'Need: ' + f.need.value, (body.getAttribute('data-path') === 'store' ? 'Store link: ' : 'How we sell today: ') + f.store.value, '', f.message.value, '', 'Thanks,'];
-      location.href = 'mailto:' + EMAIL + '?subject=' + encodeURIComponent('Three ideas for my store') + '&body=' + encodeURIComponent(lines.join('\n'));
-      status.className = 'form-status ok'; status.textContent = 'Your email app should open with your answers filled in.';
-      return;
-    }
-    btn.disabled = true; btn.textContent = 'Sending…';
-    fetch(form.action, { method: 'POST', headers: { 'Accept': 'application/json' }, body: new FormData(form) })
-      .then(function (r) { return r.json().then(function (j) { return { ok: r.ok && j.success, j: j }; }); })
-      .then(function (res) {
-        if (res.ok) { form.reset(); setPath(body.getAttribute('data-path')); status.className = 'form-status ok'; status.textContent = 'Thanks. I’ll reply by email.'; }
-        else { throw new Error('send failed'); }
-      })
-      .catch(function () { status.className = 'form-status err'; status.textContent = 'Something went wrong sending that. Please email me at ' + EMAIL + ' instead.'; })
-      .then(function () { btn.disabled = false; btn.textContent = 'Send it'; });
-  });
 })();
 </script>
+<script src="/assets/form.js"></script>
 </body>
 </html>
