@@ -851,3 +851,6 @@ html.glide{scroll-snap-type:none!important;scroll-behavior:auto!important}
   .js .tagline .ln>span,.js .rise{transform:none;opacity:1;filter:none}
   .tm-track{animation:none!important}
 }
+
+/* v4.22: the eyebrow above the headline is gone (/ and /start); keep each headline where it sat */
+.hero .wrap > .tagline:first-child{margin-top:44px}
