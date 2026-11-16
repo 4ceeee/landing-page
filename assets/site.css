@@ -854,3 +854,11 @@ html.glide{scroll-snap-type:none!important;scroll-behavior:auto!important}
 
 /* v4.22: the eyebrow above the headline is gone (/ and /start); keep each headline where it sat */
 .hero .wrap > .tagline:first-child{margin-top:44px}
+
+/* v4.23: on laptops the loading screen shows the lineup small in the middle (motion.js sets data-lu), above the
+   splash; at the hand-over the same element grows into its place in the hero while the splash fades. */
+[data-lu] #lineup{animation:none;opacity:1;transform-origin:50% 50%}
+[data-lu=splash] #lineup,[data-lu=grow] #lineup{z-index:1001;pointer-events:none}
+[data-lu=grow] #lineup{transition:transform 1200ms cubic-bezier(.77,0,.175,1)}
+[data-lu] .splash-inner{transform:translateY(clamp(80px,11vh,112px))}
+[data-lu][data-ready] .splash-inner{transform:translateY(clamp(80px,11vh,112px)) scale(1.03)}

@@ -17,6 +17,45 @@
     var mo = new MutationObserver(function () { if (isReady()) { mo.disconnect(); cb(); } });
     mo.observe(root, { attributes: true, attributeFilter: ['data-ready'] });
   }
+  /* 0a. v4.23: on laptops the loading screen shows the 3D lineup small in the middle; at the hand-over the same
+         element grows into its place in the hero, so nothing swaps. Phones and reduced motion keep the plain splash. */
+  var lu = document.getElementById('lineup');
+  var luOn = !!lu && !isReady() && !reduce && matchMedia('(min-width:900px) and (min-height:640px) and (hover:hover) and (pointer:fine)').matches;
+  var luSettled = function () { return lu.classList.contains('ok') || lu.classList.contains('fail'); };
+  /* Hand over once the models are drawn, but never wait more than 1 s for them. */
+  function whenLineup(cb) {
+    if (!luOn || luSettled()) { cb(); return; }
+    var done = false;
+    var go = function () { if (!done) { done = true; mo.disconnect(); cb(); } };
+    var mo = new MutationObserver(function () { if (luSettled()) go(); });
+    mo.observe(lu, { attributes: true, attributeFilter: ['class'] });
+    setTimeout(go, 1000);
+  }
+  if (luOn) {
+    root.setAttribute('data-lu', 'splash');
+    var place = function () {
+      if (root.getAttribute('data-lu') !== 'splash') return;
+      lu.style.transform = 'none';
+      var r = lu.getBoundingClientRect();
+      if (!r.width) return;
+      var s = Math.min(560, innerWidth * 0.42) / r.width;
+      var dx = innerWidth / 2 - (r.left + r.width / 2);
+      var dy = innerHeight / 2 - 64 - (r.top + r.height / 2);
+      lu.style.transform = 'translate(' + dx + 'px,' + dy + 'px) scale(' + s + ')';
+    };
+    place();
+    addEventListener('resize', place);
+    addEventListener('load', place, { once: true });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(place, function () {});
+    onReady(function () {
+      removeEventListener('resize', place);
+      root.setAttribute('data-lu', 'grow');
+      lu.getBoundingClientRect(); // commit the start so the transition runs
+      lu.style.transform = '';
+      setTimeout(function () { root.setAttribute('data-lu', 'done'); }, 1300); // the grow takes 1200 ms
+    });
+  }
+
   if (!isReady()) {
     var MIN_MS = 3300;
     var hide = function () {
@@ -24,7 +63,7 @@
       fonts.catch(function () {}).then(function () {
         var fp = performance.getEntriesByName('first-paint')[0];
         var painted = fp ? fp.startTime : 0;
-        setTimeout(setReady, Math.max(0, painted + MIN_MS - performance.now()));
+        setTimeout(function () { whenLineup(setReady); }, Math.max(0, painted + MIN_MS - performance.now()));
       });
     };
     if (document.readyState === 'complete') hide(); else addEventListener('load', hide, { once: true });
