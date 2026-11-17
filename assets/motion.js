@@ -126,6 +126,30 @@
     el.textContent = fmt(from);
     requestAnimationFrame(frame);
   }
+  /* v4.25 case-study number: only $22K shows and holds half a second, counts up to $121K in place, then $121K
+     slides right with the arrow while $22K stays behind. Ends exactly as the static markup. */
+  function heroCount(to) {
+    if (to.dataset.done) return;
+    var big = to.parentNode, arrow = big.querySelector('.arrow'), first = big.firstChild;
+    if (!arrow || !first || first.nodeType !== 3) { runCount(to, 1800); return; }
+    var from = document.createElement('span');
+    from.className = 'from';
+    from.textContent = first.textContent;
+    big.replaceChild(from, first);
+    var shift = from.getBoundingClientRect().left - to.getBoundingClientRect().left;
+    to.textContent = to.dataset.pre + to.dataset.from + to.dataset.suf;
+    to.style.transform = 'translateX(' + shift + 'px)';
+    arrow.style.transform = 'translateX(-0.6em)';
+    from.style.opacity = arrow.style.opacity = '0';
+    setTimeout(function () { runCount(to, 1400); }, 500);
+    setTimeout(function () {
+      var ease = 'cubic-bezier(.77,0,.175,1)';
+      to.style.transition = 'transform 900ms ' + ease;
+      arrow.style.transition = 'transform 900ms ' + ease + ',opacity 450ms ease-out 420ms';
+      from.style.transition = 'opacity 400ms ease-out 480ms'; // appears once $121K has mostly moved clear
+      to.style.transform = arrow.style.transform = from.style.opacity = arrow.style.opacity = '';
+    }, 500 + 1400 + 200);
+  }
   document.querySelectorAll('.numbers .v, .hero-stat .to').forEach(prepCount);
   var heroTo = document.querySelector('.hero-stat .to'); if (heroTo) heroTo.dataset.from = '22';
 
@@ -143,7 +167,7 @@
     }
     /* clipped items can't be observed directly (a fully clipped box never intersects), so they ride on their parent */
     el.querySelectorAll('[data-r="clip"]').forEach(function (c) { setTimeout(function () { reveal(c); }, 60); });
-    el.querySelectorAll('[data-num]').forEach(function (n) { setTimeout(function () { runCount(n, 1800); }, 250); });
+    el.querySelectorAll('[data-num]').forEach(function (n) { setTimeout(function () { if (n === heroTo) heroCount(n); else runCount(n, 1800); }, 250); });
   }
   var targets = document.querySelectorAll('[data-r]:not([data-r="clip"]), .section-head.draw, .chart, .hero-stat');
   if (reduce) document.querySelectorAll('[data-r="clip"]').forEach(function (el) { el.removeAttribute('data-r'); });

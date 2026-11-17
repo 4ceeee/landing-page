@@ -23,6 +23,7 @@ const DEFAULTS = {
   response: 0.075, // 0..1 per frame at 60 fps; lower is softer
   stagger: 0.18, // products further from the pointer react a little later
   idleSway: true, // gentle sway on touch screens until the first touch
+  align: "center", // or "left"
   label: "Vera-Fi Audio products: SnubStation Zero, Vanguard Caldera 12, Vanguard Stand, Vanguard Scout and Series One A40",
 };
 
@@ -94,8 +95,10 @@ export async function mountLineup(container, options = {}) {
     camera.aspect = w / h;
     const t = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
     dist = Math.max((height * 1.18) / (2 * t), (width * 1.12) / (2 * t * camera.aspect));
-    camera.position.set(0, height * 0.5 + dist * 0.12, dist);
-    camera.lookAt(0, height * 0.46, 0);
+    // align "left": slide the view so the lineup's left edge sits on the canvas's left edge.
+    const cx = o.align === "left" ? Math.max(0, dist * t * camera.aspect - width / 2) : 0;
+    camera.position.set(cx, height * 0.5 + dist * 0.12, dist);
+    camera.lookAt(cx, height * 0.46, 0);
     camera.updateProjectionMatrix();
     camera.updateMatrixWorld();
     wake();

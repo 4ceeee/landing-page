@@ -862,3 +862,20 @@ html.glide{scroll-snap-type:none!important;scroll-behavior:auto!important}
 [data-lu=grow] #lineup{transition:transform 1200ms cubic-bezier(.77,0,.175,1)}
 [data-lu] .splash-inner{transform:translateY(clamp(80px,11vh,112px))}
 [data-lu][data-ready] .splash-inner{transform:translateY(clamp(80px,11vh,112px)) scale(1.03)}
+
+/* v4.25: the case-study number moves in parts (motion.js), so the arrow and $121K can take a transform;
+   pre keeps the arrow's spaces exactly as before. */
+.big .to,.big .arrow{display:inline-block}
+.big .arrow{white-space:pre}
+/* v4.25: phones get a left-aligned hero sitting at the bottom of the screen, with the Scout above the headline
+   filling the space under the header. The audience choice has a divider between its two options. */
+@media (max-width:600px){
+  .hero-top{align-items:flex-start;text-align:left}
+  .hero-top .for-line{justify-content:flex-start}
+  .hero-top .hero-sub{margin-inline:0}
+  .hero .wrap > .tagline:first-child{margin-top:clamp(12px,3vh,24px)}
+  .lineup{order:-1;width:auto;margin:0 var(--gutter)}
+  .chooser{align-items:flex-start}
+}
+/* v4.25: a hairline between "I sell by DM" and "I have a store" so they read as two options */
+.path-toggle.path-big button + button::before{content:"";position:absolute;left:-2px;top:22%;bottom:22%;width:1px;background:var(--line-2);pointer-events:none}
