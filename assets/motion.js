@@ -129,6 +129,7 @@
   /* v4.25 case-study number: only $22K shows and holds half a second, counts up to $121K in place, then $121K
      slides right with the arrow while $22K stays behind. Ends exactly as the static markup. */
   /* later: set the opening state now and return a function that starts the count (used by the spotlight) */
+  var HERO_SLIDE = 500 + 1400 + 300 + 380 + 250; // hold, count, settle, fold to "K", pause; then the 900ms slide
   function heroCount(to, later, centre) {
     if (to.dataset.done) return function () {};
     var big = to.parentNode, arrow = big.querySelector('.arrow'), first = big.firstChild;
@@ -149,15 +150,37 @@
     to.style.transform = 'translateX(' + shift + 'px)';
     arrow.style.transform = 'translateX(-0.6em)';
     from.style.opacity = arrow.style.opacity = '0';
+    /* v4.27: the count runs in full dollars ($22,000 to $121,000) for more intensity, settles, then
+       folds back to "$121K" with a short blur before the slide. */
+    function count() {
+      to.dataset.done = '1';
+      var a = 1000 * parseFloat(to.dataset.from), z = 1000 * parseFloat(to.dataset.num), t0 = null;
+      var fmt = function (v) { return to.dataset.pre + Math.round(v).toLocaleString('en-US'); };
+      (function frame(ts) {
+        if (t0 === null) t0 = ts;
+        var p = Math.min(1, (ts - t0) / 1400);
+        to.textContent = fmt(a + (z - a) * (1 - Math.pow(1 - p, 4)));
+        if (p < 1) requestAnimationFrame(frame);
+      })(performance.now());
+      setTimeout(function () {
+        to.style.transition = 'filter 160ms ease-in,opacity 160ms ease-in';
+        to.style.filter = 'blur(6px)'; to.style.opacity = '.3';
+        setTimeout(function () {
+          to.textContent = to.dataset.count;
+          to.style.transition = 'filter 220ms ease-out,opacity 220ms ease-out';
+          to.style.filter = to.style.opacity = '';
+        }, 160);
+      }, 1400 + 300);
+    }
     function go() {
-    setTimeout(function () { runCount(to, 1400); }, 500);
+    setTimeout(count, 500);
     setTimeout(function () {
       var ease = 'cubic-bezier(.77,0,.175,1)';
       to.style.transition = 'transform 900ms ' + ease;
       arrow.style.transition = 'transform 900ms ' + ease + ',opacity 450ms ease-out 420ms';
       from.style.transition = 'opacity 400ms ease-out 480ms'; // appears once $121K has mostly moved clear
       to.style.transform = arrow.style.transform = from.style.opacity = arrow.style.opacity = '';
-    }, 500 + 1400 + 200);
+    }, HERO_SLIDE);
     }
     if (later) return go;
     go();
@@ -205,7 +228,7 @@
     var settle = new IntersectionObserver(function (es) {
       if (es[0].intersectionRatio < 0.9) return;
       settle.disconnect();
-      setTimeout(function () { count(); timer = setTimeout(back, 3000 + 600); }, 350);
+      setTimeout(function () { count(); timer = setTimeout(back, HERO_SLIDE + 900 + 600); }, 350);
     }, { threshold: [0.9] });
     settle.observe(heroSec);
   }
