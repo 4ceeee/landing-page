@@ -129,7 +129,8 @@
   /* v4.25 case-study number: only $22K shows and holds half a second, counts up to $121K in place, then $121K
      slides right with the arrow while $22K stays behind. Ends exactly as the static markup. */
   /* later: set the opening state now and return a function that starts the count (used by the spotlight) */
-  var HERO_SLIDE = 500 + 1400 + 300 + 380 + 250; // hold, count, settle, fold to "K", pause; then the 900ms slide
+  var HERO_MORPH = 450, HERO_COUNT = 1600, HERO_SETTLE = 250;
+  var HERO_SLIDE = 500 + HERO_MORPH + HERO_COUNT + HERO_SETTLE + HERO_MORPH + 250; // hold, unfold, count, settle, fold to "K", pause; then the 900ms slide
   function heroCount(to, later, centre) {
     if (to.dataset.done) return function () {};
     var big = to.parentNode, arrow = big.querySelector('.arrow'), first = big.firstChild;
@@ -150,27 +151,39 @@
     to.style.transform = 'translateX(' + shift + 'px)';
     arrow.style.transform = 'translateX(-0.6em)';
     from.style.opacity = arrow.style.opacity = '0';
-    /* v4.27: the count runs in full dollars ($22,000 to $121,000) for more intensity, settles, then
-       folds back to "$121K" with a short blur before the slide. */
+    /* The count runs in full dollars. "$22K" unfolds into "$22,000" (the K rolls up and out as ",000" rolls in and the
+       number widens smoothly), counts with an ease-in-out to "$121,000", then folds back to "$121K" the same way. */
+    function morphTail(head, a, b, done) {
+      var e = 'cubic-bezier(.77,0,.175,1)', tail = document.createElement('span'), ta = document.createElement('span'), tb = document.createElement('span');
+      to.textContent = head;
+      tail.style.cssText = 'display:inline-block;position:relative;white-space:pre;clip-path:inset(-4% 0 -14% 0)';
+      ta.textContent = a; tb.textContent = b;
+      tb.style.cssText = 'position:absolute;left:0;top:0;opacity:0;transform:translateY(.45em)';
+      tail.appendChild(ta); tail.appendChild(tb); to.appendChild(tail);
+      tail.style.width = ta.offsetWidth + 'px';
+      void tail.offsetWidth;
+      tail.style.transition = 'width ' + HERO_MORPH + 'ms ' + e;
+      ta.style.transition = tb.style.transition = 'opacity ' + (HERO_MORPH * 0.7) + 'ms ease-out,transform ' + HERO_MORPH + 'ms ' + e;
+      tail.style.width = tb.offsetWidth + 'px';
+      ta.style.opacity = '0'; ta.style.transform = 'translateY(-.45em)';
+      tb.style.opacity = '1'; tb.style.transform = 'none';
+      setTimeout(function () { to.textContent = head + b; if (done) done(); }, HERO_MORPH + 20);
+    }
     function count() {
       to.dataset.done = '1';
-      var a = 1000 * parseFloat(to.dataset.from), z = 1000 * parseFloat(to.dataset.num), t0 = null;
-      var fmt = function (v) { return to.dataset.pre + Math.round(v).toLocaleString('en-US'); };
-      (function frame(ts) {
-        if (t0 === null) t0 = ts;
-        var p = Math.min(1, (ts - t0) / 1400);
-        to.textContent = fmt(a + (z - a) * (1 - Math.pow(1 - p, 4)));
-        if (p < 1) requestAnimationFrame(frame);
-      })(performance.now());
-      setTimeout(function () {
-        to.style.transition = 'filter 160ms ease-in,opacity 160ms ease-in';
-        to.style.filter = 'blur(6px)'; to.style.opacity = '.3';
-        setTimeout(function () {
-          to.textContent = to.dataset.count;
-          to.style.transition = 'filter 220ms ease-out,opacity 220ms ease-out';
-          to.style.filter = to.style.opacity = '';
-        }, 160);
-      }, 1400 + 300);
+      var a = 1000 * parseFloat(to.dataset.from), z = 1000 * parseFloat(to.dataset.num), pre = to.dataset.pre;
+      var fmt = function (v) { return pre + Math.round(v).toLocaleString('en-US'); };
+      var inOut = function (p) { return p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2; };
+      morphTail(pre + to.dataset.from, 'K', ',000', function () {
+        var t0 = null;
+        requestAnimationFrame(function frame(ts) {
+          if (t0 === null) t0 = ts;
+          var p = Math.min(1, (ts - t0) / HERO_COUNT);
+          to.textContent = fmt(a + (z - a) * inOut(p));
+          if (p < 1) requestAnimationFrame(frame);
+          else setTimeout(function () { morphTail(pre + to.dataset.num, ',000', 'K'); }, HERO_SETTLE);
+        });
+      });
     }
     function go() {
     setTimeout(count, 500);
