@@ -214,6 +214,8 @@
     var big = heroTo.parentNode, label = heroStat.querySelector('.stat-label'), scale = 1.3;
     heroStat.classList.add('spot-c'); // label and number centred while in the spotlight
     var s = heroStat.getBoundingClientRect(), r = heroSec.getBoundingClientRect();
+    /* as big as fits: up to 2x, with the full "$22K → $121K" line at most 72% of the screen width */
+    scale = Math.max(1.3, Math.min(2, r.width * 0.72 / big.offsetWidth, r.height * 0.55 / heroStat.offsetHeight));
     var dx = r.left + r.width / 2 - (s.left + s.right) / 2, dy = r.top + r.height / 2 - (s.top + s.bottom) / 2;
     heroStat.style.transform = 'translate(' + dx + 'px,' + dy + 'px) scale(' + scale + ')';
     heroSec.classList.add('spot');
