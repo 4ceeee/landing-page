@@ -128,19 +128,28 @@
   }
   /* v4.25 case-study number: only $22K shows and holds half a second, counts up to $121K in place, then $121K
      slides right with the arrow while $22K stays behind. Ends exactly as the static markup. */
-  function heroCount(to) {
-    if (to.dataset.done) return;
+  /* later: set the opening state now and return a function that starts the count (used by the spotlight) */
+  function heroCount(to, later, centre) {
+    if (to.dataset.done) return function () {};
     var big = to.parentNode, arrow = big.querySelector('.arrow'), first = big.firstChild;
-    if (!arrow || !first || first.nodeType !== 3) { runCount(to, 1800); return; }
+    if (!arrow || !first || first.nodeType !== 3) {
+      if (later) return function () { runCount(to, 1800); };
+      runCount(to, 1800); return;
+    }
     var from = document.createElement('span');
     from.className = 'from';
     from.textContent = first.textContent;
     big.replaceChild(from, first);
-    var shift = from.getBoundingClientRect().left - to.getBoundingClientRect().left;
+    /* layout px (offsetLeft), so a scaled parent doesn't throw the shift off. Centred (spotlight): the number counts in
+       the middle of the line inside a slot as wide as "$121K", so it stays centred as it grows. */
+    var w = to.offsetWidth;
+    var shift = centre ? big.offsetLeft + big.offsetWidth / 2 - (to.offsetLeft + w / 2) : from.offsetLeft - to.offsetLeft;
+    if (centre) { to.style.minWidth = w + 'px'; to.style.textAlign = 'center'; }
     to.textContent = to.dataset.pre + to.dataset.from + to.dataset.suf;
     to.style.transform = 'translateX(' + shift + 'px)';
     arrow.style.transform = 'translateX(-0.6em)';
     from.style.opacity = arrow.style.opacity = '0';
+    function go() {
     setTimeout(function () { runCount(to, 1400); }, 500);
     setTimeout(function () {
       var ease = 'cubic-bezier(.77,0,.175,1)';
@@ -149,6 +158,9 @@
       from.style.transition = 'opacity 400ms ease-out 480ms'; // appears once $121K has mostly moved clear
       to.style.transform = arrow.style.transform = from.style.opacity = arrow.style.opacity = '';
     }, 500 + 1400 + 200);
+    }
+    if (later) return go;
+    go();
   }
   document.querySelectorAll('.numbers .v, .hero-stat .to').forEach(prepCount);
   var heroTo = document.querySelector('.hero-stat .to'); if (heroTo) heroTo.dataset.from = '22';
@@ -157,8 +169,51 @@
   document.querySelectorAll('.chart .bar').forEach(function (b, i) { b.style.setProperty('--i', i); });
 
   /* 4. Reveal on scroll, once. Attributes are removed afterwards so hover transitions go back to normal. */
+  /* v4.26 spotlight: when part 2 arrives, the case-study number sits centred and enlarged over a dimmed, blurred
+     section. The count runs once the section has settled, then the number glides back to its place.
+     Only where part 2 fits one screen (laptops and up); phones keep the plain count. */
+  var heroStat = heroTo && heroTo.closest('.hero-stat'), heroSec = heroStat && heroStat.closest('.hero-2');
+  function spotFits() { return !!heroSec && innerWidth > 860 && heroSec.offsetHeight <= innerHeight * 1.05; }
+  function spotlight() {
+    var big = heroTo.parentNode, label = heroStat.querySelector('.stat-label'), scale = 1.3;
+    heroStat.classList.add('spot-c'); // label and number centred while in the spotlight
+    var s = heroStat.getBoundingClientRect(), r = heroSec.getBoundingClientRect();
+    var dx = r.left + r.width / 2 - (s.left + s.right) / 2, dy = r.top + r.height / 2 - (s.top + s.bottom) / 2;
+    heroStat.style.transform = 'translate(' + dx + 'px,' + dy + 'px) scale(' + scale + ')';
+    heroSec.classList.add('spot');
+    var count = heroCount(heroTo, true, true);
+    var done = false, timer;
+    var textBox = function () { var rg = document.createRange(); rg.selectNodeContents(label); return rg.getBoundingClientRect(); };
+    function back() {
+      if (done) return; done = true; clearTimeout(timer); removeEventListener('resize', back);
+      /* FLIP: the label and the number each glide from their centred, enlarged spot to their left-aligned place */
+      var l0 = textBox(), b0 = big.getBoundingClientRect();
+      heroStat.style.transform = ''; heroStat.classList.remove('spot-c');
+      heroTo.style.minWidth = heroTo.style.textAlign = '';
+      var l1 = textBox(), b1 = big.getBoundingClientRect();
+      [[label, l0, l1], [big, b0, b1]].forEach(function (x) {
+        x[0].style.transformOrigin = (x[2].left - x[0].getBoundingClientRect().left) + 'px 0';
+        x[0].style.transform = 'translate(' + (x[1].left - x[2].left) + 'px,' + (x[1].top - x[2].top) + 'px) scale(' + scale + ')';
+      });
+      void heroStat.offsetWidth;
+      [label, big].forEach(function (e) { e.style.transition = 'transform 1100ms var(--ease-io)'; e.style.transform = ''; });
+      heroSec.classList.remove('spot');
+      setTimeout(function () { [label, big].forEach(function (e) { e.style.transition = e.style.transformOrigin = ''; }); }, 1150);
+    }
+    addEventListener('resize', back);
+    /* wait for the glide into part 2 to land before counting */
+    var settle = new IntersectionObserver(function (es) {
+      if (es[0].intersectionRatio < 0.9) return;
+      settle.disconnect();
+      setTimeout(function () { count(); timer = setTimeout(back, 3000 + 600); }, 350);
+    }, { threshold: [0.9] });
+    settle.observe(heroSec);
+  }
   function reveal(el) {
     if (el.classList.contains('in')) return;
+    if (el === heroStat && spotFits()) {
+      el.classList.add('in', 'lit'); spotlight(); return;
+    }
     el.classList.add('in', 'lit');
     if (el.matches('.chart')) return;
     if (el.hasAttribute('data-r')) {
@@ -178,6 +233,15 @@
       entries.forEach(function (e) { if (e.isIntersecting) { reveal(e.target); io.unobserve(e.target); } });
     }, { rootMargin: '0px 0px -12% 0px', threshold: 0.08 });
     targets.forEach(function (el) { io.observe(el); });
+    /* the spotlight starts as soon as part 2 peeks in, so the number is never seen in its resting place first */
+    if (heroSec) {
+      var secIO = new IntersectionObserver(function (es) {
+        if (!es[0].isIntersecting) return;
+        secIO.disconnect();
+        if (spotFits()) { reveal(heroStat); io.unobserve(heroStat); }
+      });
+      secIO.observe(heroSec);
+    }
     /* the hero number counts once the headline has landed (after the loading screen hands over) */
     /* the headline number counts when its section scrolls into view (see reveal) */
   }

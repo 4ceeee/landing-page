@@ -879,3 +879,20 @@ html.glide{scroll-snap-type:none!important;scroll-behavior:auto!important}
 }
 /* v4.25: a hairline between "I sell by DM" and "I have a store" so they read as two options */
 .path-toggle.path-big button + button::before{content:"";position:absolute;left:-2px;top:22%;bottom:22%;width:1px;background:var(--line-2);pointer-events:none}
+/* v4.26: hover on the first-screen choice (mouse only) */
+@media (hover:hover) and (pointer:fine){
+  html:not(.gated) .path-toggle button:hover{color:var(--ink)}
+  html:not(.gated) .path-toggle button[aria-pressed="true"]:hover{color:var(--gold-hi)}
+  .path-toggle.path-big button{transition:color .2s var(--ease),background-color .2s var(--ease),transform .16s var(--ease)}
+  .path-toggle.path-big button:hover{background:rgba(242,241,238,.06)}
+}
+/* v4.26: part 2 opens on the case-study number alone, centred, with everything else dimmed and blurred behind it.
+   Once the count is done it glides back to its place (motion.js, spotlight). */
+.hero-2{position:relative}
+.hero-2::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:rgba(13,14,17,.72);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);opacity:0;visibility:hidden;transition:opacity .9s var(--ease-lux) .4s,visibility 0s linear 1.3s}
+.hero-2.spot::after{opacity:1;visibility:visible;transition:opacity .5s var(--ease-lux)}
+.hero-2 .hero-stat{z-index:3}
+.hero-2.spot .hero-stat{border-top-color:transparent}
+.js .hero-2 .hero-stat::before{transition:transform 1.6s var(--ease-lux) .2s,opacity .6s var(--ease-lux)}
+.hero-2.spot .hero-stat::before{opacity:0}
+.hero-2 .hero-stat.spot-c{justify-content:center;text-align:center}
